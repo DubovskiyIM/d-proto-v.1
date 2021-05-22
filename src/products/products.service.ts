@@ -8,31 +8,29 @@ import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductsService {
-  constructor(
-    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
-    ) {}
+  constructor(@InjectModel(Product.name) private productModel: Model<ProductDocument>,
+              @InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async createProduct(createProductDto: CreateProductDto) {
+  async createProduct(createProductDto: CreateProductDto): Promise<Product | undefined> {
     const owner = (await this.userModel.findOne({ username: 'username2' })) as User;
     const createdProduct = new this.productModel(createProductDto);
     createdProduct.owner = owner;
     return await createdProduct.save();
   }
 
-  async findAll() {
+  async findAll(): Promise<Product[] | undefined> {
     return await this.productModel.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Product | undefined> {
     return await this.productModel.findById(id);
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto) {
+  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product | undefined> {
     return await this.productModel.findByIdAndUpdate(id, updateProductDto);
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<Product | undefined> {
     return await this.productModel.findByIdAndRemove(id);
   }
 }

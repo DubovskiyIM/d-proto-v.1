@@ -9,13 +9,14 @@ import { Model } from 'mongoose';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
-  sanitizeUser(user: UserDocument) {
-    const sanitized = user.toObject();
+
+  private sanitizeUser(user: UserDocument): UserDocument {
+    const sanitized = user;
     delete sanitized['password'];
     return sanitized;
   }
 
-  async create(userDTO: RegisterDTO) {
+  async create(userDTO: RegisterDTO): Promise<User | undefined> {
     const createdUser = new this.userModel(userDTO);
     await createdUser.save();
     return this.sanitizeUser(createdUser);
@@ -26,19 +27,19 @@ export class UsersService {
     return await this.userModel.findOne({ username });
   }
 
-  async findAll() {
+  async findAll(): Promise<User[] | undefined> {
     return await this.userModel.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<User | undefined> {
     return await this.userModel.findById(id);
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User | undefined> {
     return await this.userModel.findByIdAndUpdate(id, updateUserDto);
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<User | undefined> {
     return await this.userModel.findByIdAndRemove(id);
   }
 }

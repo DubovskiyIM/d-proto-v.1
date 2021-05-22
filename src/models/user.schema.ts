@@ -1,7 +1,7 @@
 import { Schema, Prop, SchemaFactory  } from '@nestjs/mongoose';
-import { HookNextFunction, Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
+
 import { Product } from './product.schema';
 
 export type UserDocument = User & Document;
@@ -65,7 +65,7 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.pre('save', async function(next: HookNextFunction) {
+UserSchema.pre('save', async function(next: mongoose.HookNextFunction) {
   try {
     if (!this.isModified('password')) {
       return next();

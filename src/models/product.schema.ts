@@ -1,6 +1,7 @@
-import { Feedback } from './../types/feedback';
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
+
+import { Feedback } from './feedback.schema';
 import { User } from './user.schema';
 
 export type ProductDocument = Product & mongoose.Document;
