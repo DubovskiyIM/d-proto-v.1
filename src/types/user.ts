@@ -34,7 +34,7 @@ export interface User extends Document {
   email: string;
   name: string;
   description: string;
-  location: Location;
+  location: string;
   followers: User[];
   followingUsers: User[];
   followingProducts: Product[];

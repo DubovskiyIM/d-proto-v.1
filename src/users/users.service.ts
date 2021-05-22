@@ -1,7 +1,6 @@
-import { LoginDTO } from './../auth/auth.dto';
+import { LoginDTO, RegisterDTO } from './../auth/auth.dto';
 import { UserDocument } from './../models/user.schema';
-import { RegisterDTO } from 'src/auth/auth.dto';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '../models/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -17,15 +16,6 @@ export class UsersService {
   }
 
   async create(userDTO: RegisterDTO) {
-    const { username, password } = userDTO;
-    const user = await this.findOneByLogin(userDTO);
-    if (user) {
-      throw new HttpException('User has already exist', HttpStatus.BAD_REQUEST);
-    } else if (username.length < 6) {
-      throw new HttpException('Login should be at least 6 digits', HttpStatus.BAD_REQUEST);
-    } else if (password.length < 6) {
-      throw new HttpException('password should be at leaste 6 digits', HttpStatus.BAD_REQUEST);
-    }
     const createdUser = new this.userModel(userDTO);
     await createdUser.save();
     return this.sanitizeUser(createdUser);
@@ -36,19 +26,19 @@ export class UsersService {
     return await this.userModel.findOne({ username });
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.userModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    return await this.userModel.findById(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    return await this.userModel.findByIdAndUpdate(id, updateUserDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    return await this.userModel.findByIdAndRemove(id);
   }
 }
