@@ -1,17 +1,22 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { LoginDTO } from './../auth/auth.dto';
+import { UserDocument } from './../models/user.schema';
+import { RegisterDTO } from 'src/auth/auth.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from '../types/user';
+import { User } from '../models/user.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
-  sanitizeUser(user: User) {
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  sanitizeUser(user: UserDocument) {
     const sanitized = user.toObject();
     delete sanitized['password'];
     return sanitized;
   }
 
-  async create(userDTO: CreateUserDto) {
+  async create(userDTO: RegisterDTO) {
     const { username, password } = userDTO;
     const user = await this.findOneByLogin(userDTO);
     if (user) {
