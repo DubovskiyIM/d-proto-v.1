@@ -11,26 +11,26 @@ export class ProductsService {
   constructor(@InjectModel(Product.name) private productModel: Model<ProductDocument>,
               @InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async createProduct(createProductDto: CreateProductDto): Promise<Product | undefined> {
+  async createProduct(createProductDto: CreateProductDto): Promise<Product> {
     const owner = (await this.userModel.findOne({ username: 'username2' })) as User;
     const createdProduct = new this.productModel(createProductDto);
     createdProduct.owner = owner;
     return await createdProduct.save();
   }
 
-  async findAll(): Promise<Product[] | undefined> {
+  async findAll(): Promise<Product[]> {
     return await this.productModel.find();
   }
 
-  async findOne(id: number): Promise<Product | undefined> {
+  async findOne(id: number): Promise<Product> {
     return await this.productModel.findById(id);
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product | undefined> {
+  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
     return await this.productModel.findByIdAndUpdate(id, updateProductDto);
   }
 
-  async remove(id: number): Promise<Product | undefined> {
+  async remove(id: number): Promise<Product> {
     return await this.productModel.findByIdAndRemove(id);
   }
 }

@@ -9,27 +9,27 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto): Promise<Order | undefined>  {
+  create(@Body() createOrderDto: CreateOrderDto): Promise<Order>  {
     return this.ordersService.create(createOrderDto);
   }
 
   @Get()
-  findAll(): Promise<Order[] | undefined>  {
+  findAll(): Promise<Order[]>  {
     return this.ordersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Order | undefined>  {
+  findOne(@Param('id') id: string): Promise<Order>  {
     return this.ordersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto): Promise<Order | undefined>  {
+  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto): Promise<Order>  {
     return this.ordersService.update(+id, updateOrderDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<Order | undefined>  {
+  remove(@Param('id') id: string): Promise<Order>  {
     return this.ordersService.remove(+id);
   }
 }

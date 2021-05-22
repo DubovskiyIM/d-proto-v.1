@@ -16,26 +16,26 @@ export class UsersService {
     return sanitized;
   }
 
-  async create(userDTO: RegisterDTO): Promise<User | undefined> {
+  async create(userDTO: RegisterDTO): Promise<User> {
     const createdUser = new this.userModel(userDTO);
     await createdUser.save();
     return this.sanitizeUser(createdUser);
   }
 
-  async findOneByLogin(userDTO: LoginDTO): Promise<User | undefined> {
+  async findOneByLogin(userDTO: LoginDTO): Promise<User> {
     const { username } = userDTO;
     return await this.userModel.findOne({ username });
   }
 
-  async findAll(): Promise<User[] | undefined> {
+  async findAll(): Promise<User[]> {
     return await this.userModel.find();
   }
 
-  async findOne(id: number): Promise<User | undefined> {
+  async findOne(id: number): Promise<User> {
     return await this.userModel.findById(id);
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<User | undefined> {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     return await this.userModel.findByIdAndUpdate(id, updateUserDto);
   }
 

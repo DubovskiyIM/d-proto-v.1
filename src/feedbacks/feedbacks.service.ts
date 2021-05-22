@@ -10,24 +10,24 @@ import { UpdateFeedbackDto } from './dto/update-feedback.dto';
 export class FeedbacksService {
   constructor(@InjectModel(Feedback.name) private feedbackModel: Model<FeedbackDocument>) {}
   
-  async create(createFeedbackDto: CreateFeedbackDto): Promise<Feedback | undefined>  {
+  async create(createFeedbackDto: CreateFeedbackDto): Promise<Feedback>  {
     const createdFeedback = await new this.feedbackModel(createFeedbackDto);
     return createdFeedback;
   }
 
-  async findAll(): Promise<Feedback[] | undefined> {
+  async findAll(): Promise<Feedback[]> {
     return await this.feedbackModel.find();
   }
 
-  async findOne(id: number): Promise<Feedback | undefined> {
+  async findOne(id: number): Promise<Feedback> {
     return await this.feedbackModel.findById(id);
   }
 
-  async update(id: number, updateFeedbackDto: UpdateFeedbackDto): Promise<Feedback | undefined> {
+  async update(id: number, updateFeedbackDto: UpdateFeedbackDto): Promise<Feedback> {
     return await this.feedbackModel.findByIdAndUpdate(id, updateFeedbackDto);
   }
 
-  async remove(id: number): Promise<Feedback | undefined> {
+  async remove(id: number): Promise<Feedback> {
     return await this.feedbackModel.remove(id);
   }
 }

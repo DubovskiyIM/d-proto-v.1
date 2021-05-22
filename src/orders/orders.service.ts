@@ -13,26 +13,26 @@ export class OrdersService {
               @InjectModel(Product.name) private productModel: Model<OrderDocument>,
               @InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async create(createOrderDto: CreateOrderDto): Promise<Order | undefined>  {
+  async create(createOrderDto: CreateOrderDto): Promise<Order>  {
     const owner = await this.userModel.findOne({ username: 'username' }) as User;
     const newOrder = new this.orderModel(createOrderDto);
     newOrder.owner = owner;
     return newOrder;
   }
 
-  async findAll(): Promise<Order[] | undefined>  {
+  async findAll(): Promise<Order[]>  {
     return await this.orderModel.find();
   }
 
-  async findOne(id: number): Promise<Order | undefined>  {
+  async findOne(id: number): Promise<Order>  {
     return await this.orderModel.findById(id);
   }
 
-  async update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order | undefined>  {
+  async update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order>  {
     return await this.orderModel.findByIdAndUpdate(id, updateOrderDto);
   }
 
-  async remove(id: number): Promise<Order | undefined>  {
+  async remove(id: number): Promise<Order>  {
     return await this.orderModel.findByIdAndRemove(id);
   }
 }

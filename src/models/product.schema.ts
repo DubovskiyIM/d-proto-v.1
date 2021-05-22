@@ -32,10 +32,10 @@ export class Product {
   @Prop()
   color: string;
 
-  @Prop()
+  @Prop({ default: 0 })
   rating: number;
 
-  @Prop()
+  @Prop({ default: 0 })
   availableQuantity: number;
 
   @Prop()

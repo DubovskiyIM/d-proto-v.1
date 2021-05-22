@@ -9,27 +9,27 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto): Promise<Product | undefined> {
+  create(@Body() createProductDto: CreateProductDto): Promise<Product> {
     return this.productsService.createProduct(createProductDto);
   }
 
   @Get()
-  findAll(): Promise<Product[] | undefined>  {
+  findAll(): Promise<Product[]>  {
     return this.productsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Product | undefined> {
+  findOne(@Param('id') id: string): Promise<Product> {
     return this.productsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto): Promise<Product | undefined> {
+  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto): Promise<Product> {
     return this.productsService.update(+id, updateProductDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<Product | undefined> {
+  remove(@Param('id') id: string): Promise<Product> {
     return this.productsService.remove(+id);
   }
 }
