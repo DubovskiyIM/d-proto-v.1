@@ -8,8 +8,7 @@ import { RegisterDTO, LoginDTO } from './auth.dto';
 export class AuthService {
   constructor(private usersService: UsersService) {}
 
-  async validateUser(userDTO: LoginDTO): Promise<any> {
-    const { username, password } = userDTO;
+  async validateUser(username, password): Promise<any> {
     const user = await this.usersService.findOneByLogin(username);
     if (user && user.password === password) {
       const { password, username, ...rest } = user;
