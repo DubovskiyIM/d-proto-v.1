@@ -1,3 +1,4 @@
+import { LocalAuthGuard } from './../guards/local-auth.guard';
 import { Body, Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDTO, RegisterDTO } from './auth.dto';
@@ -9,28 +10,22 @@ import { AuthGuard } from '@nestjs/passport';
 export class AuthController {
   constructor(private usersService: UsersService, private authService: AuthService) {}
 
-  // @Post('login')
-  // async login(@Body() userDTO: LoginDTO) {
-  //   const user = await this.userService.findByLogin(userDTO);
-  //   const payload: Payload = {
-  //     username: user.username,
-  //     password: user.password,
-  //     seller: user.seller
-  //   }
-  //   const token = await this.authService.signPayload(payload);
-  //   return { user, token }
-  // }
-
   @Post('register')
   async register(@Body() userDTO: RegisterDTO) {
     const user = await this.usersService.create(userDTO);
     return { user }
   }
 
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req) {
-    return req.user;
+  async login(@Body() user) {
+    console.log(user);
+    return user;
+  }
+
+  @Get('protected')
+  getHello() {
+    return this.authService.getHello();
   }
 
 }

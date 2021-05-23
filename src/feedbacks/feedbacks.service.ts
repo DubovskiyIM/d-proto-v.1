@@ -8,7 +8,7 @@ import { UpdateFeedbackDto } from './dto/update-feedback.dto';
 
 @Injectable()
 export class FeedbacksService {
-  constructor(@InjectModel(Feedback.name) private feedbackModel: Model<FeedbackDocument>) {}
+  constructor(@InjectModel('Feedback') private feedbackModel: Model<FeedbackDocument>) {}
   
   async create(createFeedbackDto: CreateFeedbackDto): Promise<Feedback>  {
     const createdFeedback = await new this.feedbackModel(createFeedbackDto);

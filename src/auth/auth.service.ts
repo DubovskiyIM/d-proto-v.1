@@ -10,12 +10,16 @@ export class AuthService {
 
   async validateUser(userDTO: LoginDTO): Promise<any> {
     const { username, password } = userDTO;
-    const user = await this.usersService.findOneByLogin(userDTO);
+    const user = await this.usersService.findOneByLogin(username);
     if (user && user.password === password) {
-      const { password, ...result } = user;
-      return result;
+      const { password, username, ...rest } = user;
+      return rest;
     }
     return null;
+  }
+
+  getHello(): string {
+    return 'Hello World!';
   }
 
   // async signPayload(payload: Payload) {

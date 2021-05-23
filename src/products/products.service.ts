@@ -8,8 +8,8 @@ import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductsService {
-  constructor(@InjectModel(Product.name) private productModel: Model<ProductDocument>,
-              @InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel('Product') private productModel: Model<ProductDocument>,
+              @InjectModel('User') private userModel: Model<UserDocument>) {}
 
   async createProduct(createProductDto: CreateProductDto): Promise<Product> {
     const owner = (await this.userModel.findOne({ username: 'username2' })) as User;

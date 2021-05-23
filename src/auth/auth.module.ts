@@ -10,8 +10,8 @@ import { User, UserSchema } from 'src/models/user.schema';
 
 @Module({
   imports: [
-    UsersModule, 
-    PassportModule, 
+    UsersModule,
+    PassportModule,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])
   ],
   controllers: [AuthController],

@@ -9,9 +9,9 @@ import { Product } from 'src/models/product.schema';
 
 @Injectable()
 export class OrdersService {
-  constructor(@InjectModel(Order.name) private orderModel: Model<OrderDocument>,
-              @InjectModel(Product.name) private productModel: Model<OrderDocument>,
-              @InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel('Order') private orderModel: Model<OrderDocument>,
+              @InjectModel('Product') private productModel: Model<OrderDocument>,
+              @InjectModel('User') private userModel: Model<UserDocument>) {}
 
   async create(createOrderDto: CreateOrderDto): Promise<Order>  {
     const owner = await this.userModel.findOne({ username: 'username' }) as User;

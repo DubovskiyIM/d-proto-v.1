@@ -8,22 +8,21 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
 
-  private sanitizeUser(user: UserDocument): UserDocument {
-    const sanitized = user;
-    delete sanitized['password'];
-    return sanitized;
-  }
+  // private sanitizeUser(user: UserDocument): UserDocument {
+  //   const sanitized = user;
+  //   delete sanitized['password'];
+  //   return sanitized;
+  // }
 
   async create(userDTO: RegisterDTO): Promise<User> {
     const createdUser = new this.userModel(userDTO);
     await createdUser.save();
-    return this.sanitizeUser(createdUser);
+    return createdUser;
   }
 
-  async findOneByLogin(userDTO: LoginDTO): Promise<User> {
-    const { username } = userDTO;
+  async findOneByLogin(username): Promise<User> {
     return await this.userModel.findOne({ username });
   }
 
