@@ -1,36 +1,28 @@
-import { Injectable, Post } from '@nestjs/common';
-import { sign } from 'jsonwebtoken';
-import { Payload } from '../types/payload';
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { RegisterDTO, LoginDTO } from './auth.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
-  async validateUser(username, password): Promise<any> {
+  async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByLogin(username);
-    if (user && user.password === password) {
-      const { password, username, ...rest } = user;
-      return rest;
+    console.log(user);
+    if (user && user.password === pass) {
+      const { password, ...result } = user;
+      return result;
     }
     return null;
   }
 
-  getHello(): string {
-    return 'Hello World!';
+  async login(user: any) {
+    const payload = { name: user._doc.username, sub: user._doc._id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
-
-  // async signPayload(payload: Payload) {
-  //   return sign(payload, process.env.SECRET_KEY, { expiresIn: '12h' })
-  // }
-
-  // async validateUser(userDTO: RegisterDTO): Promise<any> {
-  //   const user = await this.usersService.create(userDTO);
-  //   if (user && user.password === userDTO.password) {
-  //     const { password, ...result } = user;
-  //     return result;
-  //   }
-  //   return null;
-  // }
 }

@@ -7,7 +7,7 @@ export class SellerGuard implements CanActivate {
   canActivate(ctx: ExecutionContext) {
     const req = ctx.switchToHttp().getRequest();
     const user = req.user;
-    
+
     if (user?.seller) {
       return true;
     }
