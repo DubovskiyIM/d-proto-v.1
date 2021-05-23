@@ -10,16 +10,16 @@ import { Model } from 'mongoose';
 export class UsersService {
   constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
 
-  // private sanitizeUser(user: UserDocument): UserDocument {
-  //   const sanitized = user;
-  //   delete sanitized['password'];
-  //   return sanitized;
-  // }
+  private sanitizeUser(user: UserDocument): UserDocument {
+    const sanitized = user;
+    delete sanitized['password'];
+    return sanitized;
+  }
 
   async create(userDTO: RegisterDTO): Promise<User> {
     const createdUser = new this.userModel(userDTO);
     await createdUser.save();
-    return createdUser;
+    return this.sanitizeUser(createdUser);
   }
 
   async findOneByLogin(username): Promise<User> {

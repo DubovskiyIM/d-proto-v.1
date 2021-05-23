@@ -5,6 +5,7 @@ import { LoginDTO, RegisterDTO } from './auth.dto';
 import { Payload } from './../types/payload';
 import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthenticatedGuard } from 'src/guards/authenticated.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -19,10 +20,10 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Body() user) {
-    console.log(user);
-    return user;
+    return { message: 'Logged In' };
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Get('protected')
   getHello() {
     return this.authService.getHello();

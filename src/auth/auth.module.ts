@@ -1,3 +1,4 @@
+import { SessionSerializer } from './session.serializer';
 import { UsersService } from './../users/users.service';
 import { UsersModule } from './../users/users.module';
 import { Module } from '@nestjs/common';
@@ -11,10 +12,10 @@ import { User, UserSchema } from 'src/models/user.schema';
 @Module({
   imports: [
     UsersModule,
-    PassportModule,
+    PassportModule.register({ session: true }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, UsersService]
+  providers: [AuthService, LocalStrategy, UsersService, SessionSerializer]
 })
 export class AuthModule {}
