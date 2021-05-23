@@ -17,6 +17,4 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
-bootstrap().then((res) => {
-  console.log(res);
-});
+bootstrap();

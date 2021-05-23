@@ -1,10 +1,9 @@
-import { RegisterDTO } from '../auth/auth.dto';
-import { UserDocument } from '../models/user.schema';
-import { Injectable } from '@nestjs/common';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from '../models/user.schema';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import {Injectable} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
+import {Model} from 'mongoose';
+import {RegisterDTO} from '../auth/auth.dto';
+import {User, UserDocument} from '../models/user.schema';
+import {UpdateUserDto} from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -30,8 +29,24 @@ export class UsersService {
     return this.userModel.find();
   }
 
-  async findOne(id: number): Promise<User> {
-    return this.userModel.findById(id);
+  async findOne(id: string): Promise<User> {
+    return this.userModel.findById(+id);
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    return await this.userModel.findOne({ email }).exec();
+  }
+
+  async findByUsername(username: string) {
+    return this.userModel.findOne({ username }).exec();
+  }
+
+  async findByPhone(phone: string) {
+    return this.userModel.findOne({ phone }).exec();
+  }
+
+  async findById(id: number): Promise<User> {
+    return this.userModel.findById(+id);
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
