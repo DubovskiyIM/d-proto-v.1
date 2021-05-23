@@ -1,5 +1,4 @@
-import { Description } from "../../types/product";
-import { User } from "../../types/user";
+import { Description } from '../../types/product';
 
 export class CreateProductDto {
   title: string;
@@ -8,5 +7,5 @@ export class CreateProductDto {
   status: string;
   style: string;
   color: string;
-  description: Description
+  description: Description;
 }

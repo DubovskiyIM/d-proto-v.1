@@ -1,6 +1,6 @@
 import { Feedback } from './feedback';
 import { Product } from './product';
-import { Document } from 'mongoose'
+import { Document } from 'mongoose';
 
 export interface Address {
   addr1: string;
@@ -17,9 +17,9 @@ export interface Seller {
 }
 
 // Role Seller
-export interface RoleSeller {
-
-}
+// export interface RoleSeller {
+//
+// }
 
 export interface User extends Document {
   avatar: string;

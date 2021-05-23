@@ -10,7 +10,7 @@ export type ProductDocument = Product & mongoose.Document;
 export class Product {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   owner: User;
-  
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Feedback' })
   feedback: Feedback[];
 
@@ -46,13 +46,15 @@ export class Product {
 
   @Prop({ type: Object })
   description: {
-    about: String;
-    sizes: [{
-      id: number,
-      type: string,
-      value: string,
-    }];
-    brand: String;
+    about: string;
+    sizes: [
+      {
+        id: number;
+        type: string;
+        value: string;
+      },
+    ];
+    brand: string;
   };
 }
 
