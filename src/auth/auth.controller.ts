@@ -15,6 +15,7 @@ import { AuthService } from './auth.service';
 import { RegisterDTO } from './auth.dto';
 import { UsersService } from '../users/users.service';
 
+import { GoogleAuthGuard } from '../guards/google-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { RequestWithUser } from './requestWithUser.interface';
@@ -77,5 +78,15 @@ export class AuthController {
   @Get('users')
   async getUsers() {
     return await this.usersService.findAll();
+  }
+
+  @Get('google')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuth(@Req() req: any) {}
+
+  @Get('redirect')
+  @UseGuards(GoogleAuthGuard)
+  googleAuthRedirect(@Req() req) {
+    return this.authService.googleLogin(req);
   }
 }

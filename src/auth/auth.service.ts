@@ -71,4 +71,16 @@ export class AuthService {
   public getCookieForLogOut() {
     return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
+
+  public async googleLogin(req): Promise<any> {
+    console.log(req.user);
+    if (!req.user) {
+      return 'No user from google';
+    }
+
+    return {
+      message: 'User information from google',
+      user: req.user,
+    };
+  }
 }
