@@ -2,9 +2,9 @@ import { Document } from 'mongoose';
 import { User } from './user';
 
 export interface Size {
-  id: number,
-  type: string,
-  value: string,
+  id: number;
+  type: string;
+  value: string;
 }
 
 export interface Description {

@@ -1,12 +1,13 @@
-import { Schema, Prop, SchemaFactory  } from '@nestjs/mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
+
 import { User } from './user.schema';
 
 export type FeedbackDocument = Feedback & Document;
 
 @Schema()
 export class Feedback {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 
   @Prop()
