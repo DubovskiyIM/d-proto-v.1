@@ -6,7 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { RequestWithUser } from '../interfaces/requestWithUser.interface';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -16,9 +20,17 @@ import { Product } from '../models/product.schema';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post()
-  create(@Body() createProductDto: CreateProductDto): Promise<Product> {
-    return this.productsService.createProduct(createProductDto);
+  @Post('create')
+  @UseGuards(JwtAuthGuard)
+  async create(@Req() req: RequestWithUser): Promise<Product> {
+    req.body.owner = req.user;
+    return this.productsService.createProduct(req.body as CreateProductDto);
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  async findAllByOwner(@Param('id') id: string): Promise<Product[]> {
+    return await this.productsService.findAllByOwner(id);
   }
 
   @Get()

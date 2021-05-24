@@ -12,13 +12,14 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
-import { RegisterDTO } from './auth.dto';
+import { RegisterDTO } from './dto/auth.dto';
 import { UsersService } from '../users/users.service';
 
 import { GoogleAuthGuard } from '../guards/google-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
-import { RequestWithUser } from './requestWithUser.interface';
+
+import { RequestWithUser } from '../interfaces/requestWithUser.interface';
 
 @Controller('auth')
 export class AuthController {

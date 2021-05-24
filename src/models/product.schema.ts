@@ -1,18 +1,15 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
-import { Feedback } from './feedback.schema';
-import { User } from './user.schema';
-
 export type ProductDocument = Product & mongoose.Document;
 
 @Schema()
 export class Product {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  owner: User;
+  owner: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Feedback' })
-  feedback: Feedback[];
+  feedback: string[];
 
   @Prop()
   title: string;
@@ -47,13 +44,7 @@ export class Product {
   @Prop({ type: Object })
   description: {
     about: string;
-    sizes: [
-      {
-        id: number;
-        type: string;
-        value: string;
-      },
-    ];
+    sizes: string[];
     brand: string;
   };
 }

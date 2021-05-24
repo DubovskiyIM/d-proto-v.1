@@ -1,7 +1,7 @@
-import { LoginDTO } from './../src/auth/auth.dto';
+import { LoginDTO } from '../src/auth/dto/auth.dto';
 import { HttpStatus } from '@nestjs/common';
 import 'dotenv/config';
-import { RegisterDTO } from 'src/auth/auth.dto';
+import { RegisterDTO } from 'src/auth/dto/auth.dto';
 import * as request from 'supertest';
 import * as mongoose from 'mongoose';
 

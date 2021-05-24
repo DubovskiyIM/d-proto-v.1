@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { RegisterDTO } from './auth.dto';
+import { RegisterDTO } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 
 export interface TokenPayload {
@@ -73,7 +73,6 @@ export class AuthService {
   }
 
   public async googleLogin(req): Promise<any> {
-    console.log(req.user);
     if (!req.user) {
       return 'No user from google';
     }

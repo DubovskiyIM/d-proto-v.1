@@ -1,4 +1,4 @@
-import { User, UserDocument } from '../models/user.schema';
+import { UserDocument } from '../models/user.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -14,16 +14,17 @@ export class ProductsService {
   ) {}
 
   async createProduct(createProductDto: CreateProductDto): Promise<Product> {
-    const owner = (await this.userModel.findOne({
-      username: 'username2',
-    })) as User;
     const createdProduct = new this.productModel(createProductDto);
-    createdProduct.owner = owner;
     return await createdProduct.save();
   }
 
   async findAll(): Promise<Product[]> {
     return this.productModel.find();
+  }
+
+  async findAllByOwner(ownerId: string): Promise<any> {
+    console.log(ownerId);
+    return this.productModel.find({ owner: ownerId });
   }
 
   async findOne(id: number): Promise<Product> {
