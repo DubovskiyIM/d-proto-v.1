@@ -4,16 +4,20 @@ import {
   Get,
   Post,
   UseGuards,
-  Request,
   HttpException,
   HttpStatus,
+  HttpCode,
+  Req,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { RegisterDTO } from './auth.dto';
 import { UsersService } from '../users/users.service';
 
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
+import { RequestWithUser } from './requestWithUser.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -22,44 +26,56 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  authenticate(@Req() request: RequestWithUser) {
+    const user = request.user;
+    user.password = undefined;
+    return user;
+  }
+
   @Post('register')
   async register(@Body() userDTO: RegisterDTO) {
-    const { username, email, phone } = userDTO;
-    const [byUsername, byEmail, byPhone] = [
-      await this.usersService.findByEmail(email),
-      await this.usersService.findByPhone(phone),
-      await this.usersService.findByUsername(username),
-    ];
-    if (byUsername || byEmail || byPhone) {
-      throw new HttpException(
-        'User has already exists',
-        HttpStatus.BAD_REQUEST,
-      );
+    try {
+      const { username, email, phone } = userDTO;
+      const [byUsername, byEmail, byPhone] = [
+        await this.usersService.findByUsername(username),
+        await this.usersService.findByPhone(phone),
+        await this.usersService.findByEmail(email),
+      ];
+      if (byUsername || byEmail || byPhone) {
+        throw new HttpException(
+          'User has already exists',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      return this.authService.register(userDTO);
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    if (!username) {
-      throw new HttpException('Username is required', HttpStatus.BAD_REQUEST);
-    }
-    if (!email) {
-      throw new HttpException('Email is required', HttpStatus.BAD_REQUEST);
-    }
-    if (!phone) {
-      throw new HttpException('Phone is required', HttpStatus.BAD_REQUEST);
-    }
-
-    const createdUser = await this.usersService.create(userDTO);
-    return { createdUser };
   }
 
+  @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req: any) {
-    return await this.authService.login(req.user);
+  async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
+    const { user } = request;
+    const cookie = this.authService.getCookieWithJwtToken(user.id);
+    response.setHeader('Set-Cookie', cookie);
+    user.password = undefined;
+    return response.send(user);
   }
 
-  // Protected routes
   @UseGuards(JwtAuthGuard)
-  @Get('protectedJwt')
-  getJwt(@Request() req) {
-    return req.user;
+  @Post('logout')
+  async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
+    response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
+    return response.sendStatus(200);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('users')
+  async getUsers() {
+    return await this.usersService.findAll();
   }
 }
