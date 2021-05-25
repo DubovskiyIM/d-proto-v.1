@@ -1,5 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { User } from '../models/user.schema';
 import { UsersService } from '../users/users.service';
 import { RegisterDTO } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
@@ -15,15 +18,12 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  public async register(registrationData: RegisterDTO) {
+  register(registrationData: RegisterDTO): Observable<User> {
     try {
-      const hashedPassword = await bcrypt.hash(registrationData.password, 10);
-      const createdUser = await this.usersService.create({
-        ...registrationData,
-        password: hashedPassword,
-      });
-      createdUser.password = undefined;
-      return createdUser;
+      const createdUser = this.usersService
+        .create(registrationData)
+        .pipe(map((user: User) => (user.password = undefined)));
+      return from(createdUser);
     } catch (error) {
       throw new HttpException(
         'Something went wrong',
@@ -32,12 +32,13 @@ export class AuthService {
     }
   }
 
-  public async getAuthenticatedUser(email: string, plainTextPassword: string) {
+  public getAuthenticatedUser(email: string, plainTextPassword: string) {
     try {
-      const user = await this.usersService.findByEmail(email);
-      await AuthService.verifyPassword(plainTextPassword, user.password);
-      user.password = undefined;
-      return user;
+      this.usersService.findByEmail(email).subscribe((user: User) => {
+        AuthService.verifyPassword(plainTextPassword, user.password);
+        user.password = undefined;
+        return user;
+      });
     } catch (error) {
       throw new HttpException(
         'Wrong credentials provided',
@@ -46,11 +47,11 @@ export class AuthService {
     }
   }
 
-  private static async verifyPassword(
+  private static verifyPassword(
     plainTextPassword: string,
     hashedPassword: string,
   ) {
-    const isPasswordMatching = await bcrypt.compare(
+    const isPasswordMatching = bcrypt.compare(
       plainTextPassword,
       hashedPassword,
     );
@@ -62,13 +63,13 @@ export class AuthService {
     }
   }
 
-  public getCookieWithJwtToken(userId: number) {
+  public getCookieWithJwtToken(userId: number): string {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload);
     return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_EXPIRATION_TIME}`;
   }
 
-  public getCookieForLogOut() {
+  public getCookieForLogOut(): string {
     return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
 

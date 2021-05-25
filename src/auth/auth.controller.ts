@@ -11,6 +11,8 @@ import {
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { Observable, of } from 'rxjs';
+import { User } from '../models/user.schema';
 import { AuthService } from './auth.service';
 import { RegisterDTO } from './dto/auth.dto';
 import { UsersService } from '../users/users.service';
@@ -28,22 +30,14 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  authenticate(@Req() request: RequestWithUser) {
-    const user = request.user;
-    user.password = undefined;
-    return user;
-  }
-
   @Post('register')
-  async register(@Body() userDTO: RegisterDTO) {
+  register(@Body() userDTO: RegisterDTO): Observable<User> {
     try {
       const { username, email, phone } = userDTO;
       const [byUsername, byEmail, byPhone] = [
-        await this.usersService.findByUsername(username),
-        await this.usersService.findByPhone(phone),
-        await this.usersService.findByEmail(email),
+        this.usersService.findByUsername(username),
+        this.usersService.findByPhone(phone),
+        this.usersService.findByEmail(email),
       ];
       if (byUsername || byEmail || byPhone) {
         throw new HttpException(
@@ -60,30 +54,41 @@ export class AuthController {
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
+  logIn(
+    @Req() request: RequestWithUser,
+    @Res() response: Response,
+  ): Observable<Response> {
     const { user } = request;
     const cookie = this.authService.getCookieWithJwtToken(user.id);
     response.setHeader('Set-Cookie', cookie);
     user.password = undefined;
-    return response.send(user);
+    return of(response.send(user));
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('logout')
-  async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
+  logOut(
+    @Req() request: RequestWithUser,
+    @Res() response: Response,
+  ): Observable<Response> {
     response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
-    return response.sendStatus(200);
+    return of(response.sendStatus(200));
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('users')
-  async getUsers() {
-    return await this.usersService.findAll();
+  getUsers(): Observable<User[]> {
+    return this.usersService.findAll();
   }
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
-  async googleAuth(@Req() req: any) {}
+  googleAuth(
+    @Req() request: Request,
+    @Res() response: Response,
+  ): Observable<Response> {
+    return of(response);
+  }
 
   @Get('redirect')
   @UseGuards(GoogleAuthGuard)
