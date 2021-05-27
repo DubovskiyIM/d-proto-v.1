@@ -10,7 +10,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { Observable, of } from 'rxjs';
 import { User } from '../models/user.schema';
 import { AuthService } from './auth.service';

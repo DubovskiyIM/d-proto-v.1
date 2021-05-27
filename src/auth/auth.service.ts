@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.schema';
 import { UsersService } from '../users/users.service';
@@ -32,13 +32,18 @@ export class AuthService {
     }
   }
 
-  public getAuthenticatedUser(email: string, plainTextPassword: string) {
+  public getAuthenticatedUser(
+    email: string,
+    plainTextPassword: string,
+  ): Observable<User> {
     try {
-      this.usersService.findByEmail(email).subscribe((user: User) => {
-        AuthService.verifyPassword(plainTextPassword, user.password);
-        user.password = undefined;
-        return user;
-      });
+      return this.usersService.findByEmail(email).pipe(
+        map((user: User) => {
+          AuthService.verifyPassword(plainTextPassword, user.password);
+          user.password = undefined;
+          return user;
+        }),
+      );
     } catch (error) {
       throw new HttpException(
         'Wrong credentials provided',
