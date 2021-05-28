@@ -12,4 +12,8 @@ COPY . .
 
 EXPOSE 3000
 
-RUN yarn start:dev
+RUN yarn build
+
+COPY /dist ./dist
+
+CMD ["yarn", "dist/main"]
