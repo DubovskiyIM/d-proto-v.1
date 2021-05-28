@@ -14,7 +14,7 @@ module.exports = {
         'airbnb-typescript/base',
         // Настройки для Prettier
         'prettier/@typescript-eslint',
-        'plugin:prettier/recommended'
+        'plugin:prettier/recommended',
       ],
       rules: {
         'import/no-unresolved': 'off',
@@ -25,8 +25,8 @@ module.exports = {
           'error',
           {
             ignoreStatic: true,
-          }
-        ]
+          },
+        ],
       },
     },
     {

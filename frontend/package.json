@@ -7,21 +7,40 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
+    "storybook": "yarn docs:json && start-storybook -p 6006",
+    "build-storybook": "yarn docs:json && build-storybook"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged --relative"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix"
+    ]
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.0.2",
+    "@angular/cdk": "12.0.2",
     "@angular/common": "~12.0.2",
     "@angular/compiler": "~12.0.2",
     "@angular/core": "~12.0.2",
+    "@angular/elements": "^12.0.2",
     "@angular/forms": "~12.0.2",
+    "@angular/material": "12.0.2",
     "@angular/platform-browser": "~12.0.2",
     "@angular/platform-browser-dynamic": "~12.0.2",
     "@angular/router": "~12.0.2",
+    "@webcomponents/custom-elements": "^1.4.3",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "ng2-file-upload": "^1.4.0",
     "prettier": "^2.3.0",
     "rxjs": "~6.5.4",
@@ -37,11 +56,18 @@
     "@angular-eslint/template-parser": "12.0.0",
     "@angular/cli": "~12.0.2",
     "@angular/compiler-cli": "~12.0.2",
+    "@babel/core": "^7.14.3",
+    "@compodoc/compodoc": "^1.1.11",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/angular": "^6.2.9",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "4.23.0",
     "@typescript-eslint/parser": "4.23.0",
+    "babel-loader": "^8.2.2",
     "codelyzer": "^6.0.0",
     "eslint": "^7.26.0",
     "jasmine-core": "~3.6.0",
