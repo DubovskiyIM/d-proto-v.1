@@ -1,4 +1,5 @@
-import { User, UserDocument } from '../models/user.schema';
+import { from, Observable } from 'rxjs';
+import { UserDocument } from '../models/user.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -13,31 +14,28 @@ export class ProductsService {
     @InjectModel('User') private userModel: Model<UserDocument>,
   ) {}
 
-  async createProduct(createProductDto: CreateProductDto): Promise<Product> {
-    const owner = (await this.userModel.findOne({
-      username: 'username2',
-    })) as User;
+  createProduct(createProductDto: CreateProductDto): Observable<Product> {
     const createdProduct = new this.productModel(createProductDto);
-    createdProduct.owner = owner;
-    return await createdProduct.save();
+    return from(createdProduct.save());
   }
 
-  async findAll(): Promise<Product[]> {
-    return this.productModel.find();
+  findAll(): Observable<Product[]> {
+    return from(this.productModel.find());
   }
 
-  async findOne(id: number): Promise<Product> {
-    return this.productModel.findById(id);
+  findAllByOwner(ownerId: string): Observable<Product[]> {
+    return from(this.productModel.find({ owner: ownerId }));
   }
 
-  async update(
-    id: number,
-    updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
-    return this.productModel.findByIdAndUpdate(id, updateProductDto);
+  findOne(id: number): Observable<Product> {
+    return from(this.productModel.findById(id));
   }
 
-  async remove(id: number): Promise<Product> {
-    return this.productModel.findByIdAndRemove(id);
+  update(id: number, updateProductDto: UpdateProductDto): Observable<Product> {
+    return from(this.productModel.findByIdAndUpdate(id, updateProductDto));
+  }
+
+  remove(id: number): Observable<Product> {
+    return from(this.productModel.findByIdAndRemove(id));
   }
 }

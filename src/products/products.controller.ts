@@ -6,7 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { RequestWithUser } from '../interfaces/requestWithUser.interface';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -16,18 +21,26 @@ import { Product } from '../models/product.schema';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post()
-  create(@Body() createProductDto: CreateProductDto): Promise<Product> {
-    return this.productsService.createProduct(createProductDto);
+  @Post('create')
+  @UseGuards(JwtAuthGuard)
+  create(@Req() req: RequestWithUser): Observable<Product> {
+    req.body.owner = req.user;
+    return this.productsService.createProduct(req.body as CreateProductDto);
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  findAllByOwner(@Param('id') id: string): Observable<Product[]> {
+    return this.productsService.findAllByOwner(id);
   }
 
   @Get()
-  findAll(): Promise<Product[]> {
+  findAll(): Observable<Product[]> {
     return this.productsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Product> {
+  findOne(@Param('id') id: string): Observable<Product> {
     return this.productsService.findOne(+id);
   }
 
@@ -35,12 +48,12 @@ export class ProductsController {
   update(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
+  ): Observable<Product> {
     return this.productsService.update(+id, updateProductDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<Product> {
+  remove(@Param('id') id: string): Observable<Product> {
     return this.productsService.remove(+id);
   }
 }

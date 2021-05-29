@@ -1,12 +1,13 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import { Order } from 'src/models/order.schema';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -17,17 +18,17 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto): Promise<Order> {
+  create(@Body() createOrderDto: CreateOrderDto): Observable<Order> {
     return this.ordersService.create(createOrderDto);
   }
 
   @Get()
-  findAll(): Promise<Order[]> {
+  findAll(): Observable<Order[]> {
     return this.ordersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Order> {
+  findOne(@Param('id') id: string): Observable<Order> {
     return this.ordersService.findOne(+id);
   }
 
@@ -35,12 +36,12 @@ export class OrdersController {
   update(
     @Param('id') id: string,
     @Body() updateOrderDto: UpdateOrderDto,
-  ): Promise<Order> {
+  ): Observable<Order> {
     return this.ordersService.update(+id, updateOrderDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<Order> {
+  remove(@Param('id') id: string): Observable<Order> {
     return this.ordersService.remove(+id);
   }
 }

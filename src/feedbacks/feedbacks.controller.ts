@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import {Observable} from "rxjs";
 import { Feedback } from 'src/models/feedback.schema';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto';
@@ -17,17 +18,17 @@ export class FeedbacksController {
   constructor(private readonly feedbacksService: FeedbacksService) {}
 
   @Post()
-  create(@Body() createFeedbackDto: CreateFeedbackDto): Promise<Feedback> {
+  create(@Body() createFeedbackDto: CreateFeedbackDto): Observable<Feedback> {
     return this.feedbacksService.create(createFeedbackDto);
   }
 
   @Get()
-  findAll(): Promise<Feedback[]> {
+  findAll(): Observable<Feedback[]> {
     return this.feedbacksService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Feedback> {
+  findOne(@Param('id') id: string): Observable<Feedback> {
     return this.feedbacksService.findOne(+id);
   }
 
@@ -35,12 +36,12 @@ export class FeedbacksController {
   update(
     @Param('id') id: string,
     @Body() updateFeedbackDto: UpdateFeedbackDto,
-  ): Promise<Feedback> {
+  ): Observable<Feedback> {
     return this.feedbacksService.update(+id, updateFeedbackDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<Feedback> {
+  remove(@Param('id') id: string): Observable<Feedback> {
     return this.feedbacksService.remove(+id);
   }
 }

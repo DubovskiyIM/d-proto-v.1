@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -17,17 +18,18 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('register')
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  create(@Body() createUserDto: CreateUserDto): Observable<User> {
     return this.usersService.create(createUserDto);
   }
 
   @Get()
-  findAll(): Promise<User[]> {
+  findAll(): Observable<User[]> {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  findById(@Param('id') id: string): Promise<User> {
+  findById(@Param('id') id: string): Observable<User> {
+    console.log(id);
     return this.usersService.findById(+id);
   }
 
@@ -35,12 +37,12 @@ export class UsersController {
   update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): Promise<User> {
+  ): Observable<User> {
     return this.usersService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<User> {
+  remove(@Param('id') id: string): Observable<User> {
     return this.usersService.remove(+id);
   }
 }
