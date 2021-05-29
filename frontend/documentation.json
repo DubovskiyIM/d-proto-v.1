@@ -291,7 +291,7 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<router-outlet></router-outlet>\r\n<button mat-button color=\"primary\">Primary</button>\r\n<button mat-button color=\"accent\">Accent</button>\r\n<button mat-button color=\"warn\">Warn</button>\r\n"
+            "templateData": "<router-outlet></router-outlet>\r\n"
         },
         {
             "name": "ButtonComponent",
@@ -431,7 +431,7 @@
             "isDuplicate": true,
             "duplicateId": 1,
             "duplicateName": "ButtonComponent-1",
-            "templateData": "<button mat-button color=\"primary\">Primary</button>\n<button mat-button color=\"accent\">Accent</button>\n<button mat-button color=\"warn\">Warn</button>\n"
+            "templateData": "<button\n  class=\"py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-400\">Hello</button>\n"
         },
         {
             "name": "HeaderComponent",
