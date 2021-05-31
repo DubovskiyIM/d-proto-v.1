@@ -1,15 +1,13 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Req } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { from, Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.schema';
 import { UsersService } from '../users/users.service';
 import { RegisterDTO } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
-
-export interface TokenPayload {
-  userId: number;
-}
+import { TokenPayload } from '../interfaces/TokenPayload.interface';
+import { RequestWithUser } from '../interfaces/requestWithUser.interface';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +16,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  register(registrationData: RegisterDTO): Observable<User> {
+  public register(registrationData: RegisterDTO): Observable<User> {
     try {
       const createdUser = this.usersService
         .create(registrationData)
@@ -78,14 +76,14 @@ export class AuthService {
     return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
 
-  public async googleLogin(req): Promise<any> {
-    if (!req.user) {
+  public async googleLogin(@Req() user: RequestWithUser): Promise<any> {
+    if (!user) {
       return 'No user from google';
     }
 
     return {
       message: 'User information from google',
-      user: req.user,
+      user,
     };
   }
 }
