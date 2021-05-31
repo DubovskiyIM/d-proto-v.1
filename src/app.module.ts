@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { FilesModule } from './files/files.module';
+import { MessageModule } from './message-events/message.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { FilesModule } from './files/files.module';
     OrdersModule,
     FeedbacksModule,
     FilesModule,
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
