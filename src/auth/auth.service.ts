@@ -4,7 +4,7 @@ import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.schema';
 import { UsersService } from '../users/users.service';
-import { RegisterDTO } from './dto/auth.dto';
+import { RegisterDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 import { TokenPayload } from '../interfaces/TokenPayload.interface';
 import { RequestWithUser } from '../interfaces/requestWithUser.interface';
@@ -16,7 +16,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  public register(registrationData: RegisterDTO): Observable<User> {
+  public register(registrationData: RegisterDto): Observable<User> {
     try {
       const createdUser = this.usersService
         .create(registrationData)

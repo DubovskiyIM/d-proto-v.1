@@ -14,7 +14,7 @@ import { Response, Request } from 'express';
 import { Observable, of } from 'rxjs';
 import { User } from '../models/user.schema';
 import { AuthService } from './auth.service';
-import { RegisterDTO } from './dto/auth.dto';
+import { RegisterDto } from './dto/auth.dto';
 import { UsersService } from '../users/users.service';
 
 import { GoogleAuthGuard } from '../guards/google-auth.guard';
@@ -31,7 +31,7 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  register(@Body() userDTO: RegisterDTO): Observable<User> {
+  register(@Body() userDTO: RegisterDto): Observable<User> {
     try {
       const { username, email, phone } = userDTO;
       // const [byUsername, byEmail, byPhone] = [

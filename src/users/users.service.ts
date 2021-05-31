@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { from, Observable } from 'rxjs';
-import { RegisterDTO } from '../auth/dto/auth.dto';
+import { RegisterDto } from '../auth/dto/auth.dto';
 import { User, UserDocument } from '../models/user.schema';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -10,7 +10,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersService {
   constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
 
-  create(userDTO: RegisterDTO): Observable<User> {
+  create(userDTO: RegisterDto): Observable<User> {
     const createdUser = new this.userModel(userDTO);
     return from(createdUser.save());
   }
