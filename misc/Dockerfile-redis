@@ -1,0 +1,27 @@
+FROM node:12-alpine
+
+RUN mkdir -p /var/www/nest-app
+
+WORKDIR /var/www/nest-app
+
+ENV PATH /var/www/nest-app/node_modules/.bin:$PATH
+
+RUN adduser --disabled-password user
+
+COPY . /var/www/nest-app
+
+COPY package.json /var/www/nest-app/package.json
+
+COPY package-lock.json /var/www/nest-app/package-lock.json
+
+RUN chown -R user:user /var/www/nest-app
+
+USER user
+
+RUN npm cache clean --force
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD [ "npm", "run", "start:dev" ]
