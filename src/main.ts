@@ -17,9 +17,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  const port = process.env.SERVER_PORT;
   app.use(cookieParser());
   app.useWebSocketAdapter(new RedisIoAdapter(app));
 
-  await app.listen(3000);
+  await app.listen(port);
 }
 bootstrap();

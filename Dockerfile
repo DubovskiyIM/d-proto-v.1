@@ -1,19 +1,21 @@
 FROM node:12.22-alpine As development
+RUN mkdir -p /var/www/nest-app
+WORKDIR /var/www/nest-app
+ENV PATH /var/www/nest-app/node_modules/.bin:$PATH
+RUN adduser --disabled-password user
+COPY . /var/www/nest-app
+COPY package.json /var/www/nest-chat-realtime/package.json
 
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
+USER sudo
 RUN apk add --upgrade --no-cache vips-dev build-base --repository https://alpine.global.ssl.fastly.net/alpine/v3.10/community/
 
 RUN yarn install
 
 COPY . .
 
-EXPOSE 3000
+RUN chown -R user:user /var/www/nest-app
+USER user
+RUN yarn install
 
-RUN yarn build
-
-COPY /dist ./dist
-
-CMD ["yarn", "dist/main"]
+EXPOSE 3004
+CMD [ "yarn", "start:dev" ]
