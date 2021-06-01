@@ -39,7 +39,7 @@ export class ProductsService {
     return await this.productModel.findByIdAndUpdate(id, updateProductDto);
   }
 
-  public async remove(id: number): Promise<Product> {
+  public async remove(id: string): Promise<Product> {
     return await this.productModel.findByIdAndRemove(id);
   }
 }
