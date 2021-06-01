@@ -1,7 +1,5 @@
 import { HttpException, HttpStatus, Injectable, Req } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { User } from '../models/user.schema';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/auth.dto';

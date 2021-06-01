@@ -39,7 +39,6 @@ export class AuthController {
         await this.usersService.findByPhone(phone),
         await this.usersService.findByEmail(email),
       ];
-      console.log(byPhone, byUsername, byEmail);
       if (byUsername || byEmail || byPhone) {
         throw new HttpException(
           'User has already been exist',
@@ -68,27 +67,27 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Post('logout')
-  logOut(
+  async logOut(
     @Req() request: RequestWithUser,
     @Res() response: Response,
-  ): Observable<Response> {
+  ): Promise<Response> {
     response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
-    return of(response.sendStatus(200));
+    return response.sendStatus(200);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('users')
-  getUsers(): Observable<User[]> {
-    return this.usersService.findAll();
+  async getUsers(): Promise<User[]> {
+    return await this.usersService.findAll();
   }
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
-  googleAuth(
+  async googleAuth(
     @Req() request: Request,
     @Res() response: Response,
-  ): Observable<Response> {
-    return of(response);
+  ): Promise<Response> {
+    return response;
   }
 
   @Get('redirect')
