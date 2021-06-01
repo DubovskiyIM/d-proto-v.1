@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {from, Observable} from "rxjs";
 
 import { Feedback, FeedbackDocument } from '../models/feedback.schema';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
@@ -13,27 +12,27 @@ export class FeedbacksService {
     @InjectModel('Feedback') private feedbackModel: Model<FeedbackDocument>,
   ) {}
 
-  create(createFeedbackDto: CreateFeedbackDto): Observable<Feedback> {
-    const createdFeedback = new this.feedbackModel(createFeedbackDto);
-    return from(createdFeedback.save());
+  public async create(createFeedbackDto: CreateFeedbackDto): Promise<Feedback> {
+    const createdFeedback = await new this.feedbackModel(createFeedbackDto);
+    return await createdFeedback.save();
   }
 
-  findAll(): Observable<Feedback[]> {
-    return from(this.feedbackModel.find());
+  public async findAll(): Promise<Feedback[]> {
+    return await this.feedbackModel.find();
   }
 
-  findOne(id: number): Observable<Feedback> {
-    return from(this.feedbackModel.findById(id));
+  public async findOne(id: number): Promise<Feedback> {
+    return await this.feedbackModel.findById(id);
   }
 
-  update(
+  public async update(
     id: number,
     updateFeedbackDto: UpdateFeedbackDto,
-  ): Observable<Feedback> {
-    return from(this.feedbackModel.findByIdAndUpdate(id, updateFeedbackDto));
+  ): Promise<Feedback> {
+    return await this.feedbackModel.findByIdAndUpdate(id, updateFeedbackDto);
   }
 
-  remove(id: number): Observable<Feedback> {
-    return from(this.feedbackModel.remove(id));
+  public async remove(id: number): Promise<Feedback> {
+    return await this.feedbackModel.remove(id);
   }
 }

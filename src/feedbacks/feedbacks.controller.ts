@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import {Observable} from "rxjs";
 import { Feedback } from 'src/models/feedback.schema';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto';
@@ -18,30 +17,32 @@ export class FeedbacksController {
   constructor(private readonly feedbacksService: FeedbacksService) {}
 
   @Post()
-  create(@Body() createFeedbackDto: CreateFeedbackDto): Observable<Feedback> {
-    return this.feedbacksService.create(createFeedbackDto);
+  async create(
+    @Body() createFeedbackDto: CreateFeedbackDto,
+  ): Promise<Feedback> {
+    return await this.feedbacksService.create(createFeedbackDto);
   }
 
   @Get()
-  findAll(): Observable<Feedback[]> {
-    return this.feedbacksService.findAll();
+  async findAll(): Promise<Feedback[]> {
+    return await this.feedbacksService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Observable<Feedback> {
-    return this.feedbacksService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<Feedback> {
+    return await this.feedbacksService.findOne(+id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateFeedbackDto: UpdateFeedbackDto,
-  ): Observable<Feedback> {
-    return this.feedbacksService.update(+id, updateFeedbackDto);
+  ): Promise<Feedback> {
+    return await this.feedbacksService.update(+id, updateFeedbackDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Observable<Feedback> {
-    return this.feedbacksService.remove(+id);
+  async remove(@Param('id') id: string): Promise<Feedback> {
+    return await this.feedbacksService.remove(+id);
   }
 }
