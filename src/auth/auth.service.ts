@@ -16,12 +16,11 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  public register(registrationData: RegisterDto): Observable<User> {
+  public async register(registrationData: RegisterDto): Promise<User> {
     try {
-      const createdUser = this.usersService
-        .create(registrationData)
-        .pipe(map((user: User) => (user.password = undefined)));
-      return from(createdUser);
+      const createdUser = await this.usersService.create(registrationData);
+      createdUser.password = undefined;
+      return createdUser;
     } catch (error) {
       throw new HttpException(
         'Something went wrong',
@@ -30,18 +29,15 @@ export class AuthService {
     }
   }
 
-  public getAuthenticatedUser(
+  public async getAuthenticatedUser(
     email: string,
     plainTextPassword: string,
-  ): Observable<User> {
+  ): Promise<User> {
     try {
-      return this.usersService.findByEmail(email).pipe(
-        map((user: User) => {
-          AuthService.verifyPassword(plainTextPassword, user.password);
-          user.password = undefined;
-          return user;
-        }),
-      );
+      const user = await this.usersService.findByEmail(email);
+      await AuthService.verifyPassword(plainTextPassword, user.password);
+      user.password = undefined;
+      return user;
     } catch (error) {
       throw new HttpException(
         'Wrong credentials provided',

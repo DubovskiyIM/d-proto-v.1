@@ -18,8 +18,8 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('register')
-  create(@Body() createUserDto: CreateUserDto): Observable<User> {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return await this.usersService.create(createUserDto);
   }
 
   @Get()

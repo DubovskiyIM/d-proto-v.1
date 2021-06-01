@@ -10,25 +10,25 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersService {
   constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
 
-  create(userDTO: RegisterDto): Observable<User> {
+  create(userDTO: RegisterDto): Promise<User> {
     const createdUser = new this.userModel(userDTO);
-    return from(createdUser.save());
+    return createdUser.save();
   }
 
   findAll(): Observable<User[]> {
     return from(this.userModel.find());
   }
 
-  findByEmail(email: string): Observable<User> {
-    return from(this.userModel.findOne({ email }));
+  async findByEmail(email: string): Promise<User> {
+    return await this.userModel.findOne({ email });
   }
 
-  findByUsername(username: string): Observable<User> {
-    return from(this.userModel.findOne({ username }));
+  async findByUsername(username: string): Promise<User> {
+    return await this.userModel.findOne({ username });
   }
 
-  findByPhone(phone: string): Observable<User> {
-    return from(this.userModel.findOne({ phone }));
+  async findByPhone(phone: string): Promise<User> {
+    return await this.userModel.findOne({ phone });
   }
 
   findById(id: number): Observable<User> {

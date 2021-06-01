@@ -31,38 +31,21 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  register(@Body() userDTO: RegisterDto): Observable<User> {
+  async register(@Body() userDTO: RegisterDto): Promise<User> {
     try {
       const { username, email, phone } = userDTO;
-      // const [byUsername, byEmail, byPhone] = [
-      //   this.usersService.findByUsername(username).subscribe(),
-      //   this.usersService.findByPhone(phone).subscribe(),
-      //   this.usersService.findByEmail(email).subscribe(),
-      // ];
-      this.usersService.findByUsername(username).subscribe((user: User) => {
-        if (user) {
-          throw new HttpException(
-            'Username has been exist',
-            HttpStatus.BAD_REQUEST,
-          );
-        }
-      });
-      this.usersService.findByPhone(phone).subscribe((user: User) => {
-        if (user) {
-          throw new HttpException(
-            'Phone has been exist',
-            HttpStatus.BAD_REQUEST,
-          );
-        }
-      });
-      this.usersService.findByEmail(email).subscribe((user: User) => {
-        if (user) {
-          throw new HttpException(
-            'Email has been exist',
-            HttpStatus.BAD_REQUEST,
-          );
-        }
-      });
+      const [byUsername, byEmail, byPhone] = [
+        await this.usersService.findByUsername(username),
+        await this.usersService.findByPhone(phone),
+        await this.usersService.findByEmail(email),
+      ];
+      console.log(byPhone, byUsername, byEmail);
+      if (byUsername || byEmail || byPhone) {
+        throw new HttpException(
+          'User has already been exist',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
       return this.authService.register(userDTO);
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
