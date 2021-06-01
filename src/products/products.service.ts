@@ -28,12 +28,12 @@ export class ProductsService {
     return await this.productModel.find({ owner: ownerId });
   }
 
-  public async findOne(id: number): Promise<Product> {
+  public async findOne(id: string): Promise<Product> {
     return await this.productModel.findById(id);
   }
 
   public async update(
-    id: number,
+    id: string,
     updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     return await this.productModel.findByIdAndUpdate(id, updateProductDto);

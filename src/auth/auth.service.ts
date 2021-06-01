@@ -44,11 +44,11 @@ export class AuthService {
     }
   }
 
-  private static verifyPassword(
+  private static async verifyPassword(
     plainTextPassword: string,
     hashedPassword: string,
   ) {
-    const isPasswordMatching = bcrypt.compare(
+    const isPasswordMatching = await bcrypt.compare(
       plainTextPassword,
       hashedPassword,
     );

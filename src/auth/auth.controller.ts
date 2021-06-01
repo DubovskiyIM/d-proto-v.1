@@ -54,15 +54,19 @@ export class AuthController {
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  logIn(
+  async logIn(
     @Req() request: RequestWithUser,
     @Res() response: Response,
-  ): Observable<Response> {
-    const { user } = request;
-    const cookie = this.authService.getCookieWithJwtToken(user.id);
-    response.setHeader('Set-Cookie', cookie);
-    user.password = undefined;
-    return of(response.send(user));
+  ): Promise<Response> {
+    try {
+      const { user } = request;
+      const cookie = await this.authService.getCookieWithJwtToken(user.id);
+      response.setHeader('Set-Cookie', cookie);
+      user.password = undefined;
+      return await response.send(user);
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
   @UseGuards(JwtAuthGuard)
@@ -92,7 +96,7 @@ export class AuthController {
 
   @Get('redirect')
   @UseGuards(GoogleAuthGuard)
-  googleAuthRedirect(@Req() req) {
-    return this.authService.googleLogin(req);
+  async googleAuthRedirect(@Req() req): Promise<any> {
+    return await this.authService.googleLogin(req);
   }
 }

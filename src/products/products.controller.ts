@@ -41,9 +41,9 @@ export class ProductsController {
     return await this.productsService.findAll();
   }
 
-  @Get(':id')
+  @Get('product/:id')
   async findOne(@Param('id') id: string): Promise<Product> {
-    return await this.productsService.findOne(+id);
+    return await this.productsService.findOne(id);
   }
 
   @Patch(':id')
@@ -51,7 +51,7 @@ export class ProductsController {
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product> {
-    return await this.productsService.update(+id, updateProductDto);
+    return await this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
