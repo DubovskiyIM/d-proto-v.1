@@ -1,92 +1,115 @@
-<div [ngSwitch]='pageState' class='container'>
-  <br>
-  <br>
+<div [ngSwitch]="pageState" class="container">
+  <br />
+  <br />
   <ng-container *ngSwitchCase="'login'">
-    <form [formGroup]='loginForm' (ngSubmit)='login()'>
-      <div class='row d-flex justify-content-center'>
-        <div class='col-md-6 col-sm-10'>
-          <input type='email' formControlName='username'
-                 placeholder='email/телефон' class='form-control'>
-          <div *ngIf='submitted && f.username.errors' class='invalid-feedback'>
-            <div *ngIf='f.username.errors.required'>Введите логин</div>
-          </div>
-          <br>
-          <input type='password' formControlName='password' class='form-control inputLogin lastInp'
-                 placeholder='пароль'
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-sm-10">
+          <input
+            type="email"
+            formControlName="username"
+            placeholder="email/телефон"
+            class="form-control"
           />
-          <div *ngIf='submitted && f.password.errors' class='invalid-feedback'>
-            <div *ngIf='f.password.errors.required'>Введите пароль</div>
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Введите логин</div>
           </div>
-          <br>
+          <br />
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control inputLogin lastInp"
+            placeholder="пароль"
+          />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Введите пароль</div>
+          </div>
+          <br />
         </div>
       </div>
-      <div class='row d-flex justify-content-center'>
-        <div class='col-md-3 col-sm-5'>
-          <a class='text-info pointer' (click)="changePageState('registration')">Зарегестрироваться</a>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-3 col-sm-5">
+          <a class="text-info pointer" (click)="changePageState('registration')"
+            >Зарегестрироваться</a
+          >
         </div>
-        <div class='col-md-3 col-sm-5 text-end'>
-          <a class='text-info' (click)='forgotPasswordShow()'>Забыли пароль?</a>
+        <div class="col-md-3 col-sm-5 text-end">
+          <a class="text-info" (click)="forgotPasswordShow()">Забыли пароль?</a>
         </div>
       </div>
-      <div class='row d-flex justify-content-center'>
-        <div class='col-md-6 col-sm-10'>
-          <hr>
-          <button type='submit' class='btn btn-outline-info btnSend' [disabled]='loading'>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-sm-10">
+          <hr />
+          <button
+            type="submit"
+            class="btn btn-outline-info btnSend"
+            [disabled]="loading"
+          >
             Зарегестироваться
           </button>
         </div>
       </div>
-      {{isLoginForm}}
+      {{ isLoginForm }}
     </form>
   </ng-container>
-
 
   <ng-container *ngSwitchCase="'register'">
-    <form [formGroup]='loginForm' (ngSubmit)='register()'>
-      <div class='row d-flex justify-content-center'>
-        <div class='col-md-6 col-sm-10'>
-          <input type='email' formControlName='username'
-                 placeholder='email/телефон' class='form-control'>
-          <div *ngIf='f.username.errors' class='invalid-feedback'>
-            <div *ngIf='f.username.errors.required'>Введите Телефон</div>
-          </div>
-          <br>
-          <div *ngIf='f.username.errors' class='invalid-feedback'>
-            <div *ngIf='f.username.errors.required'>Введите Телефон</div>
-          </div>
-          <br>
-          <input type='password' formControlName='password' class='form-control inputLogin lastInp'
-                 placeholder='пароль'
+    <form [formGroup]="loginForm" (ngSubmit)="register()">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-sm-10">
+          <input
+            type="email"
+            formControlName="username"
+            placeholder="email/телефон"
+            class="form-control"
           />
-          <div *ngIf='submitted && f.password.errors' class='invalid-feedback'>
-            <div *ngIf='f.password.errors.required'>Введите пароль</div>
+          <div *ngIf="f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Введите Телефон</div>
           </div>
-          <br>
+          <br />
+          <div *ngIf="f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Введите Телефон</div>
+          </div>
+          <br />
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control inputLogin lastInp"
+            placeholder="пароль"
+          />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Введите пароль</div>
+          </div>
+          <br />
         </div>
       </div>
-      <div class='row d-flex justify-content-center'>
-        <div class='col-md-3 col-sm-5'>
-          <a class='text-info pointer' (click)="changePageState('registration')">Зарегестрироваться</a>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-3 col-sm-5">
+          <a class="text-info pointer" (click)="changePageState('registration')"
+            >Зарегестрироваться</a
+          >
         </div>
-        <div class='col-md-3 col-sm-5 text-end'>
-          <a class='text-info' (click)='forgotPasswordShow()'>Забыли пароль?</a>
+        <div class="col-md-3 col-sm-5 text-end">
+          <a class="text-info" (click)="forgotPasswordShow()">Забыли пароль?</a>
         </div>
       </div>
-      <div class='row d-flex justify-content-center'>
-        <div class='col-md-6 col-sm-10'>
-          <hr>
-          <button type='submit' class='btn btn-outline-info btnSend' [disabled]='loading'>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-sm-10">
+          <hr />
+          <button
+            type="submit"
+            class="btn btn-outline-info btnSend"
+            [disabled]="loading"
+          >
             Зарегестироваться
           </button>
         </div>
       </div>
-      {{isLoginForm}}
+      {{ isLoginForm }}
     </form>
   </ng-container>
 
-
-
-  <ng-template *ngSwitchCase="'registration'">Content to render when condition is false.</ng-template>
-
+  <ng-template *ngSwitchCase="'registration'"
+    >Content to render when condition is false.</ng-template
+  >
 </div>
-

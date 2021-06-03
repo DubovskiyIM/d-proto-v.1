@@ -15,7 +15,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(localStorage.getItem('currentUser')),
+      JSON.parse(localStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -32,7 +32,7 @@ export class AuthenticationService {
           this.currentUserSubject.next(user);
         }
         return user;
-      }),
+      })
     );
   }
 
@@ -46,7 +46,11 @@ export class AuthenticationService {
     // return this.http.get(endpoint);
   }
 
-  changePassword(oldPassword: string, newPassword: string, matchingPassword: string) {
+  changePassword(
+    oldPassword: string,
+    newPassword: string,
+    matchingPassword: string
+  ) {
     const endpoint = `${this.baseUrl}/changePassword`;
     const body = {
       matching_password: matchingPassword,
@@ -55,5 +59,4 @@ export class AuthenticationService {
     };
     return this.http.post(endpoint, body);
   }
-
 }

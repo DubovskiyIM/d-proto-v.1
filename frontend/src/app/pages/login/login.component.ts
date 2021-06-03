@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { first } from 'rxjs/operators';
@@ -12,8 +17,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({
-    "username": new FormControl(),
-    "password": new FormControl()
+    username: new FormControl(),
+    password: new FormControl(),
   });
   pageState: string = 'login';
   resetPassword: FormGroup;
@@ -23,11 +28,13 @@ export class LoginComponent implements OnInit {
   error = '';
   isLoginForm = true;
 
-  constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private authenticationService: AuthenticationService,
-              private titleService: Title) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private titleService: Title
+  ) {
     this.titleService.setTitle('Вход');
   }
 
@@ -79,7 +86,6 @@ export class LoginComponent implements OnInit {
     // }
   }
 
-
   authLogin() {
     // this.submitted = true;
     // if (this.loginForm.invalid) {
@@ -117,12 +123,9 @@ export class LoginComponent implements OnInit {
     this.error = '';
   }
 
-  public register(): void {
-  }
+  public register(): void {}
 
-  public login(): void {
-
-  }
+  public login(): void {}
 
   resetPass() {
     //   this.alertSuccess = '';
@@ -141,5 +144,4 @@ export class LoginComponent implements OnInit {
     //     }
     //   });
   }
-
 }
