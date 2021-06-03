@@ -5,17 +5,8 @@ ENV PATH /var/www/nest-app/node_modules/.bin:$PATH
 RUN adduser --disabled-password user
 COPY . /var/www/nest-app
 COPY package.json /var/www/nest-chat-realtime/package.json
-
-USER sudo
 RUN apk add --upgrade --no-cache vips-dev build-base --repository https://alpine.global.ssl.fastly.net/alpine/v3.10/community/
-
 RUN yarn install
-
 COPY . .
-
-RUN chown -R user:user /var/www/nest-app
-USER user
-RUN yarn install
-
 EXPOSE 3004
 CMD [ "yarn", "start:dev" ]

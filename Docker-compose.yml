@@ -3,6 +3,7 @@ services:
   nestapp:
     depends_on:
       - redis
+      - mongo
     build:
       context: .
       dockerfile: Dockerfile
@@ -23,6 +24,8 @@ services:
       - /var/www/nest-app/node_modules
     networks:
       - nest-app-network
+    links:
+      - mongo
 
   redis:
     image: redis:latest
@@ -41,8 +44,44 @@ services:
     networks:
       - nest-app-network
 
+  mongo:
+    container_name: mongo
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - mongodb-data:/var/www/nestapp/data/db
+    networks:
+      - nest-app-network
+    ports:
+      - '27017:27017'
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+    volumes:
+      - mongodb-data
+    depends_on:
+      - mongo
+    networks:
+      - nest-app-network
+    ports:
+      - 8081:8081
+    restart: unless-stopped
+
 networks:
   nest-app-network:
     driver: bridge
+    name: nest-app-network
 volumes:
+  mongodb-data:
+    name: mongodb-data
   red_data: {}

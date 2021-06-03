@@ -9,7 +9,6 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RequestWithUser } from '../interfaces/requestWithUser.interface';
 import { ProductsService } from './products.service';
