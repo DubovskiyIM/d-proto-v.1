@@ -10,7 +10,7 @@ module.exports = {
       extends: [
         "plugin:@angular-eslint/recommended",
         "airbnb-typescript/base",
-        "prettier/@typescript-eslint",
+        // "prettier/@typescript-eslint",
         "plugin:prettier/recommended",
       ],
       rules: {

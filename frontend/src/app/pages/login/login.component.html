@@ -1,5 +1,6 @@
 <div [ngSwitch]="pageState" class="container">
   <br />
+  <h1 class="text-center">{{pageState}}</h1>
   <br />
   <ng-container *ngSwitchCase="'login'">
     <form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -30,7 +31,7 @@
       <div class="row d-flex justify-content-center">
         <div class="col-md-3 col-sm-5">
           <a class="text-info pointer" (click)="changePageState('registration')"
-            >Зарегестрироваться</a
+          >Зарегестрироваться</a
           >
         </div>
         <div class="col-md-3 col-sm-5 text-end">
@@ -45,31 +46,30 @@
             class="btn btn-outline-info btnSend"
             [disabled]="loading"
           >
-            Зарегестироваться
+            Войти
           </button>
         </div>
       </div>
-      {{ isLoginForm }}
     </form>
   </ng-container>
 
-  <ng-container *ngSwitchCase="'register'">
-    <form [formGroup]="loginForm" (ngSubmit)="register()">
+  <ng-container *ngSwitchCase="'registration'">
+    <form [formGroup]="registrationForm" (ngSubmit)="register()">
       <div class="row d-flex justify-content-center">
         <div class="col-md-6 col-sm-10">
           <input
-            type="email"
+            type="text"
             formControlName="username"
-            placeholder="email/телефон"
+            placeholder="login"
             class="form-control"
           />
-          <div *ngIf="f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Введите Телефон</div>
-          </div>
-          <br />
-          <div *ngIf="f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Введите Телефон</div>
-          </div>
+          <br>
+          <input
+            type="text"
+            formControlName="phone"
+            placeholder="телефон"
+            class="form-control"
+          />
           <br />
           <input
             type="password"
@@ -77,20 +77,51 @@
             class="form-control inputLogin lastInp"
             placeholder="пароль"
           />
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Введите пароль</div>
-          </div>
           <br />
         </div>
       </div>
       <div class="row d-flex justify-content-center">
         <div class="col-md-3 col-sm-5">
-          <a class="text-info pointer" (click)="changePageState('registration')"
-            >Зарегестрироваться</a
-          >
+          <a class="text-info pointer" (click)="changePageState('login')">
+            Авторизироваться
+          </a>
         </div>
         <div class="col-md-3 col-sm-5 text-end">
-          <a class="text-info" (click)="forgotPasswordShow()">Забыли пароль?</a>
+          <a class="text-info" (click)="changePageState('forgot')">Забыли пароль?</a>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-sm-10">
+          <hr />
+          <button
+            type="submit"
+            class="btn btn-outline-info "
+            [disabled]="registrationForm.invalid"
+          >
+            Зарегестрироваться
+          </button>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <ng-container *ngSwitchCase="'forgot'">
+    <form [formGroup]="resetPassword" (ngSubmit)="resetPass()">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-sm-10">
+          <input
+            type="text"
+            formControlName="phone"
+            placeholder="Введите телефон"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <br>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-sm-5 text-left">
+          <a class="text-info pointer" (click)="changePageState('login')">
+            Авторизироваться
+          </a>
         </div>
       </div>
       <div class="row d-flex justify-content-center">
@@ -101,15 +132,10 @@
             class="btn btn-outline-info btnSend"
             [disabled]="loading"
           >
-            Зарегестироваться
+            Далее
           </button>
         </div>
       </div>
-      {{ isLoginForm }}
     </form>
   </ng-container>
-
-  <ng-template *ngSwitchCase="'registration'"
-    >Content to render when condition is false.</ng-template
-  >
 </div>

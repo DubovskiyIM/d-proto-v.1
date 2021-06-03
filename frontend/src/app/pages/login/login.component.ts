@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { first } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
+import { LoginService } from '../../_services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +18,29 @@ import { Title } from '@angular/platform-browser';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl(),
+    username: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
     password: new FormControl(),
   });
+  resetPassword: FormGroup = new FormGroup({
+    phone: new FormControl(),
+  });
+  registrationForm: FormGroup = new FormGroup({
+    username: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+    phone: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+      Validators.minLength(10),
+      Validators.maxLength(10),
+    ]),
+    password: new FormControl('', Validators.required),
+  });
   pageState: string = 'login';
-  resetPassword: FormGroup;
   loading = false;
   submitted = false;
   returnUrl: string;
@@ -33,7 +52,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private titleService: Title
+    private titleService: Title,
+    private baseService: LoginService
   ) {
     this.titleService.setTitle('Вход');
   }
@@ -54,12 +74,11 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  get r() {
-    return this.resetPassword.controls;
+  get reg() {
+    return this.registrationForm.controls;
   }
 
   onSubmit() {
-    this.loading = true;
     // if (this.currentInfo) {
     //   this.authenticationService.getStrForLogin().subscribe((res: any) => {
     //     if (res.id) {
@@ -123,7 +142,14 @@ export class LoginComponent implements OnInit {
     this.error = '';
   }
 
-  public register(): void {}
+  public register(): void {
+    console.log(this.registrationForm);
+    if (this.registrationForm?.invalid) {
+      return;
+    }
+    console.log('next->');
+    this.baseService.registration(this.reg);
+  }
 
   public login(): void {}
 

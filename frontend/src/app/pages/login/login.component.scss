@@ -1,3 +1,11 @@
 .pointer {
   cursor: pointer;
 }
+
+input.ng-dirty.ng-invalid {
+  border: solid red 2px;
+}
+
+input.ng-touched.ng-valid {
+  border: solid green 2px;
+}
