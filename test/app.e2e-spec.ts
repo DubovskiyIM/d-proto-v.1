@@ -3,7 +3,7 @@ import { HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
 import * as mongoose from 'mongoose';
 
-import { LoginDTO, RegisterDTO } from '../src/auth/dto/auth.dto';
+import { LoginDto, RegisterDto } from '../src/auth/dto/auth.dto';
 
 const app = 'http://localhost:3000';
 
@@ -22,10 +22,11 @@ describe('ROOT', () => {
 
 describe('AUTH', () => {
   it('should register', () => {
-    const user: RegisterDTO = {
+    const user: RegisterDto = {
       username: 'username',
       password: 'password',
       name: 'name',
+      phone: '+79998889999',
     };
     return request(app)
       .post('/auth/register')
@@ -39,11 +40,12 @@ describe('AUTH', () => {
       .expect(HttpStatus.CREATED);
   });
 
-  it('should reject dublicate registration', () => {
-    const user: RegisterDTO = {
+  it('should reject duplicate registration', () => {
+    const user: RegisterDto = {
       username: 'username',
       password: 'password',
       name: 'name',
+      phone: '+79998889999',
     };
     return request(app)
       .post('/auth/register')
@@ -57,7 +59,7 @@ describe('AUTH', () => {
   });
 
   it('should login', () => {
-    const user: LoginDTO = {
+    const user: LoginDto = {
       username: 'username',
       password: 'password',
     };

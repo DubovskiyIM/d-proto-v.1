@@ -1,15 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Req } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { from, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { User } from '../models/user.schema';
 import { UsersService } from '../users/users.service';
-import { RegisterDTO } from './dto/auth.dto';
+import { RegisterDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
-
-export interface TokenPayload {
-  userId: number;
-}
+import { TokenPayload } from '../interfaces/TokenPayload.interface';
+import { RequestWithUser } from '../interfaces/requestWithUser.interface';
 
 @Injectable()
 export class AuthService {
@@ -18,12 +14,11 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  register(registrationData: RegisterDTO): Observable<User> {
+  public async register(registrationData: RegisterDto): Promise<User> {
     try {
-      const createdUser = this.usersService
-        .create(registrationData)
-        .pipe(map((user: User) => (user.password = undefined)));
-      return from(createdUser);
+      const createdUser = await this.usersService.create(registrationData);
+      createdUser.password = undefined;
+      return createdUser;
     } catch (error) {
       throw new HttpException(
         'Something went wrong',
@@ -32,18 +27,15 @@ export class AuthService {
     }
   }
 
-  public getAuthenticatedUser(
+  public async getAuthenticatedUser(
     email: string,
     plainTextPassword: string,
-  ): Observable<User> {
+  ): Promise<User> {
     try {
-      return this.usersService.findByEmail(email).pipe(
-        map((user: User) => {
-          AuthService.verifyPassword(plainTextPassword, user.password);
-          user.password = undefined;
-          return user;
-        }),
-      );
+      const user = await this.usersService.findByEmail(email);
+      await AuthService.verifyPassword(plainTextPassword, user.password);
+      user.password = undefined;
+      return user;
     } catch (error) {
       throw new HttpException(
         'Wrong credentials provided',
@@ -52,11 +44,11 @@ export class AuthService {
     }
   }
 
-  private static verifyPassword(
+  private static async verifyPassword(
     plainTextPassword: string,
     hashedPassword: string,
   ) {
-    const isPasswordMatching = bcrypt.compare(
+    const isPasswordMatching = await bcrypt.compare(
       plainTextPassword,
       hashedPassword,
     );
@@ -78,14 +70,14 @@ export class AuthService {
     return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
 
-  public async googleLogin(req): Promise<any> {
-    if (!req.user) {
+  public async googleLogin(@Req() user: RequestWithUser): Promise<any> {
+    if (!user) {
       return 'No user from google';
     }
 
     return {
       message: 'User information from google',
-      user: req.user,
+      user,
     };
   }
 }

@@ -10,16 +10,25 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { FilesModule } from './files/files.module';
+import { MessageModule } from './message-events/message.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { getMongoConfig } from './configs/mongo.config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    ConfigModule.forRoot(),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getMongoConfig,
+    }),
     AuthModule,
     UsersModule,
     ProductsModule,
     OrdersModule,
     FeedbacksModule,
     FilesModule,
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

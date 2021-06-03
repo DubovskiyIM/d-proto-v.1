@@ -7,7 +7,6 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { Order } from 'src/models/order.schema';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -18,30 +17,30 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto): Observable<Order> {
-    return this.ordersService.create(createOrderDto);
+  async create(@Body() createOrderDto: CreateOrderDto): Promise<Order> {
+    return await this.ordersService.create(createOrderDto);
   }
 
   @Get()
-  findAll(): Observable<Order[]> {
-    return this.ordersService.findAll();
+  async findAll(): Promise<Order[]> {
+    return await this.ordersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Observable<Order> {
-    return this.ordersService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<Order> {
+    return await this.ordersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateOrderDto: UpdateOrderDto,
-  ): Observable<Order> {
-    return this.ordersService.update(+id, updateOrderDto);
+  ): Promise<Order> {
+    return await this.ordersService.update(+id, updateOrderDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Observable<Order> {
-    return this.ordersService.remove(+id);
+  async remove(@Param('id') id: string): Promise<Order> {
+    return await this.ordersService.remove(+id);
   }
 }

@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+nestapp:
+depends_on:
+      - redis
+build:
+context: .
+dockerfile: Dockerfile
+image: nest-app-docker
+container_name: nestapp
+restart: always
+tty: true
+ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+working_dir: /var/www/nest-app
+environment:
+SERVICE_NAME: nestapp
+SERVICE_TAGS: dev
+REDIS_PORT: ${REDIS_PORT}
+REDIS_HOST: ${REDIS_HOST}
+volumes:
+      - ./:/var/www/nest-app
+      - /var/www/nest-app/node_modules
+network
+networks:
+      - nest-app
+redis:
+image: redis:latest
+container_name: redis
+command: [
+        "redis-server",
+        "--bind",
+        "redis",
+        "--port",
+        "6379"
+    ]
+volumes:
+      - red_data:/var/lib/redis
+ports:
+      - '${REDIS_PORT}:${REDIS_PORT}'
+network
+networks:
+      - nest-app
+networks:
+nest-app:
+driver: bridge
+volumes:
+red_data: {}

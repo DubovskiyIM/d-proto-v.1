@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HookNextFunction } from 'mongoose';
-import * as bcrypt from 'bcrypt';
 import * as mongoose from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 import { Product } from './product.schema';
 
@@ -78,16 +77,14 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.pre('save', async function (next: HookNextFunction) {
+UserSchema.pre('save', async function (next: mongoose.HookNextFunction) {
   try {
     if (!this.isModified('password')) {
       return next();
     }
-    const hashed = await bcrypt.hash(this['password'], 10);
-    this['password'] = hashed;
+    this['password'] = await bcrypt.hash(this['password'], 10);
     return next();
   } catch (err) {
     return next(err);
   }
 });
-
