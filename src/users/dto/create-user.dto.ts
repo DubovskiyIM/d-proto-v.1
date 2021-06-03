@@ -9,4 +9,7 @@ export class CreateUserDto {
 
   @ApiProperty({ example: 'Ivan', description: 'The name of User' })
   name: string;
+
+  @ApiProperty({ example: '+78983324434', description: 'Phone of User' })
+  phone: string;
 }

@@ -14,24 +14,24 @@ export class OrdersService {
     @InjectModel('User') private userModel: Model<UserDocument>,
   ) {}
 
-  create(createOrderDto: CreateOrderDto): Observable<Order> {
-    const newOrder = new this.orderModel(createOrderDto);
-    return from(newOrder.save());
+  public async create(createOrderDto: CreateOrderDto): Promise<Order> {
+    const newOrder = await new this.orderModel(createOrderDto);
+    return await newOrder.save();
   }
 
-  findAll(): Observable<Order[]> {
-    return from(this.orderModel.find());
+  public async findAll(): Promise<Order[]> {
+    return await this.orderModel.find();
   }
 
-  findOne(id: number): Observable<Order> {
-    return from(this.orderModel.findById(id));
+  public async findOne(id: number): Promise<Order> {
+    return await this.orderModel.findById(id);
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto): Observable<Order> {
-    return from(this.orderModel.findByIdAndUpdate(id, updateOrderDto));
+  public async update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order> {
+    return await this.orderModel.findByIdAndUpdate(id, updateOrderDto);
   }
 
-  remove(id: number): Observable<Order> {
-    return from(this.orderModel.findByIdAndRemove(id));
+  public async remove(id: number): Promise<Order> {
+    return await this.orderModel.findByIdAndRemove(id);
   }
 }

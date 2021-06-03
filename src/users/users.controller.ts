@@ -18,31 +18,30 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('register')
-  create(@Body() createUserDto: CreateUserDto): Observable<User> {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return await this.usersService.create(createUserDto);
   }
 
   @Get()
-  findAll(): Observable<User[]> {
-    return this.usersService.findAll();
+  async findAll(): Promise<User[]> {
+    return await this.usersService.findAll();
   }
 
   @Get(':id')
-  findById(@Param('id') id: string): Observable<User> {
-    console.log(id);
-    return this.usersService.findById(+id);
+  async findById(@Param('id') id: string): Promise<User> {
+    return await this.usersService.findById(+id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): Observable<User> {
-    return this.usersService.update(+id, updateUserDto);
+  ): Promise<User> {
+    return await this.usersService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Observable<User> {
-    return this.usersService.remove(+id);
+  async remove(@Param('id') id: string): Promise<User> {
+    return await this.usersService.remove(+id);
   }
 }

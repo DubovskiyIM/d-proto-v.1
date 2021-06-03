@@ -8,7 +8,7 @@ import * as sharp from 'sharp';
 
 @Injectable()
 export class FilesService {
-  async saveFiles(files: MFile[]): Promise<FileElementResponse[]> {
+  public async saveFiles(files: MFile[]): Promise<FileElementResponse[]> {
     const dateFolder = format(new Date(), 'yyyy-MM-dd');
     const uploadFolder = `${path}/uploads/${dateFolder}`;
     await ensureDir(uploadFolder);
