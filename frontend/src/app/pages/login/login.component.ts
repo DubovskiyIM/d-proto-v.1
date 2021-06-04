@@ -9,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { first } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
-import { LoginService } from '../../_services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -17,27 +16,28 @@ import { LoginService } from '../../_services/login.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup = new FormGroup({
+  public loginForm: FormGroup = new FormGroup({
     username: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
     ]),
-    password: new FormControl(),
+    password: new FormControl('', Validators.minLength(6)),
   });
-  resetPassword: FormGroup = new FormGroup({
+  public resetPassword: FormGroup = new FormGroup({
     phone: new FormControl(),
   });
-  registrationForm: FormGroup = new FormGroup({
+  public registrationForm: FormGroup = new FormGroup({
     username: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
     ]),
-    phone: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-      Validators.minLength(10),
-      Validators.maxLength(10),
-    ]),
+    // phone: new FormControl('', [
+    //   Validators.required,
+    //   Validators.pattern('^[0-9]*$'),
+    //   Validators.minLength(10),
+    //   Validators.maxLength(10),
+    // ]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
   });
   pageState: string = 'login';
@@ -52,22 +52,14 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private titleService: Title,
-    private baseService: LoginService
+    private titleService: Title
   ) {
     this.titleService.setTitle('Вход');
   }
 
   ngOnInit() {
-    // this.loginForm = this.formBuilder.group({
-    //   username: ['', Validators.required],
-    //   password: ['', Validators.required],
-    // });
-    // this.resetPassword = this.formBuilder.group({
-    //   email: ['', [Validators.required, Validators.email]],
-    // });
-    this.authenticationService.logout();
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/lk/account';
+    // this.authenticationService.logout();
+    // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/lk/account';
   }
 
   get f() {
@@ -78,56 +70,34 @@ export class LoginComponent implements OnInit {
     return this.registrationForm.controls;
   }
 
-  onSubmit() {
-    // if (this.currentInfo) {
-    //   this.authenticationService.getStrForLogin().subscribe((res: any) => {
-    //     if (res.id) {
-    //       const data = btoa(res.string);
-    //       const thumbprint = this.currentInfo.Thumbprint;
-    //       this.cryptopro.signData(data, thumbprint)
-    //         .then(sign => {
-    //           this.authenticationService.loginCert(res.id, sign).subscribe((result: any) => {
-    //             const role = result.userRole[0];
-    //             if (role === 'ROLE_ADMIN' || role === 'ROLE_SUPERVISOR') {
-    //               this.router.navigate(['/manager/financial-documents']);
-    //             } else {
-    //               this.router.navigate([this.returnUrl]);
-    //             }
-    //           });
-    //         }).catch(e => {
-    //         this.notifier.notify('error', e);
-    //         this.loading = false;
-    //       });
-    //     }
-    //   });
-    // } else {
-    //   this.authLogin();
-    // }
-  }
-
-  authLogin() {
-    // this.submitted = true;
-    // if (this.loginForm.invalid) {
-    //   return;
-    // }
-    // this.authenticationService.login(this.f.username.value, this.f.password.value)
-    //   .pipe(first())
-    //   .subscribe(
-    //     data => {
-    //       const role = data.userRole[0];
-    //       if (role === 'ROLE_ADMIN' || role === 'ROLE_SUPERVISOR') {
-    //         this.router.navigate(['/manager/financial-documents']);
-    //       } else {
-    //         this.router.navigate([this.returnUrl]);
-    //       }
-    //     },
-    //     error => {
-    //       this.error = error;
-    //       this.loading = false;
-    //       if (error.status === 401) {
-    //         this.error = 'Войти не удалось';
-    //       }
-    //     });
+  auth() {
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.authenticationService
+      .login(this.loginForm)
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          console.log(data);
+          if (data.token) {
+            this.router.navigate(['/me']);
+            //       const role = data.userRole[0];
+            //       if (role === 'ROLE_ADMIN' || role === 'ROLE_SUPERVISOR') {
+            //         this.router.navigate(['/manager/financial-documents']);
+            //       } else {
+            //         this.router.navigate([this.returnUrl]);
+            //       }
+          }
+        },
+        (error) => {
+          this.error = error.message;
+          this.loading = false;
+          if (error.status === 401) {
+            this.error = 'Войти не удалось';
+          }
+        }
+      );
   }
 
   public changePageState(pageState: string) {
@@ -148,7 +118,9 @@ export class LoginComponent implements OnInit {
       return;
     }
     console.log('next->');
-    this.baseService.registration(this.reg);
+    this.authenticationService.registration(this.reg).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   public login(): void {}

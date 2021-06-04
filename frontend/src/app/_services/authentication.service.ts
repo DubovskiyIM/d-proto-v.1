@@ -10,9 +10,14 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
+  private static readonly httpActions = {
+    register: 'auth/register',
+    login: 'auth/login',
+    logout: 'auth/logout',
+  };
   public currentUser: Observable<User>;
   // private baseUrl = 'http://45.128.204.29/api';
-  baseUrl = '';
+  private baseUrl = '';
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(
@@ -25,40 +30,55 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
-    const endpoint = `${this.baseUrl}/login`;
-    return this.http.post<any>(endpoint, { login: username, password }).pipe(
-      map((user) => {
-        if (user && user.jwt) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
-        return user;
-      })
-    );
+  public login(controls) {
+    debugger;
+    const loginData = {
+      username: controls.controls?.username.value,
+      password: controls.controls?.password.value,
+    };
+    if (!loginData) {
+      return;
+    }
+    return this.http
+      .post<any>(
+        `${this.baseUrl}/${AuthenticationService.httpActions.login}`,
+        loginData
+      )
+      .pipe(
+        map((user) => {
+          console.log(user);
+          if (user && user.token) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+          }
+          return user;
+        })
+      );
   }
 
-  logout() {
+  private logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
 
-  resetPassword(email: string) {
-    // const endpoint = `${this.baseUrl}/login?email=${email}`;
-    // return this.http.get(endpoint);
+  public registration(controls) {
+    if (!controls) {
+      return;
+    }
+    const userData = {
+      username: controls?.username.value,
+      email: controls?.email.value,
+      password: controls?.password.value,
+    };
+
+    return this.http.post<any>(
+      `${this.baseUrl}/${AuthenticationService.httpActions.register}`,
+      userData
+    );
   }
 
-  changePassword(
-    oldPassword: string,
-    newPassword: string,
-    matchingPassword: string
-  ) {
-    const endpoint = `${this.baseUrl}/changePassword`;
-    const body = {
-      matching_password: matchingPassword,
-      new_password: newPassword,
-      old_password: oldPassword,
-    };
-    return this.http.post(endpoint, body);
+  public resetPassword(email: string) {
+    // const endpoint = `${this.baseUrl}/login?email=${email}`;
+    // return this.http.get(endpoint);
   }
 }
