@@ -7,7 +7,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: nest-app-docker
+    image: 9995311896/nest-app:latest
     container_name: nestapp
     restart: always
     tty: true

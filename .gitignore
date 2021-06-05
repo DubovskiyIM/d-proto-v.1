@@ -9,6 +9,9 @@
 .LSOverride
 .uploads
 yarn.lock
+data
+.elasticbeanstalk
+misc
 
 # Icon must end with two \r
 Icon
