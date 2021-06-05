@@ -1,9 +1,11 @@
+import { Product } from './product';
+
 export class User {
   avatar?: string;
   username?: string;
   password?: string;
   seller: boolean;
-  address?: any;
+  address?: string;
   created?: Date;
   lastSeen?: Date;
   status?: string;
@@ -14,6 +16,6 @@ export class User {
   location?: string;
   followers?: User[];
   followingUsers?: User[];
-  followingProducts?: any[];
-  saved: any[];
+  followingProducts?: Product[];
+  saved: Product[];
 }

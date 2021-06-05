@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../_interfaces/user';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { APP_BASE_HREF } from '@angular/common';
+import { NavigationService } from './navigation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +17,12 @@ export class AuthenticationService {
     logout: 'auth/logout',
   };
   public currentUser: Observable<User>;
-  // private baseUrl = 'http://45.128.204.29/api';
-  private baseUrl = '';
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    @Inject(APP_BASE_HREF) private baseUrl: string,
+    private navigationService: NavigationService
+  ) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
@@ -31,7 +34,6 @@ export class AuthenticationService {
   }
 
   public login(controls) {
-    debugger;
     const loginData = {
       username: controls.controls?.username.value,
       password: controls.controls?.password.value,
@@ -41,7 +43,7 @@ export class AuthenticationService {
     }
     return this.http
       .post<any>(
-        `${this.baseUrl}/${AuthenticationService.httpActions.login}`,
+        `${this.baseUrl}${AuthenticationService.httpActions.login}`,
         loginData
       )
       .pipe(
@@ -56,9 +58,10 @@ export class AuthenticationService {
       );
   }
 
-  private logout() {
+  public logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.navigationService.exit();
   }
 
   public registration(controls) {
@@ -78,7 +81,5 @@ export class AuthenticationService {
   }
 
   public resetPassword(email: string) {
-    // const endpoint = `${this.baseUrl}/login?email=${email}`;
-    // return this.http.get(endpoint);
   }
 }

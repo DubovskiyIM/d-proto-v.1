@@ -41,8 +41,6 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required),
   });
   pageState: string = 'login';
-  loading = false;
-  submitted = false;
   returnUrl: string;
   error = '';
   isLoginForm = true;
@@ -58,8 +56,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.authenticationService.logout();
-    // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/lk/account';
   }
 
   get f() {
@@ -70,7 +66,7 @@ export class LoginComponent implements OnInit {
     return this.registrationForm.controls;
   }
 
-  auth() {
+  public auth(): void {
     if (this.loginForm.invalid) {
       return;
     }
@@ -79,23 +75,12 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (data) => {
-          console.log(data);
           if (data.token) {
-            this.router.navigate(['/me']);
-            //       const role = data.userRole[0];
-            //       if (role === 'ROLE_ADMIN' || role === 'ROLE_SUPERVISOR') {
-            //         this.router.navigate(['/manager/financial-documents']);
-            //       } else {
-            //         this.router.navigate([this.returnUrl]);
-            //       }
+            this.router.navigate(['/profile']);
           }
         },
         (error) => {
-          this.error = error.message;
-          this.loading = false;
-          if (error.status === 401) {
-            this.error = 'Войти не удалось';
-          }
+          this.error = error;
         }
       );
   }
@@ -105,41 +90,16 @@ export class LoginComponent implements OnInit {
     this.isLoginForm = !this.isLoginForm;
   }
 
-  forgotPasswordShow() {
-    this.isLoginForm = !this.isLoginForm;
-    this.loginForm.reset();
-    this.resetPassword.reset();
-    this.error = '';
-  }
-
   public register(): void {
-    console.log(this.registrationForm);
     if (this.registrationForm?.invalid) {
       return;
     }
-    console.log('next->');
     this.authenticationService.registration(this.reg).subscribe((res) => {
       console.log(res);
     });
   }
 
-  public login(): void {}
 
-  resetPass() {
-    //   this.alertSuccess = '';
-    //   this.errorReset = '';
-    //   this.submittedReset = true;
-    //   if (this.resetPassword.invalid) {
-    //     return;
-    //   }
-    //   this.authenticationService.resetPassword(this.r.email.value).subscribe((res: any) => {
-    //     this.alertSuccess = 'Пароль для авторизации отправлен на указанную почту';
-    //   }, (error) => {
-    //     if (error.status === 404) {
-    //       this.errorReset = 'Пользователь с таким логином не найден';
-    //     } else {
-    //       this.errorReset = 'Ошибка';
-    //     }
-    //   });
+  public resetPass() {
   }
 }
