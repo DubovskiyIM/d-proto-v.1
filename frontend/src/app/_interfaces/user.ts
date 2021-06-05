@@ -1,12 +1,9 @@
-import { Product } from '../../../../src/types/product';
-import { Address } from '../../../../src/types/user';
-
 export class User {
   avatar?: string;
   username?: string;
   password?: string;
   seller: boolean;
-  address?: Address;
+  address?: any;
   created?: Date;
   lastSeen?: Date;
   status?: string;
@@ -17,6 +14,6 @@ export class User {
   location?: string;
   followers?: User[];
   followingUsers?: User[];
-  followingProducts?: Product[];
-  saved: Product[];
+  followingProducts?: any[];
+  saved: any[];
 }
