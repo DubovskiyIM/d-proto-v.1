@@ -10,8 +10,8 @@ module.exports = {
       extends: [
         "plugin:@angular-eslint/recommended",
         "airbnb-typescript/base",
-        "prettier/@typescript-eslint",
-        "plugin:prettier/recommended",
+        // "prettier/@typescript-eslint",
+        // "plugin:prettier/recommended",
       ],
       rules: {
         "import/no-unresolved": "off",
