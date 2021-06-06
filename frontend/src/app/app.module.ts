@@ -1,22 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { APP_BASE_HREF, PlatformLocation, CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { fakeBackendProvider } from './_helpers/fake-backend';
 import { ErrorInterceptor } from './_interceptor/error.interceptor';
 import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
-
+import { MaterialImportsModule } from './_modules/material-imports.module';
+import { LkComponent } from './lk/lk.component';
+import { EditComponent } from './lk/edit/edit.component';
+import { MyOrdersComponent } from './lk/my-orders/my-orders.component';
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
 }
@@ -28,11 +28,15 @@ export function getBaseHref(platformLocation: PlatformLocation): string {
     RegistrationComponent,
     ProfileComponent,
     HeaderComponent,
+    LkComponent,
+    EditComponent,
+    MyOrdersComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MaterialImportsModule,
     BrowserAnimationsModule,
     FormsModule,
     CommonModule,
