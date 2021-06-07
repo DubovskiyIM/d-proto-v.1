@@ -1,87 +1,46 @@
-version: '3.7'
+version: "3.3"
 services:
-  nestapp:
+  nginx:
     depends_on:
-      - redis
-      - mongo
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: 9995311896/nest-app:latest
-    container_name: nestapp
+      - frontend
+      - backend
     restart: always
-    tty: true
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
-    working_dir: /var/www/nest-app
-    environment:
-      SERVICE_NAME: nestapp
-      SERVICE_TAGS: dev
-      REDIS_PORT: ${REDIS_PORT}
-      REDIS_HOST: ${REDIS_HOST}
-    volumes:
-      - ./:/var/www/nest-app
-      - /var/www/nest-app/node_modules
-    networks:
-      - nest-app-network
-    links:
-      - mongo
-
-  redis:
-    image: redis:latest
-    container_name: redis
-    command: [
-      "redis-server",
-      "--bind",
-      "redis",
-      "--port",
-      "6379"
-    ]
-    volumes:
-      - red_data:/var/lib/redis
+      - '80:80'
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - '${REDIS_PORT}:${REDIS_PORT}'
-    networks:
-      - nest-app-network
-
+      - '3000:3000'
+    volumes:
+      - /app/node_modules
+    restart: on-failure
+    container_name: frontend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: yarn start:dev
+    ports:
+      - '3001:3001'
+    restart: on-failure
+    container_name: backend
+    volumes:
+      - /app/node_modules
+      - ./backend/src:/app/src
+    env_file:
+      - ./backend/.env
   mongo:
-    container_name: mongo
-    image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
-    volumes:
-      - mongodb-data:/var/www/nestapp/data/db
-    networks:
-      - nest-app-network
+    image: 'mongo'
+    container_name: 'mongo-db'
     ports:
-      - '27017:27017'
-
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
-      - ME_CONFIG_BASICAUTH_USERNAME=admin
-      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+      - '27017-27019:27017-27019'
     volumes:
-      - mongodb-data
-    depends_on:
-      - mongo
-    networks:
-      - nest-app-network
-    ports:
-      - 8081:8081
-    restart: unless-stopped
-
-networks:
-  nest-app-network:
-    driver: bridge
-    name: nest-app-network
-volumes:
-  mongodb-data:
-    name: mongodb-data
-  red_data: {}
+      - ./db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./db/mongo-volume:/data/db
+    env_file:
+      - ./backend/.env

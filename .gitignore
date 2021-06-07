@@ -8,7 +8,7 @@
 .AppleDouble
 .LSOverride
 .uploads
-yarn.lock
+backend/yarn.lock
 data
 .elasticbeanstalk
 misc
