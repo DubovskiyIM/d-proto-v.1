@@ -17,6 +17,8 @@ import { MaterialImportsModule } from './_modules/material-imports.module';
 import { LkComponent } from './lk/lk.component';
 import { EditComponent } from './lk/edit/edit.component';
 import { MyOrdersComponent } from './lk/my-orders/my-orders.component';
+import { StarRatingsComponent } from './components/star-ratings/star-ratings.component';
+
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
 }
@@ -31,6 +33,7 @@ export function getBaseHref(platformLocation: PlatformLocation): string {
     LkComponent,
     EditComponent,
     MyOrdersComponent,
+    StarRatingsComponent,
   ],
   imports: [
     BrowserModule,
