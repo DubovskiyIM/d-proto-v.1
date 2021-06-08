@@ -1,15 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { StarRatingColor } from '../../components/star-ratings/star-ratings.component';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  styleUrls: ['./edit.component.scss'],
 })
 export class EditComponent implements OnInit {
+  rating: number = 4.4;
 
-  constructor() { }
+  starColor: StarRatingColor = StarRatingColor.accent;
 
-  ngOnInit(): void {
+  starColorP: StarRatingColor = StarRatingColor.primary;
+
+  starColorW: StarRatingColor = StarRatingColor.warn;
+
+  constructor() {}
+
+  ngOnInit() {}
+
+  onRatingChanged(rating) {
+    this.rating = rating;
   }
-
 }

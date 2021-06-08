@@ -9,17 +9,19 @@ import { LkComponent } from './lk/lk.component'; // CLI imports router
 
 const lkRoutes: Routes = [
   { path: 'edit', component: EditComponent },
-  { path: 'my-orders', component: MyOrdersComponent },
+  { path: 'orders', component: MyOrdersComponent },
 ];
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'profile',
     component: LkComponent,
-    children: [
-      { path: 'edit', component: EditComponent },
-      { path: 'my-orders', component: MyOrdersComponent },
-    ],
+    canActivate: [AuthGuard],
+    children: lkRoutes,
+    // children: [
+    //   { path: 'edit', component: EditComponent },
+    //   { path: 'orders', component: MyOrdersComponent },
+    // ],
   },
 ];
 

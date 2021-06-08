@@ -1,44 +1,6 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
-    <h4 class="name">John Smith</h4>
-    <p class="designation">count stars</p>
-    <mat-divider></mat-divider>
-    <button mat-button class="menu-button">
-      <mat-icon>settings_ethernet</mat-icon>
-      <a routerLink="edit" class="text-light">Управление</a>
-    </button>
-    <button mat-button class="menu-button">
-      <mat-icon>archive</mat-icon>
-      <a routerLink="edit" class="text-light">Заказы</a>
-    </button>
-    <button mat-button class="menu-button">
-      <mat-icon>favorite</mat-icon>
-      <a routerLink="edit" class="text-light">Избранное</a>
-    </button>
-    <button mat-button class="menu-button">
-      <mat-icon>favorite</mat-icon>
-      <a routerLink="subscriptions" class="text-light">Подписки</a>
-    </button>
-    <mat-divider></mat-divider>
-    <button mat-button class="menu-button">
-      <mat-icon>chat</mat-icon>
-      <a routerLink="edit" class="text-light">Сообщения</a>
-    </button>
-    <button mat-button class="menu-button">
-      <mat-icon>notifications_none</mat-icon>
-      <a routerLink="edit" class="text-light">Уведомления</a>
-    </button>
-    <mat-divider></mat-divider>
-    <button mat-button class="menu-button">
-      <mat-icon>settings</mat-icon>
-      <a routerLink="edit" class="text-light">Настройки</a>
-    </button>
-    <mat-divider></mat-divider>
-    <button mat-button class="menu-button">
-      <mat-icon>exit_to_app</mat-icon>
-      <a routerLink="edit" class="text-light">Выход</a>
-    </button>
+  <app-lk-navbar-items></app-lk-navbar-items>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content mat-elevation-z8">
