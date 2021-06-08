@@ -20,6 +20,7 @@ export class StarRatingsComponent implements OnInit {
   @Input('color') color: string = 'accent';
   @Output() private ratingUpdated = new EventEmitter();
 
+  public isActiveTouch: boolean = false;
   private snackBarDuration: number = 2000;
   ratingArr = [];
 

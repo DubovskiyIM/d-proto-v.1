@@ -9,7 +9,9 @@ import { User } from '../../_interfaces/user';
 })
 export class HeaderComponent implements OnInit {
   public isLogged: true;
+
   public user: User;
+
   constructor(private auth: AuthenticationService) {}
 
   ngOnInit(): void {
