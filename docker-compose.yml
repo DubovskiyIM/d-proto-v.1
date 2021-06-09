@@ -34,7 +34,7 @@ services:
       - /node_modules
       - ./backend/src:/app/src
     env_file:
-      - ./backend/.env:./app/.env
+      - ./backend/.env
 
   mongo:
     image: 'mongo'
