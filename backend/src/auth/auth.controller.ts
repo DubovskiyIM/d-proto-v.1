@@ -41,7 +41,7 @@ export class AuthController {
       ];
       if (byUsername || byEmail || byPhone) {
         throw new HttpException(
-          'User has already been exist',
+          'User has already been exist (From CI-CD)',
           HttpStatus.BAD_REQUEST,
         );
       }
