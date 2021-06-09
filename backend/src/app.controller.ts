@@ -7,7 +7,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    // test ci-c
+    // test ci-cd
     return this.appService.getHello();
   }
 }
