@@ -20,8 +20,6 @@ services:
       - /node_modules
     restart: on-failure
     container_name: frontend
-    networks:
-      - nest-app-network
 
   backend:
     build:
@@ -36,9 +34,7 @@ services:
       - /node_modules
       - ./backend/src:/app/src
     env_file:
-      - ./backend/.env
-    networks:
-      - nest-app-network
+      - ./backend/.env:./app/.env
 
   mongo:
     image: 'mongo'
@@ -50,8 +46,6 @@ services:
       - ./db/mongo-volume:/data/db
     env_file:
       - ./backend/.env
-    networks:
-      - nest-app-network
 
   redis:
     image: redis:latest
@@ -67,13 +61,7 @@ services:
       - red_data:/var/lib/redis
     ports:
       - '${REDIS_PORT}:${REDIS_PORT}'
-    networks:
-      - nest-app-network
 
-networks:
-  nest-app-network:
-    driver: bridge
-    name: nest-app-network
 volumes:
   mongodb-data:
     name: mongodb-data
