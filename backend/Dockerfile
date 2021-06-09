@@ -8,6 +8,8 @@ RUN yarn install
 
 COPY . .
 
+COPY ./.env .
+
 RUN yarn build
 
 CMD ["yarn", "start:dev"]
