@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
@@ -17,9 +17,7 @@ export class LkComponent implements AfterViewInit {
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
       if (res.matches) {
         this.sidenav.mode = 'over';
-        this.sidenav.close().then((obs) => {
-          console.log(obs);
-        });
+        this.sidenav.close().then();
       } else {
         this.sidenav.mode = 'side';
         this.sidenav.open().then();
@@ -28,7 +26,6 @@ export class LkComponent implements AfterViewInit {
   }
 
   public changeNavBarState() {
-    console.log(this.sidenav.mode);
     if (this.sidenav?.mode === 'over') {
       this.sidenav.mode = 'side';
       this.sidenav.open().then();

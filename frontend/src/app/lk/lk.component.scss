@@ -13,14 +13,7 @@ mat-sidenav {
 
 .content {
   height: calc(100vh - 98px);
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 16px;
   margin-left: 32px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 2rem;
-  color: lightgray;
 }

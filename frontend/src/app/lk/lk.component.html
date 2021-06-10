@@ -4,8 +4,8 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content mat-elevation-z8">
+      <button (click)="changeNavBarState()" class="btn btn-outline-dark"><</button>
       <router-outlet></router-outlet>
-      <button (click)="changeNavBarState()"></button>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
