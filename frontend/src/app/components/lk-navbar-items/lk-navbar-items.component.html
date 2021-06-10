@@ -1,0 +1,42 @@
+<div class="containerSidenav">
+  <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
+  <h4 class="name">{{user.username}}</h4>
+  <app-star-ratings [rating]="rating"  [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></app-star-ratings>
+  <p class="designation text-light text-center">{{rating}}</p>
+  <mat-divider></mat-divider>
+  <button mat-button class="menu-button">
+    <mat-icon>settings_ethernet</mat-icon>
+    <a routerLink="edit" class="text-light">Управление</a>
+  </button>
+  <button mat-button class="menu-button">
+    <mat-icon>archive</mat-icon>
+    <a routerLink="orders" class="text-light">Заказы</a>
+  </button>
+  <button mat-button class="menu-button">
+    <mat-icon>favorite</mat-icon>
+    <a routerLink="edit" class="text-light">Избранное</a>
+  </button>
+  <button mat-button class="menu-button">
+    <mat-icon>favorite</mat-icon>
+    <a routerLink="subscriptions" class="text-light">Подписки</a>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-button class="menu-button">
+    <mat-icon>chat</mat-icon>
+    <a routerLink="messages" class="text-light">Сообщения</a>
+  </button>
+  <button mat-button class="menu-button">
+    <mat-icon>notifications_none</mat-icon>
+    <a routerLink="edit" class="text-light">Уведомления</a>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-button class="menu-button">
+    <mat-icon>settings</mat-icon>
+    <a routerLink="edit" class="text-light">Настройки</a>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-button class="menu-button">
+    <mat-icon>exit_to_app</mat-icon>
+    <a routerLink="edit" class="text-light">Выход</a>
+  </button>
+</div>

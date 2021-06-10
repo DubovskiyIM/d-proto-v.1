@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { JsonPipe } from '@angular/common';
-import { StarRatingColor } from '../../components/star-ratings/star-ratings.component';
 
 @Component({
   selector: 'app-edit',
@@ -8,19 +6,200 @@ import { StarRatingColor } from '../../components/star-ratings/star-ratings.comp
   styleUrls: ['./edit.component.scss'],
 })
 export class EditComponent implements OnInit {
-  rating: number = 4.4;
-
-  starColor: StarRatingColor = StarRatingColor.accent;
-
-  starColorP: StarRatingColor = StarRatingColor.primary;
-
-  starColorW: StarRatingColor = StarRatingColor.warn;
+  public listCards: any[] = [
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'small',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'large',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'large',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'small',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'small',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'small',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'small',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'small',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'small',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'medium',
+    },
+  ];
 
   constructor() {}
 
   ngOnInit() {}
-
-  onRatingChanged(rating) {
-    this.rating = rating;
-  }
 }
