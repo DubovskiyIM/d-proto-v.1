@@ -57,7 +57,7 @@ export function getBaseHref(platformLocation: PlatformLocation): string {
       useFactory: getBaseHref,
       deps: [PlatformLocation],
     },
-    fakeBackendProvider,
+    // fakeBackendProvider,
   ],
   bootstrap: [AppComponent],
 })
