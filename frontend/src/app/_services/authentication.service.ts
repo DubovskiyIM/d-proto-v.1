@@ -27,6 +27,7 @@ export class AuthenticationService {
       JSON.parse(localStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
+    this.baseUrl = 'api' + this.baseUrl;
   }
 
   public get currentUserValue(): User {
@@ -41,6 +42,7 @@ export class AuthenticationService {
     if (!loginData) {
       return;
     }
+    // `${this.baseUrl}+'api/'+${AuthenticationService.httpActions.login}`,
     return this.http
       .post<any>(
         `${this.baseUrl}${AuthenticationService.httpActions.login}`,
@@ -75,11 +77,10 @@ export class AuthenticationService {
     };
 
     return this.http.post<any>(
-      `${this.baseUrl}/${AuthenticationService.httpActions.register}`,
+      `${this.baseUrl}${AuthenticationService.httpActions.register}`,
       userData
     );
   }
 
-  public resetPassword(email: string) {
-  }
+  public resetPassword(email: string) {}
 }
