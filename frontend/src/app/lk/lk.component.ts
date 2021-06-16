@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-lk',
@@ -11,7 +12,10 @@ export class LkComponent implements AfterViewInit {
   @ViewChild(MatSidenav)
   public sidenav!: MatSidenav;
 
-  constructor(private observer: BreakpointObserver) {}
+  constructor(
+    private observer: BreakpointObserver,
+    private cookieService: CookieService
+  ) {}
 
   ngAfterViewInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {

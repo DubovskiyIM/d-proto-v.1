@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import {
   Router,
   CanActivate,
@@ -7,12 +8,15 @@ import {
 } from '@angular/router';
 
 import { AuthenticationService } from '../_services/authentication.service';
+import { NavigationService } from '../_services/navigation.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private cookieService: CookieService,
+    private navigationService: NavigationService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -21,6 +25,9 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       alert('Авторизуйтесь!');
+      this.navigationService.next('login', {
+        queryParams: { returnUrl: state.url },
+      });
     }
     //   if (
     //     route.data.roles &&
@@ -32,7 +39,10 @@ export class AuthGuard implements CanActivate {
     //   return true;
     // }
 
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-    return false;
+    return true;
+  }
+
+  private hasUserInCookie() {
+    return !!this.cookieService.get('Authentication');
   }
 }

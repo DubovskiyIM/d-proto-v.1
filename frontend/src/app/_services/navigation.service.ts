@@ -26,4 +26,11 @@ export class NavigationService {
   exit(): void {
     this.router.navigate(['/']);
   }
+
+  next(route: string, queryParams?): void {
+    if (typeof route === 'string' && !route.includes('/')) {
+      route = '/' + route;
+    }
+    this.router.navigate([route], queryParams);
+  }
 }
