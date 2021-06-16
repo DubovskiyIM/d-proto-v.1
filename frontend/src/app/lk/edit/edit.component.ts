@@ -197,6 +197,26 @@ export class EditComponent implements OnInit {
       availableQuantity: 1,
       size: 'medium',
     },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'small',
+    },
+    {
+      owner: undefined,
+      title: 'title',
+      image: './assets/img/upper-right-arrow.png',
+      description: 'description',
+      price: 1200,
+      created: new Date(),
+      availableQuantity: 1,
+      size: 'large',
+    },
   ];
 
   constructor() {}

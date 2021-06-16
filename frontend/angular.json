@@ -130,6 +130,6 @@
   },
   "defaultProject": "unique-fashion",
   "cli": {
-    "analytics": "2bd69da6-bcc7-4cb5-9ef6-b0372846efc8"
+    "analytics": false
   }
 }
