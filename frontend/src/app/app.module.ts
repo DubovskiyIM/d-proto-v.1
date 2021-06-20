@@ -20,6 +20,7 @@ import { MyOrdersComponent } from './lk/my-orders/my-orders.component';
 import { StarRatingsComponent } from './components/star-ratings/star-ratings.component';
 import { LkNavbarItemsComponent } from './components/lk-navbar-items/lk-navbar-items.component';
 import { CardComponent } from './components/card/card.component';
+import { MessagesComponent } from './lk/messages/messages.component';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -38,6 +39,7 @@ export function getBaseHref(platformLocation: PlatformLocation): string {
     StarRatingsComponent,
     LkNavbarItemsComponent,
     CardComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,
