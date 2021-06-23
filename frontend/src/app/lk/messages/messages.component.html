@@ -1,1 +1,115 @@
-<p>messages works!</p>
+<div class="container-fluid h-100">
+  <div class="row h-100">
+    <div class="col-1 col-sm-2">
+      <mat-list>
+        <mat-list-item *ngFor="let conversation of conversations" (click)="selectConversation(conversation.id)"
+                       class="conversation-card">
+          <div class="avatar align-items-center d-flex">
+            <app-avatar [width]="'80px'"></app-avatar>
+          </div>
+          <div class="messageData">
+            <span class="chatUserName w-85">{{conversation.user_name}}</span>
+            <span class="lastMessageTime">12: 23</span>
+            <p class="lastMessage"><span class="text-primary">Вы:</span> sdf sf Lorem ipsum dolor sit amet, consectetur
+            </p>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="col-8">
+      <!--      <section class="empty-conversation" *ngIf="!selectedConversation">-->
+      <!--        <span class="mat-display-1">Выберите пользователя, чтобы начать чат </span>-->
+      <!--      </section>-->
+      <app-chat></app-chat>
+<!--          <div class="chatHeader">-->
+<!--            <h2>{{selectedConversation.user_name}}-->
+<!--              &lt;!&ndash;              {{selectedConversation.display_name}}</h2>&ndash;&gt;-->
+<!--            </h2>-->
+
+<!--          </div>-->
+
+
+
+          <!--      <section *ngIf="true">-->
+          <!--        <mat-divider></mat-divider>-->
+          <!--        <mat-list dense class="conversation-history mat-typography">-->
+          <!--          <mat-list-item *ngFor="let event of events; index as i"-->
+          <!--                         [dir]="event.from === selectedConversation.me.id ? 'rtl' : 'ltr'">-->
+          <!--            <img *ngIf="event.type == 'text'" matListAvatar-->
+          <!--                 matTooltip="{{selectedConversation.members[event.from].user.name}}"-->
+          <!--                 src="https://randomuser.me/api/portraits/thumb/lego/{{i}}.jpg"-->
+          <!--            />-->
+          <!--            <p *ngIf="event.type == 'text'" [dir]="'ltr'">{{event.body.text}}</p>-->
+          <!--            <p *ngIf="event.type == 'member:joined'" class="text-center">-->
+          <!--              <b>{{selectedConversation.members[event.from].user.name}}</b> has joined the conversation</p>-->
+          <!--          </mat-list-item>-->
+          <!--        </mat-list>-->
+
+          <!--        <div class="conversation-input">-->
+          <!--          <mat-divider></mat-divider>-->
+          <!--          <mat-form-field class="full-width">-->
+          <!--            <input matInput placeholder="Start chatting..." name="text">-->
+          <!--            <mat-icon matSuffix (click)="sendText(text)">send</mat-icon>-->
+          <!--          </mat-form-field>-->
+          <!--          &lt;!&ndash;          [(ngModel)]="text"&ndash;&gt;-->
+          <!--        </div>-->
+          <!--      </section>-->
+        </div>
+      </div>
+    </div>
+
+    <!--<mat-sidenav-container class="container">-->
+    <!--  <mat-sidenav mode="side" opened>-->
+    <!--    <mat-card>-->
+    <!--      <mat-tab-group>-->
+    <!--        <mat-tab>-->
+    <!--          <ng-template mat-tab-label>-->
+    <!--            <mat-icon matListIcon>forum</mat-icon>-->
+    <!--          </ng-template>-->
+    <!--          <mat-list class="conversations">-->
+    <!--            <mat-list-item *ngFor="let conversation of conversations" (click)="selectConversation(conversation.id)">-->
+    <!--              <mat-icon matListIcon>forum</mat-icon>-->
+    <!--              <p>{{conversation.display_name}}</p>-->
+    <!--            </mat-list-item>-->
+    <!--          </mat-list>-->
+    <!--        </mat-tab>-->
+    <!--      </mat-tab-group>-->
+    <!--    </mat-card>-->
+    <!--  </mat-sidenav>-->
+    <!--  <mat-sidenav position="end" mode="side" opened *ngIf="selectedConversation">-->
+    <!--    <mat-card>-->
+    <!--      <mat-list class="members">-->
+    <!--        <mat-list-item *ngFor="let member of selectedConversation.members">-->
+    <!--          <p>{{member.value.user.name}}</p>-->
+    <!--        </mat-list-item>-->
+    <!--      </mat-list>-->
+    <!--    </mat-card>-->
+    <!--  </mat-sidenav>-->
+    <!--  <section class="empty-conversation" *ngIf="!selectedConversation">-->
+    <!--    <h1 class="mat-display-1">Select a conversation from the left to start chatting</h1>-->
+    <!--  </section>-->
+    <!--  <section *ngIf="selectedConversation">-->
+    <!--    <div class="mat-typography conversation-header">-->
+    <!--      <h2>-->
+    <!--        <mat-icon>forum</mat-icon>-->
+    <!--        {{selectedConversation.display_name}}</h2>-->
+    <!--      <p>-->
+    <!--        <mat-icon>account_circle</mat-icon>-->
+    <!--        {{2}} Members-->
+    <!--      </p>-->
+    <!--      &lt;!&ndash;      {{(selectedConversation.members | keys).length}} Members</p>&ndash;&gt;-->
+
+    <!--    </div>-->
+    <!--    <mat-divider></mat-divider>-->
+    <!--    <mat-list dense class="conversation-history mat-typography">-->
+    <!--      ...-->
+    <!--    </mat-list>-->
+    <!--    <div class="conversation-input">-->
+    <!--      <mat-divider></mat-divider>-->
+    <!--      <mat-form-field class="full-width">-->
+    <!--        <input matInput placeholder="Start chatting..." name="text" [(ngModel)]="text">-->
+    <!--        <mat-icon matSuffix (click)="sendText('sd')">send</mat-icon>-->
+    <!--      </mat-form-field>-->
+    <!--    </div>-->
+    <!--  </section>-->
+    <!--&lt;!&ndash;</mat-sidenav-container>&ndash;&gt;-->
