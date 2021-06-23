@@ -21,6 +21,10 @@ import { StarRatingsComponent } from './components/star-ratings/star-ratings.com
 import { LkNavbarItemsComponent } from './components/lk-navbar-items/lk-navbar-items.component';
 import { CardComponent } from './components/card/card.component';
 import { MessagesComponent } from './lk/messages/messages.component';
+import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
+import { ChatComponent } from './lk/chat/chat.component';
+import { ChatMessageComponent } from './lk/chat/chat-message/chat-message.component';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -40,6 +44,10 @@ export function getBaseHref(platformLocation: PlatformLocation): string {
     LkNavbarItemsComponent,
     CardComponent,
     MessagesComponent,
+    ProgressSpinnerComponent,
+    AvatarComponent,
+    ChatComponent,
+    ChatMessageComponent,
   ],
   imports: [
     BrowserModule,
