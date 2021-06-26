@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { StarRatingColor } from '../star-ratings/star-ratings.component';
-import { AuthService } from '../../../../../src/auth/auth.service';
 import { User } from '../../_interfaces/user';
 import { AuthenticationService } from '../../_services/authentication.service';
 

@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from '../_interfaces/user';
 import { APP_BASE_HREF } from '@angular/common';
+import { User } from '../_interfaces/user';
 import { NavigationService } from './navigation.service';
 
 @Injectable({
@@ -51,8 +51,6 @@ export class AuthenticationService {
       )
       .pipe(
         map((user) => {
-          debugger;
-          console.log(user);
           if (user) {
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
@@ -68,8 +66,7 @@ export class AuthenticationService {
     this.navigationService.exit();
   }
 
-  public registration(controls) {
-    debugger;
+  public registration(controls): Observable<any> {
     if (!controls) {
       return;
     }
