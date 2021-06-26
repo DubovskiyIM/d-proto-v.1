@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { first } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
+import { NavigationService } from '../../_services/navigation.service';
 
 @Component({
   selector: 'app-login',
@@ -31,13 +32,14 @@ export class LoginComponent implements OnInit {
       Validators.required,
       Validators.minLength(6),
     ]),
-    // phone: new FormControl('', [
-    //   Validators.required,
-    //   Validators.pattern('^[0-9]*$'),
-    //   Validators.minLength(10),
-    //   Validators.maxLength(10),
-    // ]),
+    phone: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+      Validators.minLength(10),
+      Validators.maxLength(10),
+    ]),
     email: new FormControl('', [Validators.required, Validators.email]),
+    name: new FormControl('', [Validators.required]),
     password: new FormControl('', Validators.required),
   });
   pageState: string = 'login';
@@ -50,13 +52,13 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private titleService: Title
+    private titleService: Title,
+    private navigationService: NavigationService
   ) {
     this.titleService.setTitle('Вход');
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   get f() {
     return this.loginForm.controls;
@@ -74,9 +76,9 @@ export class LoginComponent implements OnInit {
       .login(this.loginForm)
       .pipe(first())
       .subscribe(
-        (data) => {
-          if (data.token) {
-            this.router.navigate(['/profile']);
+        (user) => {
+          if (user) {
+            this.navigationService.next('profile');
           }
         },
         (error) => {

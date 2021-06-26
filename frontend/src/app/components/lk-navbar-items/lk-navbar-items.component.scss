@@ -1,0 +1,35 @@
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.avatar {
+  margin-top: 16px;
+}
+
+.name {
+  margin: 8px 0;
+  font-weight: normal;
+}
+
+.designation {
+  font-size: 1.1rem;
+  margin-top: 2px;
+}
+
+mat-divider {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.menu-button a {
+  text-decoration: none;
+}

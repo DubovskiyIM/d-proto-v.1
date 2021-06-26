@@ -1,0 +1,37 @@
+<div class="pin_container">
+  <div [ngClass]="'card card_'+item.size" *ngFor="let item of listCards">
+    <div class="pin_modal">
+      <div class="modal_head">
+        <div class="save_card avatar_user_card">
+          <img src="https://source.unsplash.com/c_GmwfHBDzk/50x50">
+        </div>
+        <div class="save_card">Like</div>
+      </div>
+      <div class="modal_foot">
+        <div class="pint_mock_icon_container-full">
+          <p class="text-center text-light itemProductName">Lorem ipsum dolor sit.</p>
+        </div>
+        <div class="destination text-center">
+          <div class="pint_mock_icon_container text-center">
+            <mat-icon aria-hidden="false">attach_money</mat-icon>
+          </div>
+          <span>{{item.price}}</span>
+        </div>
+
+        <!--          <div class="pint_mock_icon_container">-->
+        <!--            <img src="assets/img/send.png" alt="send" class="pint_mock_icon">-->
+        <!--          </div>-->
+
+        <!--          <div class="pint_mock_icon_container">-->
+        <!--            <img src="assets/img/ellipse.png" alt="edit" class="pint_mock_icon">-->
+        <!--          </div>-->
+      </div>
+    </div>
+
+    <div class="pin_image">
+      <img src="https://i.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
+           alt="image">
+    </div>
+  </div>
+</div>
+

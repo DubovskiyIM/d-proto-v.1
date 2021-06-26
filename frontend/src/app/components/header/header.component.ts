@@ -9,7 +9,9 @@ import { User } from '../../_interfaces/user';
 })
 export class HeaderComponent implements OnInit {
   public isLogged: true;
+
   public user: User;
+
   constructor(private auth: AuthenticationService) {}
 
   ngOnInit(): void {
@@ -22,6 +24,6 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout() {
-    this.auth.logout();;
+    this.auth.logout();
   }
 }

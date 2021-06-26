@@ -1,0 +1,21 @@
+<div class="d-flex flex-column bd-highlight mb-3 h-100">
+  <div class="p-2 bd-highlight">
+    <h2>{{selectedConversation.user_name}}</h2>
+    <span class="lastSeen">Последняя активность: сегодня</span>
+  </div>
+  <div class="p-2 bd-highlight">
+    <app-chat-message></app-chat-message>
+    <div class="message">
+      <mat-card>sfads</mat-card>
+    </div>
+  </div>
+  <div class="mt-auto p-2 bd-highlight">
+
+    <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <input matInput #message maxlength="1024" placeholder="Сообщение">
+          </mat-form-field>
+        </form>
+  </div>
+</div>
+

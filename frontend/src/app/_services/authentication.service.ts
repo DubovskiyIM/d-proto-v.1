@@ -27,6 +27,8 @@ export class AuthenticationService {
       JSON.parse(localStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
+    this.baseUrl = 'api' + this.baseUrl;
+    //
   }
 
   public get currentUserValue(): User {
@@ -34,13 +36,14 @@ export class AuthenticationService {
   }
 
   public login(controls) {
-    const loginData = {
-      username: controls.controls?.username.value,
-      password: controls.controls?.password.value,
-    };
-    if (!loginData) {
+    if (!controls) {
       return;
     }
+    const loginData = {
+      email: controls.controls?.username.value,
+      password: controls.controls?.password.value,
+    };
+
     return this.http
       .post<any>(
         `${this.baseUrl}${AuthenticationService.httpActions.login}`,
@@ -48,8 +51,9 @@ export class AuthenticationService {
       )
       .pipe(
         map((user) => {
+          debugger;
           console.log(user);
-          if (user && user.token) {
+          if (user) {
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
           }
@@ -65,6 +69,7 @@ export class AuthenticationService {
   }
 
   public registration(controls) {
+    debugger;
     if (!controls) {
       return;
     }
@@ -72,14 +77,15 @@ export class AuthenticationService {
       username: controls?.username.value,
       email: controls?.email.value,
       password: controls?.password.value,
+      name: controls?.name.value,
+      phone: controls.phone.value,
     };
 
     return this.http.post<any>(
-      `${this.baseUrl}/${AuthenticationService.httpActions.register}`,
+      `${this.baseUrl}${AuthenticationService.httpActions.register}`,
       userData
     );
   }
 
-  public resetPassword(email: string) {
-  }
+  public resetPassword(email: string) {}
 }
