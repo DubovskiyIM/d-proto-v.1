@@ -25,6 +25,7 @@ import { ProgressSpinnerComponent } from './components/progress-spinner/progress
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { ChatComponent } from './lk/chat/chat.component';
 import { ChatMessageComponent } from './lk/chat/chat-message/chat-message.component';
+import { ConversationComponent } from './lk/messages/conversation/conversation.component';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -48,6 +49,7 @@ export function getBaseHref(platformLocation: PlatformLocation): string {
     AvatarComponent,
     ChatComponent,
     ChatMessageComponent,
+    ConversationComponent,
   ],
   imports: [
     BrowserModule,

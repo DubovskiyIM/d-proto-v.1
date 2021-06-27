@@ -8,7 +8,7 @@ import { IMessages } from '../../../_interfaces/chat';
   styleUrls: ['./chat-message.component.scss'],
 })
 export class ChatMessageComponent {
-  @Input() messages: IMessages[] = [];
+  @Input() messages: any[] = [];
 
   private currentUser;
 
