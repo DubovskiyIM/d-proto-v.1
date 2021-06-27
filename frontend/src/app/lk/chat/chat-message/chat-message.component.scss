@@ -1,8 +1,43 @@
-//.message {
-//  padding: 16px;
-//  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
-//    0px 1px 3px 0px rgb(0 0 0 / 12%);
-//  background: #fff;
-//  border-radius: 2px;
-//  color: rgba(0, 0, 0, 0.87);
-//}
+@import url("https://fonts.googleapis.com/css?family=Red+Hat+Display:400,500,900&display=swap");
+
+$text-1: rgba(0, 0, 0, 0.87);
+$text-2: #939393;
+$text-3: #d3d3d3;
+$line: #ccc;
+$background: #fff;
+$background2: #333333;
+.messageContainer {
+  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
+    0px 1px 3px 0px rgb(0 0 0 / 12%);
+  padding: 16px;
+  background: $background;
+  border-radius: 1rem 1rem 1rem 1rem;
+  margin: 5px 0;
+  font-family: Red hat Display, sans-serif;
+  color: $text-1;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+}
+
+.lastMessageStyle {
+  border-radius: 1rem 1rem 1rem 0 !important;
+}
+
+.messageContainer .dataTime {
+  padding: 5px 5px 0 0;
+  color: $text-2;
+}
+
+.hisMessage {
+  background-color: $background2;
+  color: white;
+  border-radius: 1rem 1rem 0 1rem;
+}
+
+.hisMessage .dataTime {
+  color: $text-3;
+}
+
+.message {
+  width: fit-content;
+}
