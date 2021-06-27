@@ -1,21 +1,24 @@
 <div class="d-flex flex-column bd-highlight mb-3 h-100">
-  <div class="p-2 bd-highlight">
+  <div class="chatHeader">
     <h2>{{selectedConversation.user_name}}</h2>
     <span class="lastSeen">Последняя активность: сегодня</span>
   </div>
-  <div class="p-2 bd-highlight">
-    <app-chat-message></app-chat-message>
-    <div class="message">
-      <mat-card>sfads</mat-card>
-    </div>
+  <div class="chat">
+    <app-chat-message [messages]="messages"></app-chat-message>
   </div>
-  <div class="mt-auto p-2 bd-highlight">
-
-    <form class="example-form">
+  <div class="mt-auto bd-highlight chat-footer" [ngClass]="" #footerChat>
+    <form class="example-form" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+      <div class="row align-items-center">
+        <div class="col-10">
           <mat-form-field class="example-full-width">
-            <input matInput #message maxlength="1024" placeholder="Сообщение">
+            <input matInput maxlength="2056" placeholder="Сообщение" name="message" formControlName="message">
           </mat-form-field>
-        </form>
+        </div>
+        <div class="col-2">
+          <button type="submit" class="w-100 sendMessageBtn">ОТПРАВИТЬ</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 

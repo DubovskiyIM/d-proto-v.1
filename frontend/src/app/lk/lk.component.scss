@@ -3,7 +3,6 @@ mat-sidenav {
   margin: 16px;
   width: 200px;
   border-right: none;
-  //background: #002b5c;
   background-color: black;
   color: white;
   border-radius: 10px;
@@ -15,4 +14,7 @@ mat-sidenav {
   height: calc(100vh - 98px);
   border-radius: 5px;
   margin: 1rem 0 0 1rem;
+}
+mat-sidenav-container {
+  background-color: white;
 }
