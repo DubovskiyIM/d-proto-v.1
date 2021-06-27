@@ -1,23 +1,10 @@
 <div class="container-fluid h-100">
   <div class="row h-100">
     <div class="col-1 col-sm-3">
-      <mat-list>
-        <mat-list-item *ngFor="let conversation of conversations" (click)="selectConversation(conversation.id)"
-                       class="conversation-card">
-          <div class="avatar align-items-center d-flex">
-            <app-avatar [width]="'80px'"></app-avatar>
-          </div>
-          <div class="messageData">
-            <span class="chatUserName w-85">{{conversation.user_name}}</span>
-            <span class="lastMessageTime">12: 23</span>
-            <p class="lastMessage"><span class="text-primary">Вы:</span> sdf sf Lorem ipsum dolor sit amet, consectetur
-            </p>
-          </div>
-        </mat-list-item>
-      </mat-list>
+      <app-conversation [conversations]="conversations" (onChangedConversation)="changeChatDialog($event)"></app-conversation>
     </div>
     <div class="col-8">
-      <app-chat></app-chat>
-        </div>
-      </div>
+      <app-chat [chatDialog]="selectedChatDialog"></app-chat>
     </div>
+  </div>
+</div>

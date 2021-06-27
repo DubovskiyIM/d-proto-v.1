@@ -7,34 +7,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
-  // conversations: any;
-
-  // selectedConversation;
   public conversations = [
     {
       id: '22',
+      user_name: 'Carl',
+    },
+    {
+      id: '13',
       user_name: 'name',
     },
     {
-      id: '22',
-      user_name: 'name',
-    },
-    {
-      id: '22',
+      id: '44',
       user_name: 'name',
     },
   ];
-  public selectedConversation = this.conversations[0];
-  text: string;
-  events: Array<any> = [];
+  public selectedChatDialog = this.conversations[0];
 
   constructor(private router: Router) {}
 
-  buildConversationsArray(conversations) {}
+  public changeChatDialog(chatDialogId: string) {
+    this.conversations.find((item) => {
+      if (item.id === chatDialogId) {
+        this.selectedChatDialog = item;
+      }
+    });
+  }
 
   ngOnInit() {}
-
-  selectConversation(conversationId: string) {}
-
-  sendText(text: string) {}
 }

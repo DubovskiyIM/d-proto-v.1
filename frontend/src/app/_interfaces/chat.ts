@@ -8,6 +8,6 @@ export interface IMessages {
   id: string;
   data: {
     author: any;
-    messages: IMessage[];
+    messages: IMessage[] | [];
   };
 }

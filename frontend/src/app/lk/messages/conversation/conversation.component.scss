@@ -1,0 +1,31 @@
+.conversation-card {
+  padding: 2px 0 !important;
+  cursor: pointer;
+  height: inherit !important;
+}
+
+.conversation-card:hover {
+  background-color: #dde0e3;
+}
+
+.messageData {
+  margin-left: 10px;
+  overflow: hidden;
+}
+
+.chatUserName {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.lastMessage {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.lastMessageTime {
+  position: absolute;
+  right: 5px;
+}
