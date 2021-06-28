@@ -1,5 +1,5 @@
 mat-sidenav {
-  overflow-x: hidden;
+  overflow: hidden;
   margin: 16px;
   width: 200px;
   border-right: none;
@@ -15,6 +15,11 @@ mat-sidenav {
   border-radius: 5px;
   margin: 1rem 0 0 1rem;
 }
+
 mat-sidenav-container {
   background-color: white;
+}
+
+mat-sidenav .mat-sidenav-container {
+  overflow: hidden;
 }

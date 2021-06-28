@@ -4,7 +4,9 @@
   </div>
   <h4 class="name">{{user.username}}</h4>
   <app-star-ratings [rating]="rating" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></app-star-ratings>
-  <p class="designation text-light text-center">{{rating}}</p>
+  <p class="designation text-light text-center">
+    {{rating}}
+    <span class="countFeedback text-light">(124)</span></p>
   <mat-divider></mat-divider>
   <button mat-button class="menu-button">
     <mat-icon>settings_ethernet</mat-icon>

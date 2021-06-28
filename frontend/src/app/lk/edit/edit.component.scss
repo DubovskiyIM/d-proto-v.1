@@ -111,6 +111,7 @@ $cardLarge: 45;
 .pin_modal .modal_head .avatar_user_card {
   background-color: transparent !important;
 }
+
 .pin_modal .modal_foot {
   width: 100%;
   background: rgba(94, 94, 94, 0.5);
@@ -175,13 +176,13 @@ $cardLarge: 45;
   white-space: nowrap;
 }
 
-.pin_image {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+//.pin_image {
+//  width: 100%;
+//  height: 100%;
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//}
 
 .pint_mock_icon_container-full {
   color: red;
@@ -191,6 +192,16 @@ $cardLarge: 45;
 .itemProductName {
   font-size: 1.1rem;
 }
+
 .card_large .pin_modal .modal_foot {
   height: 22%;
+}
+
+.pin_image {
+  text-align: -webkit-center;
+}
+
+.pin_image img {
+  width: 100%;
+  height: 100%;
 }
