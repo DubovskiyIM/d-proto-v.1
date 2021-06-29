@@ -13,6 +13,8 @@ import { FilesModule } from './modules/files/files.module';
 import { MessageModule } from './modules/message-events/message.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getMongoConfig } from './configs/mongo.config';
+import { RoomsModule } from './modules/rooms/rooms.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { getMongoConfig } from './configs/mongo.config';
     FeedbacksModule,
     FilesModule,
     MessageModule,
+    RoomsModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],

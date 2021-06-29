@@ -12,7 +12,7 @@ backend/yarn.lock
 data
 .elasticbeanstalk
 misc
-db/mongo-volume
+db/mongo-volume/
 
 # Icon must end with two \r
 Icon
