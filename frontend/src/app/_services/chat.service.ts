@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IMessages } from '../_interfaces/chat';
+import { Socket } from 'ngx-socket-io';
+import { Message } from '../_interfaces/chat';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,7 @@ export class ChatService {
     get: 'auth/get',
   };
 
-  private messages: IMessages[] = [
+  private messages = [
     {
       id: '2213321',
       data: {
@@ -71,23 +73,7 @@ export class ChatService {
     },
   ];
 
-  public sendMessage(content: any) {
-    this.messages.push({
-      id: Math.round(100000).toString(),
-      data: {
-        author: {
-          name: 'Cris',
-          _id: '60b61a4655abc60079d026d3',
-        },
-        messages: [
-          {
-            content: content.message.value,
-            time: Date.now(),
-            type: 'text',
-          },
-        ],
-      },
-    });
+  constructor(private socket: Socket) {
   }
 
   public getMessagesForChat(chatDialog) {
@@ -97,5 +83,13 @@ export class ChatService {
       }
     });
     return dialog.messages;
+  }
+
+  sendMessage(data: any) {
+    this.socket.emit('msgToServer', data.message.value);
+  }
+
+  getMessage() {
+    return this.socket.fromEvent('message').pipe(map((data) => data));
   }
 }
