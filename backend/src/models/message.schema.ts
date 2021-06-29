@@ -17,6 +17,9 @@ export class Message {
 
     @Prop({ type: Date, required: true })
     date: Date;
+
+    @Prop({ type: String, required: true })
+    type: string;
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);
