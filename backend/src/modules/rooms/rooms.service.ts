@@ -1,26 +1,65 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRoomDto } from './dto/create-room.dto';
-import { UpdateRoomDto } from './dto/update-room.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
+import { Room } from '../../types/room';
+import { Message } from '../../types/message';
 
 @Injectable()
 export class RoomsService {
-  create(createRoomDto: CreateRoomDto) {
-    return 'This action adds a new room';
+  constructor(
+      @InjectModel('Room') private readonly roomModel: Model<Room>
+  ) {}
+
+  async create(room: Room): Promise<Room> {
+    const createdRoom = new this.roomModel(room);
+    return await createdRoom.save();
   }
 
-  findAll() {
-    return `This action returns all rooms`;
+  async addMessage(message: Message, id: string) {
+    const room = await this.findById(id);
+    message.user = message.user._id;
+    room.messages.push(message);
+
+    return await room.save();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} room`;
+  async findMessages(id: string, limit: number) {
+    let room = await this.findWithLimit(id, limit);
+
+    if (!room) {
+      const userRoom = new this.roomModel({ _id: id, name: id, is_user: true });
+      room = await this.create(userRoom);
+    }
+
+    return room.messages;
   }
 
-  update(id: number, updateRoomDto: UpdateRoomDto) {
-    return `This action updates a #${id} room`;
+  async findAll(options?: any): Promise<Room[]> {
+    return await this.roomModel.find(options).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} room`;
+  async findWithLimit(id: string, limit: number): Promise<Room | null> {
+    return await this.roomModel
+        .findById(id)
+        .slice('messages', limit)
+        // .populate('messages.user', { _id: 1, username: 1, email: 1 })
+        .exec();
+  }
+
+  async findById(id: string): Promise<Room | null> {
+    return await this.roomModel.findById(id).exec();
+  }
+
+  async findOne(options?: any, fields?: any): Promise<Room | null> {
+    return await this.roomModel.findOne(options, fields).exec();
+  }
+
+  async update(id: string, newValue: Room): Promise<Room | null> {
+    return await this.roomModel.findByIdAndUpdate(id, newValue).exec();
+  }
+
+  async delete(id: string): Promise<Room | null> {
+    return await this.roomModel.findByIdAndRemove(id).exec();
   }
 }
