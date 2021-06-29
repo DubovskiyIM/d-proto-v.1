@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrdersService } from './orders.service';
 import { OrdersController } from './orders.controller';
-import { Product, ProductSchema } from '../models/product.schema';
-import { Order, OrderSchema } from '../models/order.schema';
-import { User, UserSchema } from '../models/user.schema';
+import { Product, ProductSchema } from '../../models/product.schema';
+import { Order, OrderSchema } from '../../models/order.schema';
+import { User, UserSchema } from '../../models/user.schema';
 
 @Module({
   imports: [

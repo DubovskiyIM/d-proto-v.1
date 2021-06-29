@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
-import { RedisIoAdapter } from './adapters/redis.adapter';
+import { RedisIoAdapter } from './common/adapters/redis.adapter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

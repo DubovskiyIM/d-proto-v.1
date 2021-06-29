@@ -3,7 +3,7 @@ import { HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
 import * as mongoose from 'mongoose';
 
-import { LoginDto, RegisterDto } from '../src/auth/dto/auth.dto';
+import { LoginDto, RegisterDto } from '../src/modules/auth/dto/auth.dto';
 
 const app = 'http://localhost:3000';
 

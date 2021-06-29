@@ -1,4 +1,4 @@
-import { Address } from '../../types/user';
+import { Address } from '../../../types/user';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginDto {
