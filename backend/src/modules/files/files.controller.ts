@@ -7,7 +7,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { SellerGuard } from '../guards/seller.guard';
+import { SellerGuard } from '../../common/guards/seller.guard';
 import { MFile } from './classes/mfile.class';
 import { FileElementResponse } from './dto/file-element.response';
 import { FilesService } from './files.service';

@@ -9,12 +9,12 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '../guards/jwt-auth.guard';
-import { RequestWithUser } from '../interfaces/requestWithUser.interface';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RequestWithUser } from '../../interfaces/requestWithUser.interface';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product } from '../models/product.schema';
+import { Product } from '../../models/product.schema';
 
 @Controller('products')
 export class ProductsController {

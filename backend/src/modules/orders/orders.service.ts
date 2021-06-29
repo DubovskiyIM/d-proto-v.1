@@ -1,6 +1,6 @@
 import { from, Observable } from 'rxjs';
-import { User, UserDocument } from '../models/user.schema';
-import { Order, OrderDocument } from '../models/order.schema';
+import { User, UserDocument } from '../../models/user.schema';
+import { Order, OrderDocument } from '../../models/order.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateOrderDto } from './dto/create-order.dto';

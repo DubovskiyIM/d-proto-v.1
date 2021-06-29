@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { Feedback } from '../models/feedback.schema';
+import { Feedback } from '../../models/feedback.schema';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto';
 import { FeedbacksService } from './feedbacks.service';

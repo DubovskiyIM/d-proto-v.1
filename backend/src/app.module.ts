@@ -1,16 +1,16 @@
-import { UsersModule } from './users/users.module';
-import { FeedbacksModule } from './feedbacks/feedbacks.module';
-import { OrdersModule } from './orders/orders.module';
+import { UsersModule } from './modules/users/users.module';
+import { FeedbacksModule } from './modules/feedbacks/feedbacks.module';
+import { OrdersModule } from './modules/orders/orders.module';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductsModule } from './products/products.module';
-import { FilesModule } from './files/files.module';
-import { MessageModule } from './message-events/message.module';
+import { ProductsModule } from './modules/products/products.module';
+import { FilesModule } from './modules/files/files.module';
+import { MessageModule } from './modules/message-events/message.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getMongoConfig } from './configs/mongo.config';
 
