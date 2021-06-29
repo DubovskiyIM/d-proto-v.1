@@ -10,7 +10,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './modules/products/products.module';
 import { FilesModule } from './modules/files/files.module';
-import { MessageModule } from './modules/message-events/message.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getMongoConfig } from './configs/mongo.config';
 import { RoomsModule } from './modules/rooms/rooms.module';
@@ -30,7 +29,6 @@ import { ChatModule } from './modules/chat/chat.module';
     OrdersModule,
     FeedbacksModule,
     FilesModule,
-    MessageModule,
     RoomsModule,
     ChatModule,
   ],
