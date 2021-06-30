@@ -1,15 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import {Injectable} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
+import {Model} from 'mongoose';
 
-import { Room } from '@src/types/room';
-import { Message } from '@src/types/message';
-import { MessageDocument } from "@src/models/message.schema";
+import {Message, MessageDocument} from '@src/models/message.schema';
+import {Room, RoomDocument} from "@src/models/room.schema";
+import {ChatService} from '@src/modules/chat/chat.service';
 
 @Injectable()
 export class RoomsService {
   constructor(
-      @InjectModel('Room') private readonly roomModel: Model<Room>,
+      private chatService: ChatService,
+      @InjectModel('Room') private readonly roomModel: Model<RoomDocument>,
       @InjectModel('Message') private messageModel: Model<MessageDocument>
   ) {}
 
@@ -20,24 +21,23 @@ export class RoomsService {
 
   async addMessage(message: Message, id: string): Promise<Room> {
     const room = await this.findById(id);
-    const newMessage = await new this.messageModel(message);
+    const newMessage = new this.messageModel(message);
     newMessage.save();
-    newMessage.user = message.user._id;
     await this.roomModel.updateOne({_id: id}, {$push: {messages: newMessage}});
-    console.log(newMessage);
 
-    return await room.save();
+    return await room;
   }
 
-  async findMessages(id: string, limit: number): Promise<Message[] | null> {
+  async findMessages(id: string, limit: number): Promise<Message[]> {
     let room = await this.findWithLimit(id, limit);
 
     if (!room) {
       const userRoom = new this.roomModel({ _id: id, name: id, is_user: true });
       room = await this.create(userRoom);
     }
-
-    return room.messages;
+    const messages = await this.chatService.getMessagesByIdArray(room.messages);
+    console.log(messages);
+    return messages
   }
 
   async findAll(options?: any): Promise<Room[] | null> {

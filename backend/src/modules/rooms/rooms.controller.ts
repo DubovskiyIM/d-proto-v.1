@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 
 import { RoomsService } from './rooms.service';
-import { Room } from '../../types/room';
+import { Room } from '@src/models/room.schema';
 
 @Controller('rooms')
 export class RoomsController {

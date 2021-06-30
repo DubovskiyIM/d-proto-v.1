@@ -5,6 +5,7 @@ import { RoomsController } from './rooms.controller';
 import { RoomsService } from './rooms.service';
 import { RoomSchema } from '@src/models/room.schema';
 import { MessageSchema } from "@src/models/message.schema";
+import { ChatService } from '@src/modules/chat/chat.service';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { MessageSchema } from "@src/models/message.schema";
     MongooseModule.forFeature([{ name: 'Message', schema: MessageSchema }])
   ],
   controllers: [RoomsController],
-  providers: [RoomsService],
+  providers: [RoomsService, ChatService],
   exports: [RoomsService],
 })
 export class RoomsModule {

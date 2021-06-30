@@ -66,7 +66,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     client.broadcast.to(result.room).emit(event, result.message);
     this.logger.log('Message saved and emitted.');
     return new Observable(observer =>
-        observer.next({ event, data: result.message })
+        observer.next({ event, data: result })
     );
   }
 
