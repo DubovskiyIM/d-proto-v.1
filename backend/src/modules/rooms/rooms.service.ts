@@ -2,30 +2,34 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { Room } from '../../types/room';
-import { Message } from '../../types/message';
+import { Room } from '@src/types/room';
+import { Message } from '@src/types/message';
+import { MessageDocument } from "@src/models/message.schema";
 
 @Injectable()
 export class RoomsService {
   constructor(
-      @InjectModel('Room') private readonly roomModel: Model<Room>
+      @InjectModel('Room') private readonly roomModel: Model<Room>,
+      @InjectModel('Message') private messageModel: Model<MessageDocument>
   ) {}
 
   async create(room: Room): Promise<Room> {
-    console.log(room);
     const createdRoom = new this.roomModel(room);
     return await createdRoom.save();
   }
 
-  async addMessage(message: Message, id: string) {
+  async addMessage(message: Message, id: string): Promise<Room> {
     const room = await this.findById(id);
-    message.user = message.user._id;
-    room.messages.push(message);
+    const newMessage = await new this.messageModel(message);
+    newMessage.save();
+    newMessage.user = message.user._id;
+    await this.roomModel.updateOne({_id: id}, {$push: {messages: newMessage}});
+    console.log(newMessage);
 
     return await room.save();
   }
 
-  async findMessages(id: string, limit: number) {
+  async findMessages(id: string, limit: number): Promise<Message[] | null> {
     let room = await this.findWithLimit(id, limit);
 
     if (!room) {
@@ -36,7 +40,7 @@ export class RoomsService {
     return room.messages;
   }
 
-  async findAll(options?: any): Promise<Room[]> {
+  async findAll(options?: any): Promise<Room[] | null> {
     return await this.roomModel.find(options).exec();
   }
 
