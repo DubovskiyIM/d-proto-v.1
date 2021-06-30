@@ -1,15 +1,14 @@
 import { Provider } from '@nestjs/common';
-import Redis from 'ioredis';
+// import { createAdapter } from 'socket.io-redis';
+import { RedisClient } from 'redis';
 
 import { REDIS_PUBLISHER_CLIENT, REDIS_SUBSCRIBER_CLIENT } from './redis.constants';
-
-export type RedisClient = Redis.Redis;
 
 export const redisProviders: Provider[] = [
     {
         useFactory: (): RedisClient => {
-            return new Redis({
-                host: 'socket-redis',
+            return new RedisClient({
+                host: 'redis',
                 port: 6379,
             });
         },
@@ -17,8 +16,8 @@ export const redisProviders: Provider[] = [
     },
     {
         useFactory: (): RedisClient => {
-            return new Redis({
-                host: 'socket-redis',
+            return new RedisClient({
+                host: 'redis',
                 port: 6379,
             });
         },

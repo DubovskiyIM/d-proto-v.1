@@ -4,7 +4,7 @@ import { FileElementResponse } from './dto/file-element.response';
 import { format } from 'date-fns';
 import { path } from 'app-root-path';
 import { ensureDir, writeFile } from 'fs-extra';
-import * as sharp from 'sharp';
+import sharp from 'sharp';
 
 @Injectable()
 export class FilesService {
