@@ -12,6 +12,7 @@ export class RoomsService {
   ) {}
 
   async create(room: Room): Promise<Room> {
+    console.log(room);
     const createdRoom = new this.roomModel(room);
     return await createdRoom.save();
   }

@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
-import { RedisIoAdapter } from './common/adapters/redis.adapter';
+import { initAdapters } from '@src/common/middlewares/init-adapters.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,8 +18,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  initAdapters(app);
   app.use(cookieParser());
-  app.useWebSocketAdapter(new RedisIoAdapter(app));
 
   await app.listen(port);
 }

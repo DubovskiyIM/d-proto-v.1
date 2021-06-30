@@ -1,3 +1,4 @@
+import { HttpCode, HttpStatus, UseGuards, UseInterceptors, Logger } from "@nestjs/common";
 import {
   WebSocketGateway,
   SubscribeMessage,
@@ -8,38 +9,40 @@ import {
 import { Observable } from 'rxjs';
 import { Socket, Server } from 'socket.io';
 
-import { JwtService } from '@nestjs/jwt';
-import { User } from '../../types/user';
-import { RoomsService } from '../rooms/rooms.service';
-import { UseGuards } from "@nestjs/common";
+import { RedisPropagatorInterceptor } from "@src/shared/redis-propagator/redis-propagator.interceptor";
 import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
+import { AuthService } from "@src/modules/auth/auth.service";
+import { RoomsService } from '@src/modules/rooms/rooms.service';
 
-@WebSocketGateway(1080, { namespace: 'rooms' })
+@UseInterceptors(RedisPropagatorInterceptor)
+@WebSocketGateway({ namespace: 'rooms' })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
+  private logger: Logger = new Logger("ChatGateway");
+
   connectedUsers: string[] = [];
 
   constructor(
-      private jwtService: JwtService,
+      private authService: AuthService,
       private roomService: RoomsService
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   async handleConnection(socket: Socket) {
     const authToken = socket.handshake.headers.authorization;
-    const user: User = await this.jwtService.verify(authToken);
+    const userId = await this.authService.verify(authToken);
 
-    this.connectedUsers = [...this.connectedUsers, String(user._id)];
+    this.connectedUsers = [...this.connectedUsers, String(userId)];
 
+    this.logger.log("Initialized");
     this.server.emit('users', this.connectedUsers);
   }
 
   async handleDisconnect(socket: Socket) {
     const authToken = socket.handshake.headers.authorization;
-    const user: User = await this.jwtService.verify(authToken);
-    const userPos = this.connectedUsers.indexOf(String(user._id));
+    const userId = await this.authService.verify(authToken);
+    const userPos = this.connectedUsers.indexOf(String(userId));
 
     if (userPos > -1) {
       this.connectedUsers = [
@@ -51,9 +54,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.server.emit('users', this.connectedUsers);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @SubscribeMessage('message')
   async onMessage(client: Socket, data: any) {
+    console.log(data);
     const event: string = 'message';
     const result = data[0];
 
@@ -65,7 +69,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @SubscribeMessage('join')
   async onRoomJoin(client: Socket, data: any): Promise<any> {
     client.join(data[0]);
