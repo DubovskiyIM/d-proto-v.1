@@ -13,9 +13,10 @@ import { RedisPropagatorInterceptor } from "@src/shared/redis-propagator/redis-p
 import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
 import { AuthService } from "@src/modules/auth/auth.service";
 import { RoomsService } from '@src/modules/rooms/rooms.service';
+import { UsersService } from "@src/modules/users/users.service";
 
 @UseInterceptors(RedisPropagatorInterceptor)
-@WebSocketGateway({ namespace: 'rooms' })
+@WebSocketGateway( { namespace: 'rooms' })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
@@ -30,17 +31,18 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ) {}
 
   async handleConnection(socket: Socket) {
-    const authToken = socket.handshake.headers.authorization;
-    const userId = await this.authService.verify(authToken);
+    const authToken = socket.handshake.headers.cookie.split(';')[0].split('=Bearer ')[1];
+    const [payload, user] = await this.authService.verify(authToken);
 
-    this.connectedUsers = [...this.connectedUsers, String(userId)];
+    this.connectedUsers = [...this.connectedUsers, String(payload.userId)];
 
-    this.logger.log("Initialized");
+    this.server.emit('onJoin', user);
     this.server.emit('users', this.connectedUsers);
+    this.logger.log('Connection completed.');
   }
 
   async handleDisconnect(socket: Socket) {
-    const authToken = socket.handshake.headers.authorization;
+    const authToken = socket.handshake.headers.cookie.split(';')[0].split('=Bearer ')[1];
     const userId = await this.authService.verify(authToken);
     const userPos = this.connectedUsers.indexOf(String(userId));
 
@@ -52,18 +54,17 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     this.server.emit('users', this.connectedUsers);
+    this.logger.log('Connection destroyed.');
   }
 
   // @UseGuards(JwtAuthGuard)
   @SubscribeMessage('message')
-  async onMessage(client: Socket, data: any) {
-    console.log(data);
+  async onMessage(client: Socket, result: any) {
     const event: string = 'message';
-    const result = data[0];
 
-    await this.roomService.addMessage(result.message, result.room);
+    await this.roomService.addMessage(result, result.room);
     client.broadcast.to(result.room).emit(event, result.message);
-
+    this.logger.log('Message saved and emitted.');
     return new Observable(observer =>
         observer.next({ event, data: result.message })
     );
@@ -72,11 +73,11 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   // @UseGuards(JwtAuthGuard)
   @SubscribeMessage('join')
   async onRoomJoin(client: Socket, data: any): Promise<any> {
-    client.join(data[0]);
-
+    client.join(data);
     const messages = await this.roomService.findMessages(data, 25);
-
     client.emit('message', messages);
+    // const messages = await this.roomService.findMessages(data, 25);
+    // client.emit('message', messages);
   }
 
   @SubscribeMessage('leave')
