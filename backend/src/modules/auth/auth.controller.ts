@@ -10,18 +10,17 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
-import { Observable, of } from 'rxjs';
-import { User } from '../../models/user.schema';
+import { Response } from 'express';
+import { User } from '@src/models/user.schema';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/auth.dto';
 import { UsersService } from '../users/users.service';
 
-import { GoogleAuthGuard } from '../../common/guards/google-auth.guard';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
-import { LocalAuthGuard } from '../../common/guards/local-auth.guard';
+import { GoogleAuthGuard } from '@src/common/guards/google-auth.guard';
+import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
+import { LocalAuthGuard } from '@src/common/guards/local-auth.guard';
 
-import { RequestWithUser } from '../../interfaces/requestWithUser.interface';
+import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -72,8 +71,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Post('logout')
   async logOut(
-    @Req() request: RequestWithUser,
-    @Res() response: Response,
+      @Res() response: Response,
   ): Promise<Response> {
     response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
     return response.sendStatus(200);
@@ -88,8 +86,7 @@ export class AuthController {
   @Get('google')
   @UseGuards(GoogleAuthGuard)
   async googleAuth(
-    @Req() request: Request,
-    @Res() response: Response,
+      @Res() response: Response,
   ): Promise<Response> {
     return response;
   }

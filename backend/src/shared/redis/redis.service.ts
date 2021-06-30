@@ -8,7 +8,7 @@ import {
     REDIS_PUBLISHER_CLIENT,
     REDIS_SUBSCRIBER_CLIENT,
 } from './redis.constants';
-import { RedisClient } from './redis.providers';
+import { RedisClient } from "redis";
 
 export interface RedisSubscribeMessage {
     readonly message: string;
@@ -27,7 +27,7 @@ export class RedisService {
     public fromEvent<T extends RedisSocketEventSendDTO>(eventName: string): Observable<T> {
         this.redisSubscriberClient.subscribe(eventName);
 
-        return Observable.create((observer: Observer<RedisSubscribeMessage>) =>
+        return new Observable((observer: Observer<RedisSubscribeMessage>) =>
             this.redisSubscriberClient.on('message', (channel, message) => observer.next({ channel, message })),
         ).pipe(
             filter(({ channel }) => channel === eventName),

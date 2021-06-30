@@ -16,6 +16,7 @@ import { ProductsModule } from '@src/modules/products/products.module';
 import { FeedbacksModule } from '@src/modules/feedbacks/feedbacks.module';
 
 import { SharedModule } from "@src/shared/shared.module";
+import { ChatGateway } from "@src/modules/chat/chat.gateway";
 
 @Module({
   imports: [
@@ -36,6 +37,6 @@ import { SharedModule } from "@src/shared/shared.module";
     SharedModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatGateway],
 })
 export class AppModule {}

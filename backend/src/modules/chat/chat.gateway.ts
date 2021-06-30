@@ -22,7 +22,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   private logger: Logger = new Logger("ChatGateway");
 
-  connectedUsers: string[] = [];
+  connectedUsers: string[] = []
 
   constructor(
       private authService: AuthService,
