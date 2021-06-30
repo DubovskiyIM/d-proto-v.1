@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose';
 import { User } from "./user.schema";
 import { Message } from "./message.schema";
 
-export type RoomDocument = Room & mongoose.Document;
+export type RoomDocument = Room & Document;
 
 @Schema()
 export class Room {

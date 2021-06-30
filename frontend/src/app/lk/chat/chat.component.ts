@@ -61,7 +61,7 @@ export class ChatComponent implements AfterViewInit, OnChanges, OnInit {
 
     this.socket.on('message', (messages) => {
       console.log(messages);
-      this.messages = messages.forEach();
+      // this.messages = messages.forEach();
     });
   }
 
