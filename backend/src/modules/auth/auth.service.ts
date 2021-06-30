@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable, Req } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../../models/user.schema';
+import {User, UserDocument} from '../../models/user.schema';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/auth.dto';
 import * as bcrypt from 'bcryptjs';
 import { TokenPayload } from '../../interfaces/TokenPayload.interface';
 import { RequestWithUser } from '../../interfaces/requestWithUser.interface';
+import { WsException } from "@nestjs/websockets";
 
 @Injectable()
 export class AuthService {
@@ -79,5 +80,31 @@ export class AuthService {
       message: 'User information from google',
       user,
     };
+  }
+
+  public async verify(token: string, isWs: boolean = false): Promise<User> {
+    try {
+      const payload = <any>this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
+      const user = await this.usersService.findById(payload.sub._id);
+
+      if (!user) {
+        if (isWs) {
+          throw new WsException('Unauthorized access');
+        } else {
+          throw new HttpException(
+              'Unauthorized access',
+              HttpStatus.BAD_REQUEST
+          );
+        }
+      }
+
+      return payload.sub._id;
+    } catch (err) {
+      if (isWs) {
+        throw new WsException(err.message);
+      } else {
+        throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+      }
+    }
   }
 }
