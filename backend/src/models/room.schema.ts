@@ -32,7 +32,7 @@ export class Room {
     messages: Message[];
 
     @Prop({ type: Date, default: Date.now })
-    createdAt: string;
+    createdAt: Date;
 
     @Prop({ type: Date, default: Date.now })
     updatedAt: Date;

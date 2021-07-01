@@ -4,7 +4,7 @@ import {
   SubscribeMessage,
   WebSocketServer,
   OnGatewayConnection,
-  OnGatewayDisconnect
+  OnGatewayDisconnect, OnGatewayInit
 } from '@nestjs/websockets';
 import { Observable } from 'rxjs';
 import { Socket, Server } from 'socket.io';
@@ -17,7 +17,7 @@ import { UsersService } from "@src/modules/users/users.service";
 
 @UseInterceptors(RedisPropagatorInterceptor)
 @WebSocketGateway( { namespace: 'rooms' })
-export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
@@ -29,6 +29,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       private authService: AuthService,
       private roomService: RoomsService
   ) {}
+
+
+  async afterInit(server: any): Promise<void> {
+    this.server = server;
+    this.logger.log('Initialized.');
+  }
 
   async handleConnection(socket: Socket) {
     const authToken = socket.handshake.headers.cookie.split(';')[0].split('=Bearer ')[1];
