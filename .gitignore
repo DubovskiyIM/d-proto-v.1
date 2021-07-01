@@ -17,6 +17,8 @@ db/mongo-volume/
 # Icon must end with two \r
 Icon
 
+.idea
+
 
 # Thumbnails
 ._*
