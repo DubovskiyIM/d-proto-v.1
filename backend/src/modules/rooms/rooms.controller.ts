@@ -7,6 +7,7 @@ import {
 
 import { RoomsService } from './rooms.service';
 import { Room } from '@src/models/room.schema';
+import { CreateRoomDto } from "@src/modules/rooms/dto/create-room.dto";
 
 @Controller('rooms')
 export class RoomsController {
@@ -37,11 +38,11 @@ export class RoomsController {
   }
 
   @Post()
-  async create(@Body() body: Room): Promise<Room> {
-    if (!body || (body && Object.keys(body).length === 0))
+  async create(@Body() dto: CreateRoomDto): Promise<Room> {
+    if (!dto || (dto && Object.keys(dto).length === 0))
       throw new HttpException('Missing information', HttpStatus.BAD_REQUEST);
 
-    return await this.roomsService.create(body);
+    return await this.roomsService.create(dto);
   }
 
   @Put(':id')
