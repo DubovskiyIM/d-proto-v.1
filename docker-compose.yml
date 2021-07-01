@@ -16,15 +16,13 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
-    command: ng serve --proxy-config proxy.conf.json --host 0.0.0.0
-    ports:
-      - '4200:4200'
-    volumes:
-      - /node_modules
-      - ./frontend/src:/app/src
-    restart: on-failure
-    container_name: frontend
+      dockerfile: Dockerfile
+      ports:
+        - '3000:3000'
+      volumes:
+        - /node_modules
+      restart: on-failure
+      container_name: frontend
     networks:
       - app-network
 
@@ -66,7 +64,7 @@ services:
     command: [
         "redis-server",
         "--bind",
-        "0.0.0.0",
+        "redis",
         "--port",
         "6379"
     ]
