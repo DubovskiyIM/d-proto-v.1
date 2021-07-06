@@ -27,10 +27,13 @@ import { ChatComponent } from './lk/chat/chat.component';
 import { ChatMessageComponent } from './lk/chat/chat-message/chat-message.component';
 import { ConversationComponent } from './lk/messages/conversation/conversation.component';
 import { CardsComponent } from './lk/cards/cards.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
 }
+
+const config: SocketIoConfig = { url: 'http://localhost:3001/messages', options: {} };
 
 @NgModule({
   declarations: [
@@ -62,6 +65,7 @@ export function getBaseHref(platformLocation: PlatformLocation): string {
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
