@@ -7,19 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardComponent implements OnInit {
   @Input() card;
-  public showingImageSrc: string;
+  size = 'medium';
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.showingImageSrc = this.card.images.defaultOrderImage;
-  }
-
-  public onMouseCardOver(): void {
-    this.showingImageSrc = this.card.images.secondOrderImage;
-  }
-
-  public onMouseCardOut(): void {
-    this.showingImageSrc = this.card.images.defaultOrderImage;
-  }
+  ngOnInit(): void {}
 }

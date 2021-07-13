@@ -21,8 +21,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     const users = [
       {
         id: 1,
-        email: 'testtest',
-        username: 'chel',
+        username: 'testtest',
         password: 'testtest',
       },
     ];
@@ -41,10 +40,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
               request.url.endsWith('/auth/login') &&
               request.method === 'POST'
             ) {
-              debugger;
               const user = users.find(
                 (x) =>
-                  x.email === request.body.email &&
+                  x.username === request.body.username &&
                   x.password === request.body.password
               );
 
@@ -52,8 +50,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
               console.log('true');
               return ok({
                 id: user.id,
-                email: user.email,
-                username: 'chel',
+                username: user.username,
                 token: `fake-jwt-token`,
               });
             }

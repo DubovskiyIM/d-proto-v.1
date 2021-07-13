@@ -1,16 +1,8 @@
-$cardWidth: 250px;
-$rowIncrement: 10px;
-$cardBorderRadius: 16px;
-$CardSmall: 26;
-$cardMedium: 33;
-$cardLarge: 45;
-
-.pin_container {
-  margin: 0;
-  padding: 0;
+.containerCards {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, $cardWidth);
-  grid-auto-rows: $rowIncrement;
+  overflow-y: hidden;
+  grid-template-columns: repeat(auto-fill, 250px);
+  grid-auto-rows: 360px;
   justify-content: center;
 }
