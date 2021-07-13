@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { Message } from '../_interfaces/chat';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -85,8 +84,8 @@ export class ChatService {
     return dialog.messages;
   }
 
-  sendMessage(data: any) {
-    this.socket.emit('msgToServer', data.message.value);
+  sendMessage(body) {
+    this.socket.emit('message', body.message);
   }
 
   getMessage() {

@@ -1,9 +1,25 @@
-import { Schema } from 'mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
+import { User } from "./user.schema";
 
-const message = new Schema({
-    message: { type: String, required: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
-    date: { type: Date, required: true }
-});
+export type MessageDocument = Message & Document;
 
-export const MessageSchema = message;
+@Schema()
+export class Message {
+    @Prop({ type: String, required: true })
+    message: string;
+
+    @Prop({
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    })
+    user: User[];
+
+    @Prop({ type: Date, required: true })
+    date: Date;
+
+    @Prop({ type: String, required: true })
+    type: string;
+}
+
+export const MessageSchema = SchemaFactory.createForClass(Message);

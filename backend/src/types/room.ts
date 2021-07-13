@@ -5,10 +5,10 @@ import { User } from './user';
 export interface Room extends Document {
     name: String;
     description?: String;
-    is_user: Boolean;
-    is_private: Boolean;
+    isUser: Boolean;
+    isPrivate: Boolean;
     users?: User[];
     messages?: Message[];
-    created_at: Date;
-    updated_at: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }

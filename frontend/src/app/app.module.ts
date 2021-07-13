@@ -33,7 +33,7 @@ export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
 }
 
-const config: SocketIoConfig = { url: 'http://localhost:3001/messages', options: {} };
+const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
 
 @NgModule({
   declarations: [

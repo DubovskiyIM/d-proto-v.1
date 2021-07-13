@@ -11,6 +11,8 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { ChatService } from '../../_services/chat.service';
 import { Socket } from 'ngx-socket-io';
+import { User } from '../../_interfaces/user';
+import { Message } from '../../_interfaces/chat';
 
 @Component({
   selector: 'app-chat',
@@ -18,23 +20,10 @@ import { Socket } from 'ngx-socket-io';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements AfterViewInit, OnChanges, OnInit {
-  private activeRoom = '';
+  private activeRoom;
+  private user: User;
+  private message: Message;
   selected = 'general';
-
-  private rooms = {
-    general: false,
-    roomA: false,
-    roomB: false,
-    roomC: false,
-    roomD: false,
-  };
-  private listRooms = [
-    'general',
-    'roomA',
-    'roomB',
-    'roomC',
-    'roomD'
-  ];
 
   @ViewChild('footerChat', { read: ElementRef, static: false })
   footerChatView: ElementRef;
@@ -42,6 +31,7 @@ export class ChatComponent implements AfterViewInit, OnChanges, OnInit {
   @Input() chatDialog;
 
   public footerChatHeight;
+  public users;
 
   public messages = [];
 
@@ -53,23 +43,25 @@ export class ChatComponent implements AfterViewInit, OnChanges, OnInit {
   }
 
   ngOnInit() {
-    // this.getMessages();
-    this.activeRoom = this.selected;
+    const activeRoomIdMock = '60db831f75ec9d0091d50f44';
 
     this.socket.on('connect', () => {
-      this.check();
+      console.log('connected');
     });
 
-    this.socket.on('joinedRoom', (room) => {
-      this.rooms[room] = true;
+    this.socket.emit('join', {
+      _id: activeRoomIdMock
+    });
+    this.activeRoom = activeRoomIdMock;
+
+    // TODO Search in base by array of ids
+    this.socket.on('onJoin', (user) => {
+      this.user = user;
     });
 
-    this.socket.on('leftRoom', (room) => {
-      this.rooms[room] = false;
-    });
-
-    this.socket.on('msgToClient', (message) => {
-      this.receivedMessage(message);
+    this.socket.on('message', (messages) => {
+      console.log(messages);
+      // this.messages = messages.forEach();
     });
   }
 
@@ -79,19 +71,6 @@ export class ChatComponent implements AfterViewInit, OnChanges, OnInit {
       time: Date.now(),
       content: message
     });
-    console.log(this.messages);
-  }
-
-  check() {
-    if (!this.isMemberOfActiveRoom) {
-      this.socket.emit('leaveRoom', this.activeRoom);
-    } else {
-      this.socket.emit('joinRoom', this.activeRoom);
-    }
-  }
-
-  isMemberOfActiveRoom() {
-    return this.rooms[this.activeRoom];
   }
 
   ngAfterViewInit(): void {
@@ -99,20 +78,20 @@ export class ChatComponent implements AfterViewInit, OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // if (changes.chatDialog) {
-    //   this.getMessages();
-    // }
   }
 
   public sendMessage(): void {
     if (!this.messageForm.controls.message.value) {
       return;
     }
-    this.chatService.sendMessage(this.messageForm.controls);
+    this.socket.emit('message', {
+      result: true,
+      room: this.activeRoom,
+      message: this.messageForm.controls.message.value,
+      user: this.user,
+      type: 'text',
+      date: Date.now()
+    });
     this.messageForm.reset();
   }
-  //
-  // public getMessages() {
-  //   this.messages = this.chatService.getMessagesForChat(this.chatDialog);
-  // }
 }

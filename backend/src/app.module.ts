@@ -1,18 +1,22 @@
-import { UsersModule } from './users/users.module';
-import { FeedbacksModule } from './feedbacks/feedbacks.module';
-import { OrdersModule } from './orders/orders.module';
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-
-import { AuthModule } from './auth/auth.module';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ProductsModule } from './products/products.module';
-import { FilesModule } from './files/files.module';
-import { MessageModule } from './message-events/message.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { getMongoConfig } from './configs/mongo.config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { getMongoConfig } from '@src/configs/mongo.config';
+
+import { AppController } from '@src/app.controller';
+import { AppService } from '@src/app.service';
+
+import { AuthModule } from '@src/modules/auth/auth.module';
+import { FilesModule } from '@src/modules/files/files.module';
+import { ChatModule } from '@src/modules/chat/chat.module';
+import { RoomsModule } from '@src/modules/rooms/rooms.module';
+import { UsersModule } from '@src/modules/users/users.module';
+import { OrdersModule } from '@src/modules/orders/orders.module';
+import { ProductsModule } from '@src/modules/products/products.module';
+import { FeedbacksModule } from '@src/modules/feedbacks/feedbacks.module';
+
+import { SharedModule } from "@src/shared/shared.module";
+import { ChatGateway } from "@src/modules/chat/chat.gateway";
 
 @Module({
   imports: [
@@ -28,9 +32,11 @@ import { getMongoConfig } from './configs/mongo.config';
     OrdersModule,
     FeedbacksModule,
     FilesModule,
-    MessageModule,
+    RoomsModule,
+    ChatModule,
+    SharedModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatGateway],
 })
 export class AppModule {}
