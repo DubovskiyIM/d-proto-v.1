@@ -11,7 +11,7 @@ import { RegistrationComponent } from './pages/registration/registration.compone
 import { fakeBackendProvider } from './_helpers/fake-backend';
 import { ErrorInterceptor } from './_interceptor/error.interceptor';
 import { JwtInterceptor } from './_interceptor/jwt.interceptor';
-import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfileComponent } from './lk/profile/profile.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MaterialImportsModule } from './_modules/material-imports.module';
 import { LkComponent } from './lk/lk.component';
