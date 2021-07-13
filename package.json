@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@nestjs/platform-ws": "^7.6.18"
+  }
+}
