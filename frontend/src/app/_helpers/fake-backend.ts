@@ -20,8 +20,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const users = [
       {
-        id: 1,
-        username: 'testtest',
+        id: 3,
+        email: 'testtest',
+        username: 'cris',
         password: 'testtest',
       },
     ];
@@ -42,7 +43,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             ) {
               const user = users.find(
                 (x) =>
-                  x.username === request.body.username &&
+                  x.email === request.body.email &&
                   x.password === request.body.password
               );
 
@@ -51,6 +52,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
               return ok({
                 id: user.id,
                 username: user.username,
+                email: user.email,
                 token: `fake-jwt-token`,
               });
             }

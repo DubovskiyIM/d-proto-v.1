@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF, PlatformLocation, CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -28,6 +29,7 @@ import { ChatMessageComponent } from './lk/chat/chat-message/chat-message.compon
 import { ConversationComponent } from './lk/messages/conversation/conversation.component';
 import { CardsComponent } from './lk/cards/cards.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -75,6 +77,7 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
       useFactory: getBaseHref,
       deps: [PlatformLocation],
     },
+    CookieService,
     // fakeBackendProvider,
   ],
   bootstrap: [AppComponent],

@@ -21,7 +21,7 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     @Inject(APP_BASE_HREF) private baseUrl: string,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
   ) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser'))
@@ -84,5 +84,6 @@ export class AuthenticationService {
     );
   }
 
-  public resetPassword(email: string) {}
+  public resetPassword(email: string) {
+  }
 }
