@@ -68,7 +68,7 @@ export class AuthController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post('logout')
   async logOut(
       @Res() response: Response,
@@ -77,7 +77,7 @@ export class AuthController {
     return response.sendStatus(200);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get('users')
   async getUsers(): Promise<User[]> {
     return await this.usersService.findAll();
