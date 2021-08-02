@@ -1,11 +1,15 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res} from '@nestjs/common';
 import { ImagesService } from './images.service';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import {FileInterceptor} from "@nestjs/platform-express";
+import {diskStorage} from "multer";
+import {extname} from "path";
 
 @Controller('images')
 export class ImagesController {
+  private SERVER_URL:  string  =  "http://localhost:3001/";
+
   constructor(private readonly imagesService: ImagesService) {}
 
   @Post('upload')

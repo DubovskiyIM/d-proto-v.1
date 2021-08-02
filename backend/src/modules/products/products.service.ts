@@ -42,4 +42,8 @@ export class ProductsService {
   public async remove(id: string): Promise<Product> {
     return await this.productModel.findByIdAndRemove(id);
   }
+
+  public async setImages(id, images: string[]){
+    return await this.productModel.findByIdAndUpdate(id, { images });
+  }
 }

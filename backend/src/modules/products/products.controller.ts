@@ -1,23 +1,24 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-  Req,
+  Get, Post, Patch, Delete,
+  Body, Controller, Param,
+  UseGuards, UseInterceptors, UploadedFile,
+  Req, Res
 } from '@nestjs/common';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
-import { RequestWithUser } from '../../interfaces/requestWithUser.interface';
+import { FileInterceptor } from "@nestjs/platform-express";
+import { diskStorage } from "multer";
+import { extname } from "path";
+
+import { Product } from '@src/models/product.schema';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product } from '../../models/product.schema';
+import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
+import { IdValidationPipe } from "@src/pipes/id-validation.pipe";
+import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
 
 @Controller('products')
 export class ProductsController {
+  SERVER_URL:  string  =  "http://localhost:3001/";
   constructor(private readonly productsService: ProductsService) {}
 
   @Post('create')
@@ -31,7 +32,7 @@ export class ProductsController {
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  async findAllByOwner(@Param('id') id: string): Promise<Product[]> {
+  async findAllByOwner(@Param('id', IdValidationPipe) id: string): Promise<Product[]> {
     return await this.productsService.findAllByOwner(id);
   }
 
@@ -41,20 +42,44 @@ export class ProductsController {
   }
 
   @Get('product/:id')
-  async findOne(@Param('id') id: string): Promise<Product> {
+  async findOne(@Param('id', IdValidationPipe) id: string): Promise<Product> {
     return await this.productsService.findOne(id);
   }
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', IdValidationPipe) id: string,
     @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     return await this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<Product> {
+  async remove(@Param('id', IdValidationPipe) id: string): Promise<Product> {
     return await this.productsService.remove(id);
+  }
+
+  @Post(':id/product')
+  @UseInterceptors(FileInterceptor('file',
+      {
+        storage: diskStorage({
+          destination: './products',
+          filename: (_req, file, cb) => {
+            const randomName = Array(32)
+                .fill(null)
+                .map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
+            return cb(null, `${randomName}${extname(file.originalname)}`)
+          }
+        })
+      })
+  )
+  async uploadImages(@Param('id', IdValidationPipe) id: string, @UploadedFile() files: any[]) {
+    const urls = files.map(file => `${this.SERVER_URL}${file.path}`)
+    await this.productsService.setImages(id, urls);
+  }
+
+  @Get('product/:fileId')
+  async serveImages(@Param('fileId', IdValidationPipe) fileId: string, @Res() res): Promise<any> {
+    res.sendFile(fileId, { root: 'products' });
   }
 }

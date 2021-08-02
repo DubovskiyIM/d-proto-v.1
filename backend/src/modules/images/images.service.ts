@@ -13,7 +13,6 @@ export class ImagesService {
 
   async create(createImageDto: any) {
     const uploadedImage = await new this.imageModel(createImageDto);
-    console.log(uploadedImage);
     return await uploadedImage.save();
   }
 
