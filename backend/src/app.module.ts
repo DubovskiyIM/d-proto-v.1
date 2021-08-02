@@ -17,7 +17,6 @@ import { FeedbacksModule } from '@src/modules/feedbacks/feedbacks.module';
 
 import { SharedModule } from "@src/shared/shared.module";
 import { ChatGateway } from "@src/modules/chat/chat.gateway";
-import { ImagesModule } from './modules/images/images.module';
 
 @Module({
   imports: [
@@ -35,8 +34,7 @@ import { ImagesModule } from './modules/images/images.module';
     FilesModule,
     RoomsModule,
     ChatModule,
-    SharedModule,
-    ImagesModule
+    SharedModule
   ],
   controllers: [AppController],
   providers: [AppService, ChatGateway],
