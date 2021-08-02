@@ -11,8 +11,9 @@ export class ImagesService {
       @InjectModel('Image') private imageModel: Model<ImageDocument>,
   ) {}
 
-  async create(createImageDto: CreateImageDto) {
+  async create(createImageDto: any) {
     const uploadedImage = await new this.imageModel(createImageDto);
+    console.log(uploadedImage);
     return await uploadedImage.save();
   }
 

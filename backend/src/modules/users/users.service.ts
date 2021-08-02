@@ -14,6 +14,10 @@ export class UsersService {
     return await createdUser.save();
   }
 
+  public async setAvatar(id, avatarUrl: string){
+    return await this.userModel.findByIdAndUpdate(id, { avatar: avatarUrl });
+  }
+
   public async findAll(): Promise<User[]> {
     return await this.userModel.find();
   }

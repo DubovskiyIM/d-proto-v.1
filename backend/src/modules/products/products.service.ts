@@ -1,8 +1,8 @@
-import { UserDocument } from '../../models/user.schema';
+import { UserDocument } from '@src/models/user.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Product, ProductDocument } from '../../models/product.schema';
+import { Product, ProductDocument } from '@src/models/product.schema';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
