@@ -47,6 +47,9 @@ export class Product {
     sizes: string[];
     brand: string;
   };
+
+  @Prop()
+  likes: string[];
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

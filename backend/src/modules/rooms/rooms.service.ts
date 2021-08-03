@@ -1,11 +1,11 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
-import {InjectModel} from '@nestjs/mongoose';
-import {Model} from 'mongoose';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
-import {Message, MessageDocument} from '@src/models/message.schema';
-import {Room, RoomDocument} from "@src/models/room.schema";
-import {ChatService} from '@src/modules/chat/chat.service';
-import {CreateRoomDto} from "@src/modules/rooms/dto/create-room.dto";
+import { Message, MessageDocument } from '@src/models/message.schema';
+import { Room, RoomDocument } from "@src/models/room.schema";
+import { ChatService } from '@src/modules/chat/chat.service';
+import { CreateRoomDto } from "@src/modules/rooms/dto/create-room.dto";
 
 @Injectable()
 export class RoomsService {
@@ -34,9 +34,7 @@ export class RoomsService {
       const userRoom = new this.roomModel({ _id: id, name: id, is_user: true });
       room = await this.create(userRoom);
     }
-    const messages = await this.chatService.getMessagesByIdArray(room.messages);
-    console.log(messages);
-    return messages
+    return await this.chatService.getMessagesByIdArray(room.messages)
   }
 
   async findAll(options?: any): Promise<Room[] | null> {
