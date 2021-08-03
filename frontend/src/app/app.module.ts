@@ -29,7 +29,7 @@ import { ChatMessageComponent } from './lk/chat/chat-message/chat-message.compon
 import { ConversationComponent } from './lk/messages/conversation/conversation.component';
 import { CardsComponent } from './lk/cards/cards.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-
+import { NgxMasonryModule } from 'ngx-masonry';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -66,8 +66,9 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     BrowserAnimationsModule,
     FormsModule,
     CommonModule,
+    NgxMasonryModule,
     ReactiveFormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
