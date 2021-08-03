@@ -64,11 +64,11 @@ export class AuthService {
   public getCookieWithJwtToken(userId: number): string {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload);
-    return `Authorization= Bearer ${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_EXPIRATION_TIME}`;
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_EXPIRATION_TIME}`;
   }
 
   public getCookieForLogOut(): string {
-    return `Authorization=; HttpOnly; Path=/; Max-Age=0`;
+    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
 
   public async googleLogin(@Req() user: RequestWithUser): Promise<any> {

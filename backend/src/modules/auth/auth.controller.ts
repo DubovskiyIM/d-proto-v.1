@@ -9,6 +9,9 @@ import {
   HttpCode,
   Req,
   Res,
+  Param,
+  UseInterceptors,
+  UploadedFile
 } from '@nestjs/common';
 import { Response } from 'express';
 import { User } from '@src/models/user.schema';
@@ -20,10 +23,15 @@ import { GoogleAuthGuard } from '@src/common/guards/google-auth.guard';
 import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '@src/common/guards/local-auth.guard';
 
+import { FileInterceptor } from "@nestjs/platform-express";
+import { diskStorage } from  'multer';
+import { extname } from  'path';
+
 import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
 
 @Controller('auth')
 export class AuthController {
+  SERVER_URL:  string  =  "http://localhost:3001/";
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
@@ -95,5 +103,28 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   async googleAuthRedirect(@Req() req): Promise<any> {
     return await this.authService.googleLogin(req);
+  }
+
+  @Post(':id/avatar')
+  @UseInterceptors(FileInterceptor('file',
+      {
+        storage: diskStorage({
+          destination: './avatars',
+          filename: (_req, file, cb) => {
+            const randomName = Array(32)
+                .fill(null)
+                .map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
+            return cb(null, `${randomName}${extname(file.originalname)}`)
+          }
+        })
+      })
+  )
+  uploadAvatar(@Param('id') id, @UploadedFile() file) {
+    this.usersService.setAvatar(id, `${this.SERVER_URL}${file.path}`);
+  }
+
+  @Get('avatars/:fileId')
+  async serveAvatar(@Param('fileId') fileId, @Res() res): Promise<any> {
+    res.sendFile(fileId, { root: 'avatars' });
   }
 }
