@@ -1,27 +1,27 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-  Req,
+  Get, Post, Patch, Delete, Req, Res,
+  Body, Controller, Param,
+  UseGuards, UseInterceptors, UploadedFile
 } from '@nestjs/common';
-import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
-import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
+import { FileInterceptor } from "@nestjs/platform-express";
+import { diskStorage } from "multer";
+import { extname } from "path";
+
+import { Product } from '@src/models/product.schema';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product } from '@src/models/product.schema';
+import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
+import { IdValidationPipe } from "@src/pipes/id-validation.pipe";
+import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
 
 @Controller('products')
 export class ProductsController {
+  SERVER_URL:  string  =  "http://localhost:3001/";
   constructor(private readonly productsService: ProductsService) {}
 
   @Post('create')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async create(@Req() req: RequestWithUser): Promise<Product> {
     req.body.owner = await req.user;
     return await this.productsService.createProduct(
@@ -30,31 +30,79 @@ export class ProductsController {
   }
 
   @Get(':id')
-  // @UseGuards(JwtAuthGuard)
-  async findAllByOwner(@Param('id') id: string): Promise<Product[]> {
+  @UseGuards(JwtAuthGuard)
+  async findAllByOwner(@Param('id', IdValidationPipe) id: string): Promise<Product[]> {
     return await this.productsService.findAllByOwner(id);
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async findAll(): Promise<Product[]> {
     return await this.productsService.findAll();
   }
 
   @Get('product/:id')
-  async findOne(@Param('id') id: string): Promise<Product> {
+  async findOne(@Param('id', IdValidationPipe) id: string): Promise<Product> {
     return await this.productsService.findOne(id);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async update(
-    @Param('id') id: string,
-    @Body() updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
+      @Param('id', IdValidationPipe) id: string,
+      @Body() updateProductDto: UpdateProductDto): Promise<Product> {
     return await this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<Product> {
+  @UseGuards(JwtAuthGuard)
+  async remove(@Param('id', IdValidationPipe) id: string): Promise<Product> {
     return await this.productsService.remove(id);
+  }
+
+  @Post(':id/product')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('file',
+      {
+        storage: diskStorage({
+          destination: './products',
+          filename: (_req, file, cb) => {
+            const randomName = Array(32)
+                .fill(null)
+                .map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
+            return cb(null, `${randomName}${extname(file.originalname)}`)
+          }
+        })
+      })
+  )
+  async uploadImages(
+      @Param('id', IdValidationPipe) id: string,
+      @UploadedFile() files: any[]): Promise<void> {
+    const urls = files.map(file => `${this.SERVER_URL}${file.path}`)
+    await this.productsService.setImages(id, urls);
+  }
+
+  @Get('product/:fileId')
+  @UseGuards(JwtAuthGuard)
+  async serveImages(
+      @Param('fileId', IdValidationPipe) fileId: string,
+      @Res() res): Promise<any> {
+    res.sendFile(fileId, { root: 'products' });
+  }
+
+  @Post(':id/like')
+  @UseGuards(JwtAuthGuard)
+  async like(
+      @Param('id', IdValidationPipe) id: string,
+      @Req() req: RequestWithUser): Promise<void> {
+    await this.productsService.likeProduct(req.user.id, id);
+  }
+
+  @Post(':id/unlike')
+  @UseGuards(JwtAuthGuard)
+  async unlike(
+      @Param('id', IdValidationPipe) id: string,
+      @Req() req: RequestWithUser): Promise<void> {
+    await this.productsService.unlikeProduct(req.user.id, id);
   }
 }
