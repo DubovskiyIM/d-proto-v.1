@@ -1,8 +1,7 @@
 import {
-  Get, Post, Patch, Delete,
+  Get, Post, Patch, Delete, Req, Res,
   Body, Controller, Param,
-  UseGuards, UseInterceptors, UploadedFile,
-  Req, Res
+  UseGuards, UseInterceptors, UploadedFile
 } from '@nestjs/common';
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
@@ -37,6 +36,7 @@ export class ProductsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async findAll(): Promise<Product[]> {
     return await this.productsService.findAll();
   }
@@ -47,19 +47,21 @@ export class ProductsController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async update(
-    @Param('id', IdValidationPipe) id: string,
-    @Body() updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
+      @Param('id', IdValidationPipe) id: string,
+      @Body() updateProductDto: UpdateProductDto): Promise<Product> {
     return await this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async remove(@Param('id', IdValidationPipe) id: string): Promise<Product> {
     return await this.productsService.remove(id);
   }
 
   @Post(':id/product')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file',
       {
         storage: diskStorage({
@@ -81,6 +83,7 @@ export class ProductsController {
   }
 
   @Get('product/:fileId')
+  @UseGuards(JwtAuthGuard)
   async serveImages(
       @Param('fileId', IdValidationPipe) fileId: string,
       @Res() res): Promise<any> {
@@ -88,6 +91,7 @@ export class ProductsController {
   }
 
   @Post(':id/like')
+  @UseGuards(JwtAuthGuard)
   async like(
       @Param('id', IdValidationPipe) id: string,
       @Req() req: RequestWithUser): Promise<void> {
@@ -95,6 +99,7 @@ export class ProductsController {
   }
 
   @Post(':id/unlike')
+  @UseGuards(JwtAuthGuard)
   async unlike(
       @Param('id', IdValidationPipe) id: string,
       @Req() req: RequestWithUser): Promise<void> {

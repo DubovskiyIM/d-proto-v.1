@@ -35,7 +35,7 @@ export class UsersService {
     return await this.userModel.findOne({ phone });
   }
 
-  public async findById(id: string): Promise<User> {
+  public async findById(id: any): Promise<User> {
     const user = await this.userModel.findById(id);
     if (user) {
       return user;
@@ -46,11 +46,11 @@ export class UsersService {
     );
   }
 
-  public async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  public async update(id: any, updateUserDto: UpdateUserDto): Promise<User> {
     return await this.userModel.findByIdAndUpdate(id, updateUserDto);
   }
 
-  public async remove(id: string): Promise<User> {
+  public async remove(id: any): Promise<User> {
     return await this.userModel.findByIdAndRemove(id);
   }
 
@@ -81,8 +81,8 @@ export class UsersService {
         userToUnfollow.followers.find(id => id === userId) &&
         currentUser.followingUsers.find(id => id === toUnfollowId)
     ) {
-      userToUnfollow.followers.filter(id => id !== userId);
-      currentUser.followingUsers.filter(id => id !== toUnfollowId);
+      userToUnfollow.followers = userToUnfollow.followers.filter(id => id !== userId);
+      currentUser.followingUsers = currentUser.followingUsers.filter(id => id !== toUnfollowId);
       this.userModel.findByIdAndUpdate(toUnfollowId, userToUnfollow).exec();
       this.userModel.findByIdAndUpdate(userId, currentUser).exec();
     }
