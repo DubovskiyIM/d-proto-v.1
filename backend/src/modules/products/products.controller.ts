@@ -73,13 +73,31 @@ export class ProductsController {
         })
       })
   )
-  async uploadImages(@Param('id', IdValidationPipe) id: string, @UploadedFile() files: any[]) {
+  async uploadImages(
+      @Param('id', IdValidationPipe) id: string,
+      @UploadedFile() files: any[]): Promise<void> {
     const urls = files.map(file => `${this.SERVER_URL}${file.path}`)
     await this.productsService.setImages(id, urls);
   }
 
   @Get('product/:fileId')
-  async serveImages(@Param('fileId', IdValidationPipe) fileId: string, @Res() res): Promise<any> {
+  async serveImages(
+      @Param('fileId', IdValidationPipe) fileId: string,
+      @Res() res): Promise<any> {
     res.sendFile(fileId, { root: 'products' });
+  }
+
+  @Post(':id/like')
+  async like(
+      @Param('id', IdValidationPipe) id: string,
+      @Req() req: RequestWithUser): Promise<void> {
+    await this.productsService.likeProduct(req.user.id, id);
+  }
+
+  @Post(':id/unlike')
+  async unlike(
+      @Param('id', IdValidationPipe) id: string,
+      @Req() req: RequestWithUser): Promise<void> {
+    await this.productsService.unlikeProduct(req.user.id, id);
   }
 }
