@@ -1,36 +1,54 @@
 $cardWidth: 250px;
 $rowIncrement: 10px;
-$cardBorderRadius: 16px;
+$cardBorderRadius: 10px;
 $CardSmall: 26;
 $cardMedium: 33;
 $cardLarge: 45;
+$cardFontsMain: 'Roboto';
 
 .cardItem {
   opacity: 1;
   overflow: hidden;
   padding: 0;
-  margin: 15px 10px;
+  margin: 10px 0;
   position: relative;
   border-radius: $cardBorderRadius;
 }
 
-.card_small {
-  grid-row-end: span $CardSmall;
+.cardHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cardFooter {
+  position: absolute;
+  left: 0;
 }
 
-.card_medium {
-  grid-row-end: span $cardMedium;
+
+.avatarCardHeaderUserName{
+  font-size: 1rem;
+  padding-left: 8px;
+  font-family: $cardFontsMain, 'serif';
 }
 
-.card_large {
-  grid-row-end: span $cardLarge;
-}
+//.card_small {
+//  grid-row-end: span $CardSmall;
+//}
+//
+//.card_medium {
+//  grid-row-end: span $cardMedium;
+//}
+//
+//.card_large {
+//  grid-row-end: span $cardLarge;
+//}
 
-.pin_title {
-  width: 0;
-  height: 0;
-  opacity: 0;
-}
+//.pin_title {
+//  width: 0;
+//  height: 0;
+//  opacity: 0;
+//}
 
 .defaultPhoto img {
   width: 100%;
@@ -39,6 +57,15 @@ $cardLarge: 45;
   justify-content: center;
   align-items: center;
 }
+
+.photoContainer{
+  border-radius: 5px;
+}
+
+.cardTitle {
+  font-size: 18px;
+}
+
 
 //.pin_modal {
 //  width: 100%;

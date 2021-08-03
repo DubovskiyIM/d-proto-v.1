@@ -1,7 +1,7 @@
 <div class="containerCards">
-<ngx-masonry [updateLayout]="updateMasonryLayout">
-  <div ngxMasonryItem class="masonry-item" *ngFor="let item of listCards">
-    <app-card [card]="item" (open)="updateMasonryLayout = true"></app-card>
-  </div>
-</ngx-masonry>
+  <ngx-masonry [updateLayout]="updateMasonryLayout">
+    <div ngxMasonryItem class="masonry-item" *ngFor="let item of listCards">
+      <app-card [card]="item"></app-card>
+    </div>
+  </ngx-masonry>
 </div>

@@ -13,16 +13,14 @@ export class CardComponent implements OnInit {
   size = 'medium';
 
   clicked = false;
-  @Output() open: EventEmitter<any> = new EventEmitter();
 
   // @Output() onChanged = new EventEmitter();
   // change(increased: any) {
   //   this.onChanged.emit(increased);
   // }
 
-  click() {
+  pickCard() {
     this.clicked = true;
-    this.open.emit('sdf');
   }
   constructor() {}
 

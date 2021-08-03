@@ -6,9 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit.component.scss'],
 })
 export class EditComponent implements OnInit {
+  public userCard = {
+    username: 'velldfgdgdf',
+    avatar: 'https://i.picsum.photos/id/1022/512/512.jpg?hmac=nl9w07uW1LOTANdOs1nRNA-U1O7ZumXYL1d8TtmCqmI',
+  };
+
   public listCards: any[] = [
     {
-      owner: undefined,
+      owner: this.userCard,
       title: 'title',
       image: './assets/img/upper-right-arrow.png',
       description: 'description',
@@ -18,7 +23,7 @@ export class EditComponent implements OnInit {
       size: 'medium',
     },
     {
-      owner: undefined,
+      owner: this.userCard,
       title: 'title',
       image: './assets/img/upper-right-arrow.png',
       description: 'description',
