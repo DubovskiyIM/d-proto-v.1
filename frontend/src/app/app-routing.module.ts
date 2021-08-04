@@ -3,14 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './lk/profile/profile.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { EditComponent } from './lk/edit/edit.component';
 import { MyOrdersComponent } from './lk/my-orders/my-orders.component';
 import { LkComponent } from './lk/lk.component';
-import { MessagesComponent } from './lk/messages/messages.component'; // CLI imports router
+import { MessagesComponent } from './lk/messages/messages.component';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 
 const lkRoutes: Routes = [
-  { path: 'edit', component: EditComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'home', component: MyProfileComponent },
   { path: 'orders', component: MyOrdersComponent },
   { path: 'messages', component: MessagesComponent },
 ];
@@ -26,6 +25,8 @@ const routes: Routes = [
     //   { path: 'orders', component: MyOrdersComponent },
     // ],
   },
+  { path: 'profile/:id', component: ProfileComponent },
+  // { path: '', component}
 ];
 
 @NgModule({

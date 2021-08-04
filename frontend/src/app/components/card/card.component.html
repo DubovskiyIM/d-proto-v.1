@@ -1,23 +1,22 @@
-<div class="product">
-  <div class="cardHeader">
-      <span class="avatarCardHeader">
+<div class="cardWrapper">
+  <div class="cardHeader" *ngIf="isShowHeader">
+      <span class="avatarCardHeader" (click)="goToProfilePage()">
         <app-avatar width="30px"></app-avatar>
       </span>
     <span class="avatarCardHeaderUserName boldText">
         {{card?.owner?.username}}
       </span>
   </div>
-  <div class="cardItem card_medium card" (click)="pickCard">
-    <div class="cardContent">
-      <div class="photoContainer">
+<!--  [@changeCardImage]="currentImageCardState"-->
+  <div class="cardItem card_medium card" >
+      <div class="photoContainer"  (mouseover)="changeStateImageState()">
         <img src="https://i.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
-             alt="image" *ngIf="card.size === 'medium'">
+             alt="image" *ngIf="card.size === 'medium'" class="defaultState">
         <img src="https://i.picsum.photos/id/48/200/200.jpg?hmac=3FKJwSlm1FM1GD916vZX2Z3HUjHsUXvQM3rYWYXsQvc"
              alt="image" *ngIf="card.size === 'small'">
         <img src="https://i.picsum.photos/id/30/500/200.jpg?hmac=40j93kHi7aLLphS9asc5UfT7ZAwWdKRsb-z2EnzSuHY"
              alt="image" *ngIf="card.size === 'large'">
       </div>
-    </div>
   </div>
   <div class="cardFooter">
     <span class="cardTitle boldText">
