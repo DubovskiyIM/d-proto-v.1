@@ -1,18 +1,22 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { UserService } from '../../../_services/user.service';
 
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
   styleUrls: ['./conversation.component.scss'],
 })
-export class ConversationComponent {
+export class ConversationComponent implements OnInit {
   @Input() conversations = [];
 
-  @Output() onChangedConversation = new EventEmitter<string>();
+  @Output() changeConversation = new EventEmitter<string>();
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   public selectConversation(conversationId: string) {
-    this.onChangedConversation.emit(conversationId);
+    this.changeConversation.emit(conversationId);
+  }
+
+  ngOnInit() {
   }
 }

@@ -64,4 +64,8 @@ export class RoomsService {
   async delete(id: string): Promise<Room | null> {
     return await this.roomModel.findByIdAndRemove(id).exec();
   }
+
+  async getRooms(rooms: string[]): Promise<Room[]> {
+    return await this.roomModel.find({'_id': {$in: rooms}});
+  }
 }

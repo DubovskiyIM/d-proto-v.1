@@ -2,24 +2,28 @@ import {
   Body, Request,
   Controller,
   Get, Post, Put, Delete,
-  HttpException, HttpStatus
+  HttpException, HttpStatus, UseGuards
 } from '@nestjs/common';
 
 import { RoomsService } from './rooms.service';
 import { Room } from '@src/models/room.schema';
 import { CreateRoomDto } from "@src/modules/rooms/dto/create-room.dto";
+import { JwtAuthGuard } from "@src/common/guards/jwt-auth.guard";
+import { RequestWithUser } from "@src/interfaces/requestWithUser.interface";
 
 @Controller('rooms')
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
   @Get()
-  async index(): Promise<Room[]> {
-    return await this.roomsService.findAll();
+  @UseGuards(JwtAuthGuard)
+  async getRooms(@Request() req: RequestWithUser) {
+    return await this.roomsService.getRooms(req.user.rooms);
   }
 
   @Get(':id')
-  async show(@Request() req): Promise<Room> {
+  @UseGuards(JwtAuthGuard)
+  async show(@Request() req: RequestWithUser): Promise<Room> {
     const id = req.params.id;
     if (!id)
       throw new HttpException(

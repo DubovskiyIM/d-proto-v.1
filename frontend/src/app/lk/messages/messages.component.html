@@ -1,7 +1,7 @@
 <div class="container-fluid h-100">
   <div class="row h-100">
     <div class="col-1 col-sm-3">
-      <app-conversation [conversations]="conversations" (onChangedConversation)="changeChatDialog($event)"></app-conversation>
+      <app-conversation [conversations]="conversations" (changeConversation)="changeChatDialog($event)"></app-conversation>
     </div>
     <div class="col-8">
       <app-chat [chatDialog]="selectedChatDialog"></app-chat>

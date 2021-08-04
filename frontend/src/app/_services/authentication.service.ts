@@ -10,12 +10,12 @@ import { NavigationService } from './navigation.service';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
   private static readonly httpActions = {
     register: 'auth/register',
     login: 'auth/login',
     logout: 'auth/logout',
   };
+  private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
   constructor(

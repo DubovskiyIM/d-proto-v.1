@@ -67,7 +67,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     const event: string = 'message';
 
     await this.roomService.addMessage(result, result.room);
-    client.broadcast.to(result.room).emit(event, result.message);
+    client.broadcast.to(result.room).emit(event, result);
     this.logger.log('Message saved and emitted.');
     return new Observable(observer =>
         observer.next({ event, data: result })
@@ -77,13 +77,13 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   // @UseGuards(JwtAuthGuard)
   @SubscribeMessage('join')
   async onRoomJoin(client: Socket, data: any): Promise<any> {
-    client.join(data);
+    client.join(data._id);
     const messages = await this.roomService.findMessages(data, 25);
     client.emit('message', messages);
   }
 
   @SubscribeMessage('leave')
   onRoomLeave(client, data: any): void {
-    client.leave(data[0]);
+    client.leave(data._id);
   }
 }

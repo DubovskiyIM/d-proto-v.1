@@ -39,4 +39,5 @@ export interface User extends Document {
   followingUsers: User[];
   followingProducts: Product[];
   saved: Product[];
+  rooms: string[];
 }
