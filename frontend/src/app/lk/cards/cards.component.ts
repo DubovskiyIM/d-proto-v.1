@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardsComponent implements OnInit {
   @Input() listCards = [];
-  @Input() isShowHeader = true;
+  @Input() isHomePage = true;
   updateMasonryLayout = false;
   masonryItems = [
     {
@@ -40,5 +40,9 @@ export class CardsComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  updateGrid() {
+    console.log('jnkl');
+    this.updateMasonryLayout = !this.updateMasonryLayout;
+  }
 
 }

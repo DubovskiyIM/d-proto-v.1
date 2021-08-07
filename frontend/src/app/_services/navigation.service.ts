@@ -43,4 +43,8 @@ export class NavigationService {
   public goHomePage() {
     this.router.navigate(['lk/home']).then();
   }
+
+  public goToProductPage(productId: number) {
+    this.router.navigate(['product', productId]);
+  }
 }

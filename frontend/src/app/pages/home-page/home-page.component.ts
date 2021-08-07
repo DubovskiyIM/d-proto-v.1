@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ProductService} from "../../_services/product.service";
 
 @Component({
   selector: 'app-home-page',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  public listCards = [];
+  constructor(private productService: ProductService) {
   }
+  ngOnInit() {
+    this.listCards = this.productService.getProductsList();
 
+  }
 }

@@ -1,30 +1,45 @@
-<div class="cardWrapper">
-  <div class="cardHeader" *ngIf="isShowHeader">
+<div class="cardWrapper" >
+  <div class="cardHeader" *ngIf="isHomePage">
       <span class="avatarCardHeader" (click)="goToProfilePage()">
         <app-avatar width="30px"></app-avatar>
       </span>
-    <span class="avatarCardHeaderUserName boldText">
+    <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
         {{card?.owner?.username}}
       </span>
   </div>
-<!--  [@changeCardImage]="currentImageCardState"-->
-  <div class="cardItem card_medium card" >
-      <div class="photoContainer"  (mouseover)="changeStateImageState()">
-        <img src="https://i.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
+  <!--  [@changeCardImage]="currentImageCardState"-->
+  <div class="cardItem card_medium card">
+    <div class="photoContainer" (mouseover)="changeMouseOverSate()" (mouseleave)="leaveMouseSate()">
+      <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
+        <span class="crop"(click)="clickOpenModalView()">
+          <mat-icon>crop_free</mat-icon>
+        </span>
+        <span class="favorite" (click)=addFavoriteProduct()>
+            <mat-icon>favorite_border</mat-icon>
+        </span>
+      </div>
+      <div class="photoContent" (click)="goToProductPage()">
+        <img src="https://i.picsum.photos/id/1022/1000/2000.jpg?hmac=o0R55IjBxpioWBx8GaBz84h_ktgoSX1Kz1quH4L8JyY"
              alt="image" *ngIf="card.size === 'medium'" class="defaultState">
         <img src="https://i.picsum.photos/id/48/200/200.jpg?hmac=3FKJwSlm1FM1GD916vZX2Z3HUjHsUXvQM3rYWYXsQvc"
              alt="image" *ngIf="card.size === 'small'">
         <img src="https://i.picsum.photos/id/30/500/200.jpg?hmac=40j93kHi7aLLphS9asc5UfT7ZAwWdKRsb-z2EnzSuHY"
              alt="image" *ngIf="card.size === 'large'">
       </div>
+    </div>
   </div>
   <div class="cardFooter">
-    <span class="cardTitle boldText">
+    <span class="cardTitle boldText" (click)="goToProductPage()">
          Туфли GUCCI&TYPE
     </span>
   </div>
 </div>
-
+<div>
+  <app-card-modal [toggleModal]="openModalSubj.asObservable()"></app-card-modal>
+</div>
+<!--<ng-template #openModalView>-->
+<!---->
+<!--</ng-template>-->
 <!--<div class="pin_container">-->
 <!--  <div class="card_medium">-->
 <!--    <div class="card card_medium" style="opacity: 1;">-->

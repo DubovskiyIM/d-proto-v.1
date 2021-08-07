@@ -7,7 +7,9 @@ $cardMedium: 33;
 $cardLarge: 45;
 $cardFontsMain: 'Roboto';
 
-.cardWrapper{}
+.cardWrapper{
+
+}
 
 .cardItem {
   cursor: pointer;
@@ -48,9 +50,11 @@ $cardFontsMain: 'Roboto';
 
 .photoContainer{
   width: 200px;
-
+  max-height: 300px;
   border-radius: 5px;
 }
+
+
 
 .cardTitle {
   font-size: $cardFontSize;
@@ -58,5 +62,31 @@ $cardFontsMain: 'Roboto';
 
 .pint_mock_icon {
   width: 50%;
+}
+
+//.openCardInModalBtn{
+//  position: absolute;
+//  top: 5px;
+//  color: #5f6368;
+//  left: 5px;
+//}
+.modalSocialHeaderIcon{
+
+  .crop{
+    mat-icon {
+      font-size: 28px;
+    }
+    position: absolute;
+    top: 7px;
+    left: 7px;
+  }
+  .favorite{
+    mat-icon {
+      font-size: 32px;
+    }
+    position: absolute;
+    top: 7px;
+    right: 18px;
+  }
 }
 
