@@ -9,11 +9,14 @@ import { MessagesComponent } from './lk/messages/messages.component';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import {HomePageComponent} from "./pages/home-page/home-page.component";
 import {ProductPageComponent} from "./pages/product-page/product-page.component";
+import { UsersComponent } from  './pages/users/users.component'
+import { AddProductComponent} from './pages/add-product/add-product.component'
 
 const lkRoutes: Routes = [
   { path: 'home', component: MyProfileComponent },
   { path: 'orders', component: MyOrdersComponent },
   { path: 'messages', component: MessagesComponent },
+  { path: 'add-product', component: AddProductComponent }
 ];
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -27,6 +30,7 @@ const routes: Routes = [
     //   { path: 'orders', component: MyOrdersComponent },
     // ],
   },
+  { path: 'users', component: UsersComponent },
   { path: 'profile/:id', component: ProfileComponent },
   { path: 'product/:id', component: ProductPageComponent },
   { path: '', component: HomePageComponent },

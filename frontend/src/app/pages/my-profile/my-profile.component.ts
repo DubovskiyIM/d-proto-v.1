@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs/operators";
+import {AuthenticationService} from '../../_services/authentication.service'
+import {ProductService} from '../../_services/product.service'
 
 @Component({
   selector: 'app-my-profile',
@@ -9,239 +11,37 @@ import {switchMap} from "rxjs/operators";
   styleUrls: ['./my-profile.component.scss']
 })
 export class MyProfileComponent implements OnInit {
-
+  public userProfileData;
   public userCard = {
     username: 'velldfgdgdf',
     avatar: 'https://i.picsum.photos/id/1022/512/512.jpg?hmac=nl9w07uW1LOTANdOs1nRNA-U1O7ZumXYL1d8TtmCqmI',
   };
 
-  public listCards: any[] = [
-    {
-      owner: this.userCard,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: this.userCard,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'small',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'small',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'small',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'small',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'small',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'small',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'large',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'large',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'medium',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'small',
-    },
-    {
-      owner: undefined,
-      title: 'title',
-      image: './assets/img/upper-right-arrow.png',
-      description: 'description',
-      price: 1200,
-      created: new Date(),
-      availableQuantity: 1,
-      size: 'large',
-    },
-  ];
-
+  public listCards: any = [];
   private userid: number | undefined;
 
   private subscription: Subscription;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private authenticationService: AuthenticationService, private productService: ProductService) {
   }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(
       switchMap((params) => params.getAll('id')),
-    )
-      .subscribe((data) => {
+    ).subscribe((data) => {
         console.log(data);
         this.userid = +data;
       });
+    this.authenticationService.currentUser.subscribe((user) => {
+      this.userProfileData = user;
+      console.log(user);
+      this.productService.getProductByOwner(user).subscribe((res) => {
+        console.log('this');
+        this.listCards = res;
+      })
+    });
+
+
   }
+
 }

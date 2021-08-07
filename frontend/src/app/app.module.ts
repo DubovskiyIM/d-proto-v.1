@@ -35,6 +35,9 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { DefaultHomePageComponent } from './pages/default-home-page/default-home-page.component';
 import { CardModalComponent } from './components/card/card-modal/card-modal.component';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
+import { UsersComponent } from './pages/users/users.component';
+import { AddNewCardViewComponent } from './components/card/add-new-card-view/add-new-card-view.component';
+import { AddProductComponent } from './pages/add-product/add-product.component';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -66,7 +69,10 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     HomePageComponent,
     DefaultHomePageComponent,
     CardModalComponent,
-    ProductPageComponent
+    ProductPageComponent,
+    UsersComponent,
+    AddNewCardViewComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

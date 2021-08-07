@@ -62,6 +62,7 @@ export class AuthenticationService {
 
   public logout() {
     localStorage.removeItem('currentUser');
+    this.http.post(`${this.baseUrl}${AuthenticationService.httpActions.logout}`, {}).subscribe(()=> {});
     this.currentUserSubject.next(null);
     this.navigationService.exit();
   }

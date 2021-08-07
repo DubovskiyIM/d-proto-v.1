@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NavigationService } from '../../_services/navigation.service'
+import { ProductService } from '../../_services/product.service'
 
 @Component({
   selector: 'app-cards',
@@ -36,13 +38,21 @@ export class CardsComponent implements OnInit {
     { title: ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto cum cumque eum molestiae obc' },
   ];
 
-  constructor() {}
+  constructor(private navigationService: NavigationService, private productService: ProductService) {}
 
   ngOnInit(): void {}
 
   updateGrid() {
     console.log('jnkl');
     this.updateMasonryLayout = !this.updateMasonryLayout;
+  }
+
+  goToAddProductPage() {
+    // this.n
+    this.productService.productCreate().subscribe((res)=> {
+      console.log(res);
+    })
+    // this.navigationService.go
   }
 
 }

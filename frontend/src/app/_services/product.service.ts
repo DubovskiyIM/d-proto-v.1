@@ -1,9 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { APP_BASE_HREF } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  private static readonly httpActions = {
+    register: 'auth/register',
+    login: 'auth/login',
+    logout: 'auth/logout',
+  };
 
   public userCard1 = {
     username: 'Mery Jery',
@@ -231,7 +238,9 @@ export class ProductService {
       size: 'large',
     },
   ];
-  constructor() { }
+  constructor(  private http: HttpClient,   @Inject(APP_BASE_HREF) private baseUrl: string,) {
+    this.baseUrl = 'api' + this.baseUrl;
+  }
 
   getProductsList() {
     return this.listCards;
@@ -245,5 +254,22 @@ export class ProductService {
       }
     })
     return product;
+  }
+
+  productCreate() {
+   return  this.http.post('api/products/create', {
+      title: 'MEGA SHOTS',
+      images: [],
+      proce: 1200,
+      status: 'ACTIVE',
+      style: '',
+      color: '',
+      tags: [],
+    })
+  }
+
+  getProductByOwner(owner) {
+    debugger;
+    return this.http.get('api/products/' + owner._id)
   }
 }
