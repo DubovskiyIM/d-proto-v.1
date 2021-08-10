@@ -35,6 +35,6 @@ export class NavbarComponent implements OnInit {
   }
 
   public goHomePage() {
-    this.navigateService.goHomePage();
+    this.navigateService.goToLKHomePage();
   }
 }

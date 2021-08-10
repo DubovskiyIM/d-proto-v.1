@@ -1,5 +1,5 @@
 <div class="cardWrapper" >
-  <div class="cardHeader" *ngIf="isHomePage">
+  <div class="cardHeader" *ngIf="!isProfilePage">
       <span class="avatarCardHeader" (click)="goToProfilePage()">
         <app-avatar width="30px"></app-avatar>
       </span>
@@ -11,7 +11,7 @@
   <div class="cardItem card_medium card">
     <div class="photoContainer" (mouseover)="changeMouseOverSate()" (mouseleave)="leaveMouseSate()">
       <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
-        <span class="crop"(click)="clickOpenModalView()">
+        <span class="crop" (click)="clickOpenModalView()">
           <mat-icon>crop_free</mat-icon>
         </span>
         <span class="favorite" (click)=addFavoriteProduct()>
@@ -24,13 +24,16 @@
         <img src="https://i.picsum.photos/id/48/200/200.jpg?hmac=3FKJwSlm1FM1GD916vZX2Z3HUjHsUXvQM3rYWYXsQvc"
              alt="image" *ngIf="card.size === 'small'">
         <img src="https://i.picsum.photos/id/30/500/200.jpg?hmac=40j93kHi7aLLphS9asc5UfT7ZAwWdKRsb-z2EnzSuHY"
-             alt="image" *ngIf="card.size === 'large'">
+             alt="image" *ngIf="!card.size">
       </div>
     </div>
   </div>
   <div class="cardFooter">
     <span class="cardTitle boldText" (click)="goToProductPage()">
-         Туфли GUCCI&TYPE
+      {{card.title}}
+    </span>
+    <span *ngIf="!card.title">
+       Туфли GUCCI&TYPE
     </span>
   </div>
 </div>

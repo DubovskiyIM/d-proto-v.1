@@ -34,14 +34,16 @@ export class MyProfileComponent implements OnInit {
       });
     this.authenticationService.currentUser.subscribe((user) => {
       this.userProfileData = user;
-      console.log(user);
-      this.productService.getProductByOwner(user).subscribe((res) => {
-        console.log('this');
-        this.listCards = res;
-      })
+      this.getUserCardsList();
     });
 
 
   }
 
+  private getUserCardsList() {
+    this.productService.getProductByOwner(this.userProfileData._id).subscribe((res) => {
+      console.log('this', res);
+      this.listCards = res;
+    })
+  }
 }

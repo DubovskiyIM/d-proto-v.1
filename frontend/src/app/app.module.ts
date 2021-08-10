@@ -38,6 +38,9 @@ import { ProductPageComponent } from './pages/product-page/product-page.componen
 import { UsersComponent } from './pages/users/users.component';
 import { AddNewCardViewComponent } from './components/card/add-new-card-view/add-new-card-view.component';
 import { AddProductComponent } from './pages/add-product/add-product.component';
+import { CreateProductComponent } from './pages/create-product/create-product.component';
+import { DragAndDropFileComponent } from './components/drag-and-drop-file/drag-and-drop-file.component';
+import { DndDirective } from './_directives/dnd.directive';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -72,7 +75,10 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     ProductPageComponent,
     UsersComponent,
     AddNewCardViewComponent,
-    AddProductComponent
+    AddProductComponent,
+    CreateProductComponent,
+    DragAndDropFileComponent,
+    DndDirective
   ],
   imports: [
     BrowserModule,

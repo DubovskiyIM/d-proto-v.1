@@ -9,7 +9,7 @@ import { ProductService } from '../../_services/product.service'
 })
 export class CardsComponent implements OnInit {
   @Input() listCards = [];
-  @Input() isHomePage = true;
+  @Input() isProfilePage = false;
   updateMasonryLayout = false;
   masonryItems = [
     {
@@ -47,11 +47,13 @@ export class CardsComponent implements OnInit {
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
-  goToAddProductPage() {
+  goToCreateProduct() {
+    // this.
     // this.n
-    this.productService.productCreate().subscribe((res)=> {
-      console.log(res);
-    })
+    this.navigationService.goToCreateProductPage();
+    // this.productService.productCreate().subscribe((res)=> {
+    //   console.log(res);
+    // })
     // this.navigationService.go
   }
 

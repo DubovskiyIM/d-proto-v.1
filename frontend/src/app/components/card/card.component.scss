@@ -7,9 +7,11 @@ $cardMedium: 33;
 $cardLarge: 45;
 $cardFontsMain: 'Roboto';
 
-.cardWrapper{
+.cardWrapper {
 
 }
+
+
 
 .cardItem {
   cursor: pointer;
@@ -27,6 +29,7 @@ $cardFontsMain: 'Roboto';
   top: 0;
   left: 0;
 }
+
 .cardFooter {
   cursor: pointer;
   position: absolute;
@@ -34,7 +37,7 @@ $cardFontsMain: 'Roboto';
 }
 
 
-.avatarCardHeaderUserName{
+.avatarCardHeaderUserName {
   font-size: $cardFontSize;
   padding-left: 8px;
   font-family: $cardFontsMain, 'serif';
@@ -48,12 +51,11 @@ $cardFontsMain: 'Roboto';
   align-items: center;
 }
 
-.photoContainer{
+.photoContainer {
   width: 200px;
   max-height: 300px;
   border-radius: 5px;
 }
-
 
 
 .cardTitle {
@@ -70,20 +72,23 @@ $cardFontsMain: 'Roboto';
 //  color: #5f6368;
 //  left: 5px;
 //}
-.modalSocialHeaderIcon{
+.modalSocialHeaderIcon {
 
-  .crop{
+  .crop {
     mat-icon {
       font-size: 28px;
     }
+
     position: absolute;
     top: 7px;
     left: 7px;
   }
-  .favorite{
+
+  .favorite {
     mat-icon {
       font-size: 32px;
     }
+
     position: absolute;
     top: 7px;
     right: 18px;

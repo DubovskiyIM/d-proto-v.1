@@ -16,7 +16,7 @@ const lkRoutes: Routes = [
   { path: 'home', component: MyProfileComponent },
   { path: 'orders', component: MyOrdersComponent },
   { path: 'messages', component: MessagesComponent },
-  { path: 'add-product', component: AddProductComponent }
+  { path: 'create', component: AddProductComponent }
 ];
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,6 +30,7 @@ const routes: Routes = [
     //   { path: 'orders', component: MyOrdersComponent },
     // ],
   },
+
   { path: 'users', component: UsersComponent },
   { path: 'profile/:id', component: ProfileComponent },
   { path: 'product/:id', component: ProductPageComponent },

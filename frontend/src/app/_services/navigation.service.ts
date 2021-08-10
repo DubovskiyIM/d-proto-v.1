@@ -40,10 +40,13 @@ export class NavigationService {
     this.router.navigate([rouerLInk]).then();
   }
 
-  public goHomePage() {
+  public goToLKHomePage() {
     this.router.navigate(['lk/home']).then();
   }
 
+  public goToCreateProductPage() {
+    this.router.navigate(['lk/create']).then();
+  }
   public goToProductPage(productId: number) {
     this.router.navigate(['product', productId]);
   }

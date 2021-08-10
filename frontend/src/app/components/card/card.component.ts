@@ -37,7 +37,7 @@ export class CardComponent implements OnInit {
 
   isShortView = true;
 
-  @Input() isHomePage = true;
+  @Input() isProfilePage = true;
 
   showSocialButtons = false;
 

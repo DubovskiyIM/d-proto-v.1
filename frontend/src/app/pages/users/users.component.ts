@@ -18,7 +18,6 @@ export class UsersComponent implements OnInit {
   }
 
   openChatRoom(userCard) {
-    debugger;
     this.userService.openChatByUser(userCard._id).subscribe((res) => {
 
     });

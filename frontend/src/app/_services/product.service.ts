@@ -256,20 +256,11 @@ export class ProductService {
     return product;
   }
 
-  productCreate() {
-   return  this.http.post('api/products/create', {
-      title: 'MEGA SHOTS',
-      images: [],
-      proce: 1200,
-      status: 'ACTIVE',
-      style: '',
-      color: '',
-      tags: [],
-    })
+  productCreate(productValues) {
+   return  this.http.post('api/products/create', productValues)
   }
 
-  getProductByOwner(owner) {
-    debugger;
-    return this.http.get('api/products/' + owner._id)
+  getProductByOwner(ownerID) {
+    return this.http.get('api/products/' + ownerID)
   }
 }
