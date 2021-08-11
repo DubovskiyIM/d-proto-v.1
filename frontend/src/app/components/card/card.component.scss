@@ -57,6 +57,10 @@ $cardFontsMain: 'Roboto';
   border-radius: 5px;
 }
 
+.homePageView {
+  width: 300px;
+  max-height: 400px;
+}
 
 .cardTitle {
   font-size: $cardFontSize;

@@ -1,11 +1,12 @@
 <div class="containerCards">
   <ngx-masonry [updateLayout]="updateMasonryLayout">
-    <div *ngIf="isProfilePage" ngxMasonryItem class="masonry-item" class="homePageAddButton">
-      <button class="btn btn-outline-dark" (click)="goToCreateProduct()">ADD</button>
-      <!--      <app-card [card]="listCards[0]" [isHomePage]="isHomePage" (updateGrid)="updateGrid()"></app-card>-->
-    </div>
+<!--    <div *ngIf="isProfilePage" ngxMasonryItem class="masonry-item" class="homePageAddButton">-->
+<!--      <button class="btn btn-outline-dark" (click)="goToCreateProduct()">ADD</button>-->
+<!--      &lt;!&ndash;      <app-card [card]="listCards[0]" [isHomePage]="isHomePage" (updateGrid)="updateGrid()"></app-card>&ndash;&gt;-->
+<!--    </div>-->
     <div ngxMasonryItem class="masonry-item" *ngFor="let item of listCards">
       <app-card [card]="item" [isProfilePage]="isProfilePage" (updateGrid)="updateGrid()"></app-card>
     </div>
   </ngx-masonry>
 </div>
+

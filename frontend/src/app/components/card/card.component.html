@@ -9,7 +9,7 @@
   </div>
   <!--  [@changeCardImage]="currentImageCardState"-->
   <div class="cardItem card_medium card">
-    <div class="photoContainer" (mouseover)="changeMouseOverSate()" (mouseleave)="leaveMouseSate()">
+    <div class="photoContainer" (mouseover)="changeMouseOverSate()" (mouseleave)="leaveMouseSate()" [ngClass]="{homePageView: isProfilePage}">
       <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
         <span class="crop" (click)="clickOpenModalView()">
           <mat-icon>crop_free</mat-icon>
