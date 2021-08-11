@@ -12,15 +12,8 @@ import {ProductService} from '../../_services/product.service'
 })
 export class MyProfileComponent implements OnInit {
   public userProfileData;
-  public userCard = {
-    username: 'velldfgdgdf',
-    avatar: 'https://i.picsum.photos/id/1022/512/512.jpg?hmac=nl9w07uW1LOTANdOs1nRNA-U1O7ZumXYL1d8TtmCqmI',
-  };
-
   public listCards: any = [];
   private userid: number | undefined;
-
-  private subscription: Subscription;
 
   constructor(private route: ActivatedRoute, private authenticationService: AuthenticationService, private productService: ProductService) {
   }

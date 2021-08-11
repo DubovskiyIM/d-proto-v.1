@@ -1,8 +1,28 @@
-.cardModalWrapper{
-  max-width: 1024px;
-  height: 600px;
+//.cardModalWrapper{
+//  max-width: 1024px;
+//  height: 600px;
+//}
+//.modalWrapper{
+//  width: 100%;
+//  height: 600px;
+//}
+.cardModalContainer{
+  width: 100%
+  //min-width: 1024px;
+  //margin: 0 auto;
 }
-.modalWrapper{
-  width: 100%;
+
+::ng-deep .modal-dialog{
+  max-width: 80%;
   height: 600px;
+  margin: 100px auto;
+}
+.modalCLoseButton{
+  text-align: right;
+}
+.modalHeader{
+  padding: 16px 16px;
+}
+.modalHeaderTitle{
+  font-size: 18px;
 }

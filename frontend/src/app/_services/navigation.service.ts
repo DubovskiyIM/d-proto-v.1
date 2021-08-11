@@ -36,8 +36,8 @@ export class NavigationService {
   }
 
   public goToProfilePage(ownerId: string) {
-    let rouerLInk = `profile/${ownerId}`;
-    this.router.navigate([rouerLInk]).then();
+    let routerLInk = `profile/${ownerId}`;
+    this.router.navigate([routerLInk]).then();
   }
 
   public goToLKHomePage() {

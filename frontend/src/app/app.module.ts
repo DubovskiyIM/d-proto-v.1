@@ -42,6 +42,7 @@ import { CreateProductComponent } from './pages/create-product/create-product.co
 import { DragAndDropFileComponent } from './components/drag-and-drop-file/drag-and-drop-file.component';
 import { DndDirective } from './_directives/dnd.directive';
 import { RightProfileNavbarComponent } from './components/right-profile-navbar/right-profile-navbar.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -80,7 +81,8 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     CreateProductComponent,
     DragAndDropFileComponent,
     DndDirective,
-    RightProfileNavbarComponent
+    RightProfileNavbarComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

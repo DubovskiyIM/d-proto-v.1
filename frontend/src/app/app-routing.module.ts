@@ -11,12 +11,14 @@ import {HomePageComponent} from "./pages/home-page/home-page.component";
 import {ProductPageComponent} from "./pages/product-page/product-page.component";
 import { UsersComponent } from  './pages/users/users.component'
 import { AddProductComponent} from './pages/add-product/add-product.component'
+import {SettingsComponent} from "./pages/settings/settings.component";
 
 const lkRoutes: Routes = [
   { path: 'home', component: MyProfileComponent },
   { path: 'orders', component: MyOrdersComponent },
   { path: 'messages', component: MessagesComponent },
-  { path: 'create', component: AddProductComponent }
+  { path: 'create', component: AddProductComponent },
+  { path: 'settings', component: SettingsComponent }
 ];
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

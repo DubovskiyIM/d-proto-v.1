@@ -9,7 +9,8 @@ import { ProductService } from '../../_services/product.service'
 })
 export class CardsComponent implements OnInit {
   @Input() listCards = [];
-  @Input() isProfilePage = false;
+  @Input() isHomePage = false;
+  @Input() isProfilePage = true;
   updateMasonryLayout = false;
   masonryItems = [
     {

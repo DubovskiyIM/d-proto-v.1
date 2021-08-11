@@ -3,40 +3,46 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {Observable, Subscription} from "rxjs";
+import {ModalDismissReasons, NgbModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-card-modal',
   templateUrl: './card-modal.component.html',
   styleUrls: ['./card-modal.component.scss'],
 })
-export class CardModalComponent implements OnInit, OnDestroy {
-  @Input() cardImageUrl: string;
+export class CardModalComponent implements OnInit {
+  @Input() card;
 
   @ViewChild('modalWrapper', { static: false })
   modalCard: ElementRef;
 
   private eventsSubscription: Subscription;
 
-  @Input() toggleModal: Observable<void>;
-
-
-  constructor(public dialog: MatDialog) { }
-
-  openDialog() {
-    // const dialogRef = this.dialog.open(this.modalCard);
-
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
+  ngOnInit() {
+    console.log(this.card);
   }
 
-  ngOnInit(): void {
-    this.eventsSubscription = this.toggleModal.subscribe(() => {
-      console.log('open');
+  @Input() toggleModal: Observable<void>;
+  closeModal: string;
+
+  constructor(private modalService: NgbModal) {}
+
+  triggerModal() {
+    this.modalService.open(this.modalCard, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+      this.closeModal = `Closed with: ${res}`;
+    }, (res) => {
+      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
     });
   }
 
-  ngOnDestroy() {
-    this.eventsSubscription.unsubscribe();
+  getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
+
 }

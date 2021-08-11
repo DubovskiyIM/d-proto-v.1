@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import {ProductService} from "../../_services/product.service";
 
 @Component({
   selector: 'app-profile',
@@ -9,11 +10,11 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  private userid: number | undefined;
+  private userid: string | undefined;
+  public userProfileData;
+  public listCards: any = [];
 
-  private subscription: Subscription;
-
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private productService: ProductService) {
   }
 
   ngOnInit(): void {
@@ -21,8 +22,16 @@ export class ProfileComponent implements OnInit {
       switchMap((params) => params.getAll('id')),
     )
       .subscribe((data) => {
-        console.log(data);
-        this.userid = +data;
+        this.userid = data;
+        this.getUserCardsList();
       });
+  }
+
+  private getUserCardsList() {
+
+    this.productService.getProductByOwner(this.userid).subscribe((res) => {
+      console.log('this', res);
+      this.listCards = res;
+    })
   }
 }

@@ -1,0 +1,16 @@
+.cardsWrapper {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.tabs ::ng-deep .mat-tab-header {
+  border-bottom: none;
+}
+
+.tabs ::ng-deep .mat-ink-bar {
+  background-color: black;
+}
+
+.cardsWrapper{
+  margin-top: 40px;
+}

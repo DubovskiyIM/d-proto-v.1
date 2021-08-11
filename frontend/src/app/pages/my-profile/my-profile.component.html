@@ -1,57 +1,18 @@
 <div class="lkContent">
-<!--  <div class="row profileHeader">-->
-<!--    <div class="col-2">-->
-<!--      <app-avatar [width]="'120px'"></app-avatar>-->
-<!--    </div>-->
-<!--    <div class="col-10">-->
-<!--      <a href="" class="userName">{{userProfileData.username}}</a>-->
-<!--      <p class="name">Регина Збарская</p>-->
-<!--      <div class="statistics">-->
-<!--        <span class="countSale">301 продано</span>-->
-<!--        <span class="lastSeen">последняя активность 6 часов назад</span>-->
-<!--      </div>-->
-<!--      <div class="socialButtonsGroup">-->
-<!--        <div class="subscribe">-->
-
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="description">-->
-
-<!--      </div>-->
-
-<!--      <div class="lastSeen">-->
-<!--        Сегодня в 23:39-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="row profileDescription">-->
-<!--    <div class="col-12">-->
-<!--      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aperiam aspernatur delectus-->
-<!--      eligendi eos esse est et,-->
-<!--      eum facilis fugit, incidunt iusto nam perspiciatis placeat quidem quo tenetur vel voluptatum?-->
-<!--    </div>-->
-<!--  </div>-->
-
   <div class="row showCase">
     <div class="col-9">
-      <div class="cardsWrapper">
-        <app-cards [listCards]="listCards" [isProfilePage]="true"></app-cards>
-      </div>
+      <mat-tab-group mat-align-tabs="start" class="tabs">
+        <mat-tab label="Магазин">
+          <div class="cardsWrapper">
+            <app-cards [listCards]="listCards" [isHomePage]="true"></app-cards>
+          </div>
+        </mat-tab>
+        <mat-tab label="Понравилось">Понравилось</mat-tab>
+        <mat-tab label="Подписи">Подписи</mat-tab>
+      </mat-tab-group>
     </div>
     <div class="col-3">
       <app-right-profile-navbar [profile]="userProfileData"></app-right-profile-navbar>
     </div>
-
-    <!--    <div class="col-12">-->
-<!--      <mat-tab-group>-->
-<!--        <mat-tab label="First">-->
-<!--          <div class="myCards">-->
-<!--          -->
-<!--          </div>-->
-<!--        </mat-tab>-->
-<!--        <mat-tab label="Second"> Content 2 </mat-tab>-->
-<!--        <mat-tab label="Third"> Content 3 </mat-tab>-->
-<!--      </mat-tab-group>-->
-<!--    </div>-->
   </div>
 </div>

@@ -1,15 +1,33 @@
-<!--<h1 mat-dialog-title>Dialog with elements</h1>-->
-<!--<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>-->
-<!--<div mat-dialog-actions>-->
-<!--  <button mat-button mat-dialog-close>Close</button>-->
-<!--</div>-->
-<!--<div class="bg-light modalWrapper">-->
-<!--  <div class="row">-->
-<!--    <div class="col-6">-->
+<button class="btn btn-danger" (click)="triggerModal()">Open Modal</button>
 
-<!--    </div>-->
-<!--    <div class="col-6">-->
+<ng-template #modalCard let-modal>
+  <div class="cardModalContainer">
+    <div class="modalHeader">
+      <!--      <h4 class="modal-title" id="modal-basic-title"></h4>-->
+      <!--      <button type="button" class="close" aria-label="Close" >-->
+      <!--    -->
+      <!--      </button>-->
+      <p class="modalCLoseButton text-end">
+        <mat-icon (click)="modal.dismiss('Cross click')">close</mat-icon>
+      </p>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-6">
 
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+        </div>
+        <div class="col-6">
+          <div class="modalHeaderTitle">{{card?.title}}</div>
+          <div class="modalProductDesc">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur dolor earum esse laboriosam, odio
+            ratione sunt tempora temporibus. Commodi consequatur corporis eveniet harum incidunt magnam nihil possimus
+            qui, reprehenderit ullam?
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+    </div>
+  </div>
+</ng-template>

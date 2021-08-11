@@ -5,6 +5,7 @@ import {
   animate, state, style, transition, trigger,
 } from '@angular/animations';
 import { NavigationService } from '../../_services/navigation.service';
+import { CardModalComponent } from "./card-modal/card-modal.component";
 import {Subject} from "rxjs";
 
 @Component({
@@ -37,7 +38,8 @@ export class CardComponent implements OnInit {
 
   isShortView = true;
 
-  @Input() isProfilePage = true;
+  @Input() isHomePage = false;
+  @Input() isProfilePage = true
 
   showSocialButtons = false;
 
@@ -61,7 +63,7 @@ export class CardComponent implements OnInit {
   }
 
   public goToProfilePage() {
-    this.navigateService.goToProfilePage('22');
+    this.navigateService.goToProfilePage(this.card?.owner);
   }
 
   pickCard() {
@@ -71,8 +73,12 @@ export class CardComponent implements OnInit {
   addFavoriteProduct() {
   }
 
+  deleteProduct() {
+
+  }
   clickOpenModalView() {
-    this.openModalSubj.next();
+    // this.CardModalComponent.openModal();
+    // this.openModalSubj.next();
     // this.openModal();
     // this.isShortView = false;
   }

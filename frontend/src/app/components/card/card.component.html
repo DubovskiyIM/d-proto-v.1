@@ -1,5 +1,5 @@
 <div class="cardWrapper" >
-  <div class="cardHeader" *ngIf="!isProfilePage">
+  <div class="cardHeader" *ngIf="!isHomePage">
       <span class="avatarCardHeader" (click)="goToProfilePage()">
         <app-avatar width="30px"></app-avatar>
       </span>
@@ -9,13 +9,16 @@
   </div>
   <!--  [@changeCardImage]="currentImageCardState"-->
   <div class="cardItem card_medium card">
-    <div class="photoContainer" (mouseover)="changeMouseOverSate()" (mouseleave)="leaveMouseSate()" [ngClass]="{homePageView: isProfilePage}">
+    <div class="photoContainer" (mouseover)="changeMouseOverSate()" (mouseleave)="leaveMouseSate()" [ngClass]="{profilePageView: (isHomePage || isProfilePage)}">
       <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
         <span class="crop" (click)="clickOpenModalView()">
           <mat-icon>crop_free</mat-icon>
         </span>
-        <span class="favorite" (click)=addFavoriteProduct()>
+        <span class="favorite" (click)=addFavoriteProduct() *ngIf="!isHomePage">
             <mat-icon>favorite_border</mat-icon>
+        </span>
+        <span class="delete" (click)="deleteProduct()" *ngIf="isHomePage">
+           <mat-icon>delete</mat-icon>
         </span>
       </div>
       <div class="photoContent" (click)="goToProductPage()">
@@ -38,7 +41,7 @@
   </div>
 </div>
 <div>
-  <app-card-modal [toggleModal]="openModalSubj.asObservable()"></app-card-modal>
+<!--  <app-card-modal [card]="card"></app-card-modal>-->
 </div>
 <!--<ng-template #openModalView>-->
 <!---->
