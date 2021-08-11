@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProductService} from "../../_services/product.service";
 import {NavigationService} from "../../_services/navigation.service";
 
@@ -13,6 +13,8 @@ import {NavigationService} from "../../_services/navigation.service";
 export class AddProductComponent implements OnInit {
   createProductForm: FormGroup;
   private fileList = [];
+  private uploadFilesList = []
+
   constructor(private formBuilder: FormBuilder, private productService: ProductService, private navigateService: NavigationService) {
     this.createProductForm = formBuilder.group({
       "productTitle": ["", [Validators.required]],
@@ -49,7 +51,9 @@ export class AddProductComponent implements OnInit {
 
   changeFileList(event) {
     this.fileList = event;
-    debugger;
+    this.productService.pushImages(event).subscribe((res) => {
+      this.uploadFilesList.push(res[1]?.url);
+    });
   }
 
   submit() {
@@ -63,8 +67,9 @@ export class AddProductComponent implements OnInit {
       tags: this.tags,
       style: '',
       color: '',
-      images: this.fileList
+      images: this.uploadFilesList,
     }
+
     this.productService.productCreate(productData).subscribe((res) => {
       if (res) {
         this.navigateService.goToLKHomePage();
