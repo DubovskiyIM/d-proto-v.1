@@ -3,16 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './lk/profile/profile.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { EditComponent } from './lk/edit/edit.component';
 import { MyOrdersComponent } from './lk/my-orders/my-orders.component';
 import { LkComponent } from './lk/lk.component';
-import { MessagesComponent } from './lk/messages/messages.component'; // CLI imports router
+import { MessagesComponent } from './lk/messages/messages.component';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
+import {HomePageComponent} from "./pages/home-page/home-page.component";
+import {ProductPageComponent} from "./pages/product-page/product-page.component";
+import { UsersComponent } from  './pages/users/users.component'
+import { AddProductComponent} from './pages/add-product/add-product.component'
 
 const lkRoutes: Routes = [
-  { path: 'edit', component: EditComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'home', component: MyProfileComponent },
   { path: 'orders', component: MyOrdersComponent },
   { path: 'messages', component: MessagesComponent },
+  { path: 'create', component: AddProductComponent }
 ];
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,6 +30,11 @@ const routes: Routes = [
     //   { path: 'orders', component: MyOrdersComponent },
     // ],
   },
+
+  { path: 'users', component: UsersComponent },
+  { path: 'profile/:id', component: ProfileComponent },
+  { path: 'product/:id', component: ProductPageComponent },
+  { path: '', component: HomePageComponent },
 ];
 
 @NgModule({

@@ -1,0 +1,23 @@
+<div class="dropzone" appDnd (fileDropped)="onFileDropped($event)">
+  <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event)">
+  <p class="testAddImage">Добавьте изоброжение сюда</p>
+  <mat-icon>upload_file</mat-icon>
+  <p>или</p>
+  <label for="fileDropRef">Выберите файл</label>
+</div>
+<div class="uploadFileZone" *ngIf="files.length">
+  <div class="cardPreview d-flex justify-content-start align-items-center" *ngFor="let item of files; let i = index;">
+      <span class="imageDone">
+        <mat-icon>
+          cloud_done
+        </mat-icon>
+      </span>
+      <span class="fileName">{{item?.name}}</span>
+      <span class="size">
+        {{formatBytes(item?.size)}}
+      </span>
+      <span class="deleteIcon" (click)="deleteFile(i)">
+        <mat-icon>delete_outline</mat-icon>
+      </span>
+  </div>
+</div>

@@ -1,8 +1,24 @@
 .containerCards {
   width: 100%;
-  display: grid;
-  overflow-y: hidden;
-  grid-template-columns: repeat(auto-fill, 250px);
-  grid-auto-rows: 360px;
-  justify-content: center;
 }
+
+.masonry-item {
+  padding: 25px 0 20px 0;
+  margin: 0 10px 30px 10px;
+}
+.btn{
+  width: 100px;
+  height: 100px;
+}
+
+.homePageAddButton {
+  margin-right: 20px;
+  button {
+    height: 200px;
+    width: 150px;
+    margin-top: 40px;
+  }
+}
+//.card {
+//  display: inline-block;
+//}

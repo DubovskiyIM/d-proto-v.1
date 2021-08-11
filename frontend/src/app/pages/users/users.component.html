@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-4 card" *ngFor="let item of listUsers">
+      <div class="row">
+        <div class="col-6">
+          <app-avatar></app-avatar>
+        </div>
+        <div class="col-6">
+          <div>{{item.username}}</div>
+          <button class="btn btn-outline-dark" (click)="openChatRoom(item)"><mat-icon>email</mat-icon></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

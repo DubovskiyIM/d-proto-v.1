@@ -28,9 +28,26 @@ export class NavigationService {
   }
 
   next(route: string, queryParams?): void {
+    let routerLink = route;
     if (typeof route === 'string' && !route.includes('/')) {
-      route = '/' + route;
+      routerLink = '/' + route;
     }
-    this.router.navigate([route], queryParams);
+    this.router.navigate([routerLink], queryParams).then();
+  }
+
+  public goToProfilePage(ownerId: string) {
+    let rouerLInk = `profile/${ownerId}`;
+    this.router.navigate([rouerLInk]).then();
+  }
+
+  public goToLKHomePage() {
+    this.router.navigate(['lk/home']).then();
+  }
+
+  public goToCreateProductPage() {
+    this.router.navigate(['lk/create']).then();
+  }
+  public goToProductPage(productId: number) {
+    this.router.navigate(['product', productId]);
   }
 }
