@@ -1,21 +1,27 @@
 <div class="profileBar">
   <div class="userName">{{profile?.username}}</div>
-  <div class="name">{{profile?.name || "Васильев Егор" }}</div>
-  <div class="rating">
+  <div class="name d-flex align-items-center">{{profile?.name || "Васильев Егор" }}<mat-icon *ngIf="true">verified</mat-icon></div>
+  <div class="rating d-flex align-items-center">
     <mat-icon>star</mat-icon>
     <span>4.2</span>
   </div>
-  <app-avatar></app-avatar>
-    <div class="socialButtons">
-      <a href="#">Подписаться</a>
-      <a href="#">Написать</a>
+  <div class="avatarProfile">
+    <app-avatar [width]="'170px'"></app-avatar>
+  </div>
+  <div class="socialButtons">
+    <div class="row">
+      <div class="col-md-6 col-12"><a href="#" class="following">Подписаться</a></div>
+      <div class="col-md-6 col-12" ><a href="#" class="messageSendSocialButton">Написать</a></div>
     </div>
+
+
+  </div>
   <div class="countSale">
-    <div class="lastSeen">
-
+    <div class="countNumber d-flex align-items-center">
+      <mat-icon>sell</mat-icon>301 продано
     </div>
-    <div class="countNumber">
-
+    <div class="lastSeen d-flex align-items-center">
+      <mat-icon>flash_on</mat-icon>Последняя активность 6 часов назад
     </div>
   </div>
   <div class="description">

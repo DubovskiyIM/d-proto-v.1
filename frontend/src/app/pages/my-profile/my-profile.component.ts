@@ -29,7 +29,6 @@ export class MyProfileComponent implements OnInit {
     this.route.paramMap.pipe(
       switchMap((params) => params.getAll('id')),
     ).subscribe((data) => {
-        console.log(data);
         this.userid = +data;
       });
     this.authenticationService.currentUser.subscribe((user) => {
