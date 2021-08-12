@@ -8,7 +8,7 @@ import { User } from '../../_interfaces/user';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  public isLogged: true;
+  public isLogged = false;
 
   public user: User;
 
@@ -24,6 +24,8 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout() {
+    this.user = null;
+    this.isLogged = false;
     this.auth.logout();
   }
 }

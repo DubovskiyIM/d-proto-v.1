@@ -11,7 +11,7 @@
   <div class="cardItem card_medium card">
     <div class="photoContainer" (mouseover)="changeMouseOverSate()" (mouseleave)="leaveMouseSate()" [ngClass]="{profilePageView: (isHomePage || isProfilePage)}">
       <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
-        <span class="crop" (click)="clickOpenModalView()">
+        <span class="crop" (click)="cardModalComponent.triggerModal()">
           <mat-icon>crop_free</mat-icon>
         </span>
         <span class="favorite" (click)=addFavoriteProduct() *ngIf="!isHomePage">
@@ -41,14 +41,14 @@
   </div>
 </div>
 <div>
-<!--  <app-card-modal [card]="card"></app-card-modal>-->
+  <app-card-modal [card]="card" #cardModalComponent></app-card-modal>
 </div>
 <!--<ng-template #openModalView>-->
 <!---->
 <!--</ng-template>-->
 <!--<div class="pin_container">-->
 <!--  <div class="card_medium">-->
-<!--    <div class="card card_medium" style="opacity: 1;">-->
+<!--    <div class="card card_medium" style="opacity: 1;"app-mo>-->
 <!--      <div class="pin_image">-->
 <!--        <img src="https://i.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"-->
 <!--             alt="image" class="defaultPhoto">-->

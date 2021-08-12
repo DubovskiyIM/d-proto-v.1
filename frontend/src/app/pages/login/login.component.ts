@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (user) => {
           if (user) {
-            this.navigationService.next('profile');
+            this.navigationService.next('lk/home');
           }
         },
         (error) => {
