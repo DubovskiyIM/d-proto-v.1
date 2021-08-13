@@ -9,14 +9,15 @@ import { CreateRoomDto } from "@src/modules/rooms/dto/create-room.dto";
 
 @Injectable()
 export class RoomsService {
+  public room: Room;
   constructor(
       private readonly chatService: ChatService,
       @InjectModel('Room') private readonly roomModel: Model<RoomDocument>,
       @InjectModel('Message') private readonly messageModel: Model<MessageDocument>
   ) {}
 
-  async create(dto: CreateRoomDto): Promise<Room> {
-    return this.roomModel.create(dto);
+  async createRoom(createRoomDto: CreateRoomDto): Promise<Room> {
+    return this.roomModel.create(createRoomDto);
   }
 
   async addMessage(message: Message, id: string): Promise<Room> {
@@ -29,11 +30,6 @@ export class RoomsService {
 
   async findMessages(id: string, limit: number): Promise<Message[]> {
     let room = await this.findWithLimit(id, limit);
-
-    if (!room) {
-      const userRoom = new this.roomModel({ _id: id, name: id, is_user: true });
-      room = await this.create(userRoom);
-    }
     return await this.chatService.getMessagesByIdArray(room.messages)
   }
 
@@ -65,7 +61,7 @@ export class RoomsService {
     return await this.roomModel.findByIdAndRemove(id).exec();
   }
 
-  async getRooms(rooms: string[]): Promise<Room[]> {
-    return await this.roomModel.find({'_id': {$in: rooms}});
+  async getRooms(id): Promise<Room[]> {
+    return await this.roomModel.find({'_id': {$in: id}});
   }
 }
