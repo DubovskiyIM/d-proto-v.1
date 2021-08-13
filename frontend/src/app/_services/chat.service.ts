@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { APP_BASE_HREF } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +13,7 @@ export class ChatService {
     send: 'chat/send',
     set: 'chat/set',
     get: 'auth/get',
+    rooms: 'rooms'
   };
 
   private messages = [
@@ -72,7 +76,8 @@ export class ChatService {
     },
   ];
 
-  constructor(private socket: Socket) {
+  constructor(private socket: Socket, private http: HttpClient, @Inject(APP_BASE_HREF) private baseUrl: string) {
+    this.baseUrl = 'api' + this.baseUrl;
   }
 
   public getMessagesForChat(chatDialog) {
@@ -90,5 +95,9 @@ export class ChatService {
 
   getMessage() {
     return this.socket.fromEvent('message').pipe(map((data) => data));
+  }
+
+  public getRooms(): Observable<any> {
+    return this.http.get(`${this.baseUrl}${ChatService.httpActions.rooms}`);
   }
 }

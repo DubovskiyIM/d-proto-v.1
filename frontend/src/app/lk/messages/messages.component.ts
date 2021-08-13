@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ChatService } from '../../_services/chat.service';
 
 @Component({
   selector: 'app-messages',
@@ -7,23 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
-  public conversations = [
-    {
-      id: '22',
-      user_name: 'Carl',
-    },
-    {
-      id: '13',
-      user_name: 'name',
-    },
-    {
-      id: '44',
-      user_name: 'name',
-    },
-  ];
-  public selectedChatDialog = this.conversations[0];
+  public conversations = [];
+  public selectedChatDialog;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private chatService: ChatService) {}
 
   public changeChatDialog(chatDialogId: string) {
     this.conversations.find((item) => {
@@ -33,5 +21,10 @@ export class MessagesComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.chatService.getRooms().subscribe(rooms => {
+      this.conversations = rooms;
+      this.selectedChatDialog = this.conversations[0];
+    });
+  }
 }

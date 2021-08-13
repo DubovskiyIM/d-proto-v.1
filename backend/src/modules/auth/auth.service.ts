@@ -10,6 +10,13 @@ import { WsException } from "@nestjs/websockets";
 
 @Injectable()
 export class AuthService {
+  public static getAuthToken(cookies: string): string {
+    return cookies
+        .split(';')
+        .find(s => s.includes('Authentication='))
+        .split('Authentication=')[1];
+  }
+
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
@@ -84,7 +91,7 @@ export class AuthService {
 
   public async verify(token: string, isWs: boolean = false): Promise<[any, User]> {
     try {
-      const payload = <any>this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
+      const payload = this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
       const user = await this.usersService.findById(payload.userId);
 
       if (!user) {

@@ -10,10 +10,8 @@ import { Observable } from 'rxjs';
 import { Socket, Server } from 'socket.io';
 
 import { RedisPropagatorInterceptor } from "@src/shared/redis-propagator/redis-propagator.interceptor";
-import { JwtAuthGuard } from "@src/common/guards/jwt-auth.guard";
 import { AuthService } from "@src/modules/auth/auth.service";
 import { RoomsService } from '@src/modules/rooms/rooms.service';
-import { UsersService } from "@src/modules/users/users.service";
 
 @UseInterceptors(RedisPropagatorInterceptor)
 @WebSocketGateway( { namespace: 'rooms' })
@@ -37,7 +35,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   }
 
   async handleConnection(socket: Socket) {
-    const authToken = socket.handshake.headers.cookie.split(';')[0].split('=Bearer ')[1];
+    const authToken = await AuthService.getAuthToken(socket.handshake.headers.cookie);
     const [ payload, user ] = await this.authService.verify(authToken);
 
     this.connectedUsers = [...this.connectedUsers, String(payload.userId)];
@@ -48,7 +46,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   }
 
   async handleDisconnect(socket: Socket) {
-    const authToken = socket.handshake.headers.cookie.split(';')[0].split('=Bearer ')[1];
+    const authToken = await AuthService.getAuthToken(socket.handshake.headers.cookie);
     const userId = await this.authService.verify(authToken);
     const userPos = this.connectedUsers.indexOf(String(userId));
 
@@ -69,7 +67,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     const event: string = 'message';
 
     await this.roomService.addMessage(result, result.room);
-    client.broadcast.to(result.room).emit(event, result.message);
+    client.broadcast.to(result.room).emit(event, result);
     this.logger.log('Message saved and emitted.');
     return new Observable(observer =>
         observer.next({ event, data: result })
@@ -79,15 +77,13 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   // @UseGuards(JwtAuthGuard)
   @SubscribeMessage('join')
   async onRoomJoin(client: Socket, data: any): Promise<any> {
-    client.join(data);
+    client.join(data._id);
     const messages = await this.roomService.findMessages(data, 25);
     client.emit('message', messages);
-    // const messages = await this.roomService.findMessages(data, 25);
-    // client.emit('message', messages);
   }
 
   @SubscribeMessage('leave')
   onRoomLeave(client, data: any): void {
-    client.leave(data[0]);
+    client.leave(data._id);
   }
 }

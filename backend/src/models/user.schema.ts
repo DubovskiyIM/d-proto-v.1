@@ -69,6 +69,9 @@ export class User {
 
   @Prop()
   savedProducts: string[];
+
+  @Prop()
+  rooms: string[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
