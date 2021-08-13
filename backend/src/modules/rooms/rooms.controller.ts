@@ -2,47 +2,58 @@ import {
   Body, Request,
   Controller,
   Get, Post, Put, Delete,
-  HttpException, HttpStatus
+  HttpException, HttpStatus, UseGuards, Req
 } from '@nestjs/common';
 
 import { RoomsService } from './rooms.service';
 import { Room } from '@src/models/room.schema';
 import { CreateRoomDto } from "@src/modules/rooms/dto/create-room.dto";
+import { JwtAuthGuard } from "@src/common/guards/jwt-auth.guard";
+import { RequestWithUser } from "@src/interfaces/requestWithUser.interface";
+import {UsersService} from "@src/modules/users/users.service";
 
 @Controller('rooms')
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
-  @Get()
-  async index(): Promise<Room[]> {
-    return await this.roomsService.findAll();
+  @Get('rooms')
+  @UseGuards(JwtAuthGuard)
+  async create(@Request() req: RequestWithUser) {
+    return await this.roomsService.getRooms(req.user.id);
+  }
+
+  @Post('create')
+  @UseGuards(JwtAuthGuard)
+  async getRooms(@Request() req: RequestWithUser) {
+    const rooms = await this.roomsService.getRooms(req.user.id);
+    if (!rooms) {
+      this.roomsService.createRoom(req.user.id)
+    }
+    return await this.roomsService.getRooms(req.user.id);
   }
 
   @Get(':id')
-  async show(@Request() req): Promise<Room> {
-    const id = req.params.id;
-    if (!id)
+  @UseGuards(JwtAuthGuard)
+  async getRoomByUser(@Request() req: RequestWithUser): Promise<Room> {
+    const selfId = req.user.id;
+    const userId = req.params.id;
+    if (!userId)
       throw new HttpException(
           'ID parameter is missing',
           HttpStatus.BAD_REQUEST,
       );
 
-    const room = await this.roomsService.findById(id);
-    if (!room)
-      throw new HttpException(
-          `The room with the id: ${id} does not exists`,
-          HttpStatus.BAD_REQUEST,
-      );
-
+    let room = await this.roomsService.findOne({users: [selfId, userId]})
+    if (!room) {
+      const roomDto = {
+        messages: [],
+        users: [selfId, userId],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+      room = await this.roomsService.createRoom(roomDto)
+    }
     return room;
-  }
-
-  @Post()
-  async create(@Body() dto: CreateRoomDto): Promise<Room> {
-    if (!dto || (dto && Object.keys(dto).length === 0))
-      throw new HttpException('Missing information', HttpStatus.BAD_REQUEST);
-
-    return await this.roomsService.create(dto);
   }
 
   @Put(':id')

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { AuthenticationService } from '../../../_services/authentication.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { AuthenticationService } from '../../../_services/authentication.service
   templateUrl: './chat-message.component.html',
   styleUrls: ['./chat-message.component.scss'],
 })
-export class ChatMessageComponent {
+export class ChatMessageComponent implements OnInit {
   @Input() messages: any[] = [];
 
   private currentUser;
@@ -17,9 +17,9 @@ export class ChatMessageComponent {
     });
   }
 
-  public isMyMessage(id: number): boolean {
-    return this.messages[id]?.data?.author?._id === this.currentUser?._id;
-  }
+  // public isMyMessage(id: number): boolean {
+  //   return this.messages[id]?.data?.author?._id === this.currentUser?._id;
+  // }
 
   public isLastMessageInGroup(
     indexGroup: number,
@@ -30,5 +30,9 @@ export class ChatMessageComponent {
       currentMessages.indexOf(currentMessages[indexMessage]) + 1 ===
       currentMessages.length
     );
+  }
+
+  ngOnInit(): void {
+    console.log(this.messages);
   }
 }

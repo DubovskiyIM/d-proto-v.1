@@ -8,7 +8,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User as UserSchema } from '@src/models/user.schema';
 import { IdValidationPipe } from "@src/pipes/id-validation.pipe";
 import { RequestWithUser } from "@src/interfaces/requestWithUser.interface";
-import {JwtAuthGuard} from "@src/common/guards/jwt-auth.guard";
+import { JwtAuthGuard } from "@src/common/guards/jwt-auth.guard";
 
 @Controller('users')
 export class UsersController {
