@@ -23,6 +23,7 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit() {
     this.chatService.getRooms().subscribe(rooms => {
+      debugger;
       this.conversations = rooms;
       this.selectedChatDialog = this.conversations[0];
     });

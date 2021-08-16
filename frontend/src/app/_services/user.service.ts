@@ -8,23 +8,23 @@ import {Inject, Injectable } from '@angular/core';
 export class UserService {
   private static readonly httpActions = {
     getAll: 'users',
-    rooms: 'rooms/create',
+    rooms: 'rooms',
     getRooms: '',
   };
-  constructor(private http: HttpClient, @Inject(APP_BASE_HREF) private baseUrl: string,) {
+  constructor(private http: HttpClient, @Inject(APP_BASE_HREF) private baseUrl: string) {
     this.baseUrl = 'api' + this.baseUrl;
     console.log(this.baseUrl);
   }
 
   getUsers(){
-    console.log(`${this.baseUrl}${UserService.httpActions.getAll}`);
+    // console.log(`${this.baseUrl}${UserService.httpActions.getAll}`);
     return this.http.get<any>(
       `${this.baseUrl}${UserService.httpActions.getAll}`,
     );
   }
 
   openChatByUser(selectUserId) {
-    return this.http.post(`${this.baseUrl}${UserService.httpActions.rooms}`, {_id: selectUserId})
+    return this.http.get(`${this.baseUrl}${UserService.httpActions.rooms}/${selectUserId}`);
   }
 
   getUserChatRoom() {

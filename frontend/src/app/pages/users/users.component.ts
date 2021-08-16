@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from  '../../_services/user.service'
+import {NavigationService} from "../../_services/navigation.service";
 
 @Component({
   selector: 'app-users',
@@ -8,7 +9,7 @@ import { UserService } from  '../../_services/user.service'
 })
 export class UsersComponent implements OnInit {
   listUsers = [];
-  constructor(private  userService: UserService) { }
+  constructor(private  userService: UserService, private navigateService: NavigationService) { }
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe((res) => {
@@ -19,7 +20,7 @@ export class UsersComponent implements OnInit {
 
   openChatRoom(userCard) {
     this.userService.openChatByUser(userCard._id).subscribe((res) => {
-
+        this.navigateService.goToChatPage();
     });
   }
 

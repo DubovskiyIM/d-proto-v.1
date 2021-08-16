@@ -50,4 +50,8 @@ export class NavigationService {
   public goToProductPage(productId: number) {
     this.router.navigate(['product', productId]);
   }
+
+  public goToChatPage() {
+    this.router.navigate(['lk/messages']).then();
+  }
 }

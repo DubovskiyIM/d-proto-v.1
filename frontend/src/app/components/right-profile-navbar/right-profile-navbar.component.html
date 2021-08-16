@@ -1,12 +1,12 @@
 <div class="profileBar">
   <div class="userName">{{profile?.username}}</div>
   <div class="name d-flex align-items-center">{{profile?.name || "Васильев Егор" }}<mat-icon *ngIf="true">verified</mat-icon></div>
+  <div class="avatarProfile">
+    <app-avatar [width]="'170px'"></app-avatar>
+  </div>
   <div class="rating d-flex align-items-center">
     <mat-icon>star</mat-icon>
     <span>4.2</span>
-  </div>
-  <div class="avatarProfile">
-    <app-avatar [width]="'170px'"></app-avatar>
   </div>
   <div class="socialButtons">
     <div class="row">

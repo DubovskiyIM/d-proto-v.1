@@ -64,6 +64,9 @@ export class AddProductComponent implements OnInit {
       title: this.createProductForm.value.productTitle,
       status: 'ACTIVE',
       price: this.createProductForm.value.productPrice,
+      description: {
+        about: this.createProductForm.value.productDescription
+      },
       tags: this.tags,
       style: '',
       color: '',
