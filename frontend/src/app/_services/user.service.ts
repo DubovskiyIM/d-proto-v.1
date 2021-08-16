@@ -1,6 +1,6 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import {Inject, Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -16,11 +16,9 @@ export class UserService {
     console.log(this.baseUrl);
   }
 
-  getUsers(){
+  getUsers() {
     // console.log(`${this.baseUrl}${UserService.httpActions.getAll}`);
-    return this.http.get<any>(
-      `${this.baseUrl}${UserService.httpActions.getAll}`,
-    );
+    return this.http.get<any>(`${this.baseUrl}${UserService.httpActions.getAll}`);
   }
 
   openChatByUser(selectUserId) {
