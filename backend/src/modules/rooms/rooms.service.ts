@@ -18,17 +18,22 @@ export class RoomsService {
       @InjectModel('User') private readonly userModel: Model<UserDocument>
   ) {}
 
+  async getAllRooms(roomIds: string[]): Promise<Room[] | null> {
+    return await this.roomModel.find({_id: {$in: roomIds}});
+  }
+
   async findRoom(userId: string, selfId: string): Promise<Room | null> {
-    const user1 = await this.userModel.findById(userId);
-    const user2 = await this.userModel.findById(selfId);
     const room = await this.roomModel.findOne({ users: { $all: [userId, selfId] } });
     if (room) {
       return room;
     }
+    const members = [
+      await this.userModel.findById(userId),
+      await this.userModel.findById(selfId)
+    ]
     const newRoom = await this.roomModel.create({});
-    await this.roomModel.updateOne({_id: newRoom._id}, {$push: {users: user1}});
-    await this.roomModel.updateOne({_id: newRoom._id}, {$push: {users: user2}});
-
+    await this.roomModel.updateOne({_id: newRoom._id}, {$push: {users: { $each: members}}});
+    members.forEach(async user => await user.updateOne({$push: {rooms: newRoom._id} }));
     return await newRoom.save();
   }
 
@@ -79,10 +84,4 @@ export class RoomsService {
   async getRoomsById(id): Promise<Room[]> {
     return await this.roomModel.find({'_id': {$in: id}});
   }
-  //
-  // // TODO Search rooms by included in rooms.users array.
-  // // TODO Business logic for get all conversations. See how it makes in mongo
-  // async getRoomsByUser(id: string): Promise<Room[] | null> {
-  //   return await this.roomModel.find((room) => room.users.incudes(id));
-  // }
 }
