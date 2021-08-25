@@ -9,7 +9,7 @@ import {filter, map} from "rxjs/operators";
 })
 export class ProductService {
   private static readonly httpActions = {
-    register: 'auth/register',
+    getAll: 'products',
     login: 'auth/login',
     logout: 'auth/logout',
   };
@@ -246,7 +246,8 @@ export class ProductService {
   }
 
   getProductsList() {
-    return this.listCards;
+    // return this.listCards;
+    return this.http.get(`${this.baseUrl}/${ProductService.httpActions.getAll}`);
   }
 
   getProductById(productId: string) {

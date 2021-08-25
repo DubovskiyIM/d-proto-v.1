@@ -45,7 +45,7 @@ export class CardModalComponent implements OnInit {
   //
   ngOnInit() {
 
-    console.log(this.card);
+    // console.log(this.card);
   }
 
   // @Input() toggleModal: Observable<void>;

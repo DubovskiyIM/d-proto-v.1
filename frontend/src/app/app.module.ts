@@ -82,7 +82,7 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     DragAndDropFileComponent,
     DndDirective,
     RightProfileNavbarComponent,
-    SettingsComponent
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

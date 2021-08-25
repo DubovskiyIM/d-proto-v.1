@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import {ProductService} from "../../_services/product.service";
+import {UserService} from "../../_services/user.service";
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,7 @@ export class ProfileComponent implements OnInit {
   public userProfileData;
   public listCards: any = [];
 
-  constructor(private route: ActivatedRoute, private productService: ProductService) {
+  constructor(private route: ActivatedRoute, private productService: ProductService, private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -25,12 +26,15 @@ export class ProfileComponent implements OnInit {
         this.userid = data;
         this.getUserCardsList();
       });
+
+    this.userService.getUserInfoById(this.userid).subscribe((res) => {
+      this.userProfileData = res;
+    })
   }
 
   private getUserCardsList() {
-
     this.productService.getProductByOwner(this.userid).subscribe((res) => {
-      console.log('this', res);
+      // console.log('this', res);
       this.listCards = res;
     })
   }

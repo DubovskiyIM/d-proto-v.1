@@ -7,11 +7,14 @@ import {ProductService} from "../../_services/product.service";
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-  public listCards = [];
+  public listCards;
   constructor(private productService: ProductService) {
   }
   ngOnInit() {
-    this.listCards = this.productService.getProductsList();
+    this.productService.getProductsList().subscribe((res) => {
+      this.listCards = res;
+      // console.log(this.)
+    });
 
   }
 }
