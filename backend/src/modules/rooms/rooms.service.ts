@@ -6,6 +6,7 @@ import { Message, MessageDocument } from '@src/models/message.schema';
 import { Room, RoomDocument } from "@src/models/room.schema";
 import { ChatService } from '@src/modules/chat/chat.service';
 import { CreateRoomDto } from "@src/modules/rooms/dto/create-room.dto";
+import { UserDocument } from "@src/models/user.schema";
 
 @Injectable()
 export class RoomsService {
@@ -13,11 +14,31 @@ export class RoomsService {
   constructor(
       private readonly chatService: ChatService,
       @InjectModel('Room') private readonly roomModel: Model<RoomDocument>,
-      @InjectModel('Message') private readonly messageModel: Model<MessageDocument>
+      @InjectModel('Message') private readonly messageModel: Model<MessageDocument>,
+      @InjectModel('User') private readonly userModel: Model<UserDocument>
   ) {}
 
+  async getAllRooms(roomIds: string[]): Promise<Room[] | null> {
+    return await this.roomModel.find({_id: {$in: roomIds}});
+  }
+
+  async findRoom(userId: string, selfId: string): Promise<Room | null> {
+    const room = await this.roomModel.findOne({ users: { $all: [userId, selfId] } });
+    if (room) {
+      return room;
+    }
+    const members = [
+      await this.userModel.findById(userId),
+      await this.userModel.findById(selfId)
+    ]
+    const newRoom = await this.roomModel.create({});
+    await this.roomModel.updateOne({_id: newRoom._id}, {$push: {users: { $each: members}}});
+    members.forEach(async user => await user.updateOne({$push: {rooms: newRoom._id} }));
+    return await newRoom.save();
+  }
+
   async createRoom(createRoomDto: CreateRoomDto): Promise<Room> {
-    return this.roomModel.create(createRoomDto);
+    return await this.roomModel.create(createRoomDto);
   }
 
   async addMessage(message: Message, id: string): Promise<Room> {
@@ -41,7 +62,6 @@ export class RoomsService {
     return await this.roomModel
         .findById(id)
         .slice('messages', limit)
-        // .populate('messages.user', { _id: 1, username: 1, email: 1 })
         .exec();
   }
 
@@ -61,7 +81,7 @@ export class RoomsService {
     return await this.roomModel.findByIdAndRemove(id).exec();
   }
 
-  async getRooms(id): Promise<Room[]> {
+  async getRoomsById(id): Promise<Room[]> {
     return await this.roomModel.find({'_id': {$in: id}});
   }
 }

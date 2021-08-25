@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationService } from '../../_services/navigation.service'
-import { ProductService } from '../../_services/product.service'
+import { NavigationService } from '../../_services/navigation.service';
+import { ProductService } from '../../_services/product.service';
 
 @Component({
   selector: 'app-cards',
@@ -57,5 +57,4 @@ export class CardsComponent implements OnInit {
     // })
     // this.navigationService.go
   }
-
 }

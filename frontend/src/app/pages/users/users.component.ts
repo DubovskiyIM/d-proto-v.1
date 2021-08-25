@@ -9,18 +9,18 @@ import {NavigationService} from "../../_services/navigation.service";
 })
 export class UsersComponent implements OnInit {
   listUsers = [];
-  constructor(private  userService: UserService, private navigateService: NavigationService) { }
+  constructor(private userService: UserService, private navigateService: NavigationService) { }
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe((res) => {
-      console.log(res);
       this.listUsers = res;
-    })
+    });
   }
 
   openChatRoom(userCard) {
     this.userService.openChatByUser(userCard._id).subscribe((res) => {
-        this.navigateService.goToChatPage();
+      console.log(res);
+      this.navigateService.goToChatPage();
     });
   }
 
