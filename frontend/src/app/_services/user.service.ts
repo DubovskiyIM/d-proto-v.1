@@ -1,6 +1,7 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import {ChatService} from "./chat.service";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class UserService {
     getRooms: '',
   };
 
-  constructor(private http: HttpClient, @Inject(APP_BASE_HREF) private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject(APP_BASE_HREF) private baseUrl: string, private chatService: ChatService) {
     this.baseUrl = 'api' + this.baseUrl;
     // console.log(this.baseUrl);
   }
@@ -23,6 +24,7 @@ export class UserService {
   }
 
   openChatByUser(selectUserId) {
+    this.chatService.selectedChatUserId = selectUserId;
     return this.http.get(`${this.baseUrl}${UserService.httpActions.rooms}/${selectUserId}`);
   }
 

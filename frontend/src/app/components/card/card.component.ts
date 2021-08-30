@@ -84,7 +84,9 @@ export class CardComponent implements OnInit {
   }
 
   goToProductPage() {
-    this.navigateService.goToProductPage(this.card.id);
+    if (this.card._id) {
+      this.navigateService.goToProductPage(this.card._id);
+    }
   }
 
   changeMouseOverSate() {

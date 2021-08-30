@@ -23,8 +23,6 @@ export class RightProfileNavbarComponent implements OnInit {
   public follow(): void {
     let userId = this.profile._id;
     // console.log(userId);
-    debugger;
-
   }
 
 }

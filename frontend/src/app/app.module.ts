@@ -6,6 +6,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF, PlatformLocation, CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { NgxMasonryModule } from 'ngx-masonry';
+import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+
 import { AppRoutingModule } from './app-routing.module';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { AppComponent } from './app.component';
@@ -93,6 +95,7 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     FormsModule,
     CommonModule,
     NgxMasonryModule,
+    NgxUsefulSwiperModule,
     ReactiveFormsModule,
     SocketIoModule.forRoot(config),
   ],

@@ -23,7 +23,7 @@ export class ProductPageComponent implements OnInit {
       .subscribe((data) => {
         this.productId = data;
         this.product = this.productService.getProductById(this.productId);
-        console.log(this.product);
+        // console.log(this.product);
       });
   }
 

@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
   openChatRoom(userCard) {
     this.userService.openChatByUser(userCard._id).subscribe((res) => {
       console.log(res);
-      this.navigateService.goToChatPage();
+      this.navigateService.goToChatPage(userCard._id);
     });
   }
 

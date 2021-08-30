@@ -1,17 +1,3 @@
-//.cardModalWrapper{
-//  max-width: 1024px;
-//  height: 600px;
-//}
-//.modalWrapper{
-//  width: 100%;
-//  height: 600px;
-//}
-.cardModalContainer{
-  width: 100%
-  //min-width: 1024px;
-  //margin: 0 auto;
-}
-
 ::ng-deep .modal-dialog{
   max-width: 80%;
   height: 600px;
@@ -31,4 +17,85 @@
     font-weight: 400;
   }
 }
-.modalTitle{}
+.socialButton {
+  margin-top: 1rem;
+  button{
+    font-size: 18px;
+    border-radius: 0;
+  }
+}
+
+
+
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  max-height: 600px;
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-button-next{
+  color: black;
+}
+.swiper-button-prev{
+  color: black;
+}
+.swiper-pagination{
+  color: #333333;
+}
+.cardInfo {
+  font-family: Roboto serif;
+}
+.swiperWrap{
+  width: 95%;
+  margin: 1rem auto;
+}
+.cardInfo h2{
+  margin-bottom: 0;
+}
+.cardInfo h3{
+  margin: 0;
+  font-size: 19px;
+  font-weight: 500;
+
+}
+.userName{
+  font-family: Roboto, serif;
+  font-size: 16px;
+  margin: 1rem 0 1rem 1rem;
+}
+.productModal{
+  width: 95%;
+  margin: 0 auto;
+}
+.modalDesc{
+  margin-top: 1rem;
+  font-size: 18px;
+}
