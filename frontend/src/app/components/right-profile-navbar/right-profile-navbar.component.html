@@ -1,6 +1,8 @@
 <div class="profileBar">
   <div class="userName">{{profile?.username}}</div>
-  <div class="name d-flex align-items-center">{{profile?.name || "Васильев Егор" }}<mat-icon *ngIf="true">verified</mat-icon></div>
+  <div class="name d-flex align-items-center">{{profile?.name || "Васильев Егор" }}
+    <mat-icon *ngIf="true">verified</mat-icon>
+  </div>
   <div class="avatarProfile">
     <app-avatar [width]="'170px'"></app-avatar>
   </div>
@@ -10,16 +12,25 @@
   </div>
   <div class="socialButtons">
     <div class="row">
-      <div class="col-md-6 col-12"><a href="#" class="following">Подписаться</a></div>
-      <div class="col-md-6 col-12" ><a href="#" class="messageSendSocialButton">Написать</a></div>
+      <div class="col-12">
+        <ng-container *ngIf="!isSubscribedUser">
+          <a class="following" (click)="follow()">Подписаться</a>
+        </ng-container>
+        <ng-container *ngIf="isSubscribedUser">
+          <a class="following subscribedState" (click)="unfollow()">Отписаться</a>
+        </ng-container>
+        <a href="#" class="messageSendSocialButton">Написать</a>
+      </div>
     </div>
   </div>
   <div class="countSale">
     <div class="countNumber d-flex align-items-center">
-      <mat-icon>sell</mat-icon>301 продано
+      <mat-icon>sell</mat-icon>
+      301 продано
     </div>
     <div class="lastSeen d-flex align-items-center">
-      <mat-icon>flash_on</mat-icon>Последняя активность 6 часов назад
+      <mat-icon>flash_on</mat-icon>
+      Последняя активность 6 часов назад
     </div>
   </div>
   <div class="description">

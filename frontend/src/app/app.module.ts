@@ -45,6 +45,9 @@ import { DragAndDropFileComponent } from './components/drag-and-drop-file/drag-a
 import { DndDirective } from './_directives/dnd.directive';
 import { RightProfileNavbarComponent } from './components/right-profile-navbar/right-profile-navbar.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { FavoriteDirective } from './_directives/favorite.directive';
+import { NotifyComponent } from './components/notify/notify.component';
+// import { NotifyMessageComponent } from "./components/notify/notify.component";
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -85,6 +88,8 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     DndDirective,
     RightProfileNavbarComponent,
     SettingsComponent,
+    FavoriteDirective,
+    NotifyComponent,
   ],
   imports: [
     BrowserModule,

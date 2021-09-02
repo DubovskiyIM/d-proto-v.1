@@ -1,31 +1,36 @@
-::ng-deep .modal-dialog{
+::ng-deep .modal-dialog {
   max-width: 80%;
   height: 600px;
   margin: 100px auto;
 }
-.modalCLoseButton{
+
+.modalCLoseButton {
   text-align: right;
 }
-.modalHeader{
+
+.modalHeader {
   padding: 16px 16px;
 }
-.modalHeaderTitle{
+
+.modalHeaderTitle {
+  cursor: pointer;
   font-size: 22px;
-  span{
+
+  span {
     margin-left: 10px;
     font-size: 16px;
     font-weight: 400;
   }
 }
+
 .socialButton {
   margin-top: 1rem;
-  button{
+
+  button {
     font-size: 18px;
     border-radius: 0;
   }
 }
-
-
 
 
 .swiper-container {
@@ -61,41 +66,64 @@
   object-fit: cover;
 }
 
-.swiper-button-next{
+.swiper-button-next {
   color: black;
 }
-.swiper-button-prev{
+
+.swiper-button-prev {
   color: black;
 }
-.swiper-pagination{
+
+.swiper-pagination {
   color: #333333;
 }
+
 .cardInfo {
   font-family: Roboto serif;
 }
-.swiperWrap{
+
+.swiperWrap {
   width: 95%;
   margin: 1rem auto;
 }
-.cardInfo h2{
+
+.cardInfo h2 {
   margin-bottom: 0;
 }
-.cardInfo h3{
+
+.cardInfo h3 {
   margin: 0;
   font-size: 19px;
   font-weight: 500;
 
 }
-.userName{
+
+.userName {
   font-family: Roboto, serif;
   font-size: 16px;
   margin: 1rem 0 1rem 1rem;
 }
-.productModal{
+
+.productModal {
   width: 95%;
   margin: 0 auto;
 }
-.modalDesc{
+
+.sizeLabel{
+  font-size: 14px;
+}
+
+.modalDesc {
   margin-top: 1rem;
   font-size: 18px;
+}
+
+.shareLink {
+  margin-left: 10px;
+  cursor: pointer;
+  font-family: Roboto, serif;
+
+  span {
+    margin-left: 5px;
+  }
 }

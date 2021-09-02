@@ -1,14 +1,16 @@
 import {
   Component, ElementRef, Input, OnDestroy, OnInit, ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {Observable, Subscription} from "rxjs";
-import { SwiperOptions } from 'swiper';
+import {SwiperOptions} from 'swiper';
 import {ModalDismissReasons, NgbModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {UserService} from "../../../_services/user.service";
-import { NavigationService } from  '../../../_services/navigation.service'
+import {NavigationService} from '../../../_services/navigation.service'
 import {ChatService} from "../../../_services/chat.service";
 import {eventListeners} from "@popperjs/core";
+import {NotifyComponent} from "../../notify/notify.component";
+import {ClipboardService} from "ngx-clipboard";
 
 @Component({
   selector: 'app-card-modal',
@@ -19,8 +21,12 @@ export class CardModalComponent implements OnInit {
   @Input() card;
   @Input() isHomePage;
 
-  @ViewChild('modalWrapper', { static: false })
+
+  @ViewChild('modalWrapper', {static: false})
   modalCard: ElementRef;
+
+  @ViewChild(NotifyComponent, {static: false})
+  notify;
 
   closeModal: string;
   config: SwiperOptions = {
@@ -36,7 +42,12 @@ export class CardModalComponent implements OnInit {
     spaceBetween: 30
   };
 
-  constructor(private modalService: NgbModal, private userService: UserService, private navigateService: NavigationService, private chatService: ChatService) {}
+  constructor(private modalService: NgbModal,
+              private userService: UserService,
+              private navigateService: NavigationService,
+              private chatService: ChatService,
+              private clipboardService: ClipboardService) {
+  }
 
   ngOnInit() {
     console.log(this.card);
@@ -62,8 +73,13 @@ export class CardModalComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
+  }
+
+  public goToProductPage() {
+    this.navigateService.goToProductPage(this.card._id)
+    this.closeOpenedModal();
   }
 
   public openChat() {
@@ -72,11 +88,16 @@ export class CardModalComponent implements OnInit {
       this.navigateService.goToChatPage(this.card?.owner);
     })
     this.closeOpenedModal();
-    // this.openChatByUser
   }
 
   public closeOpenedModal() {
     this.modalService.dismissAll();
+  }
+
+  public copyLink() {
+    const location = window.location.href + 'product/' + this.card._id;
+    this.clipboardService.copyFromContent(location);
+    this.notify.openSnackBar()
   }
 
 

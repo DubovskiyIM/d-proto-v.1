@@ -26,23 +26,28 @@
         </div>
       </div>
       <div class="col-6 cardInfo">
-        <h2 class="modalHeaderTitle">
+        <h2 class="modalHeaderTitle" (click)="goToProductPage()">
           {{card.title}}
         </h2>
         <h3>{{card.price || '2999' }} р</h3>
-        <h3>размер S</h3>
         <div class="modalUserInfo d-flex align-items-center" *ngIf="!isHomePage">
           <app-avatar [width]="'30px'"></app-avatar>
           <span class="userName">Имя User</span>
         </div>
+        <h3 class="sizeLabel">размер S</h3>
         <div class="modalDesc">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi cupiditate debitis doloribus eum, ipsa
           laboriosam magni, nam qui rerum sit ut vel! Assumenda corporis doloribus, harum hic nemo qui voluptate?
         </div>
-        <div class="socialButton" *ngIf="!isHomePage">
+        <div class="socialButton d-flex justify-content-start" *ngIf="!isHomePage">
           <button class="btn btn-outline-dark" (click)="openChat()">Написать</button>
+          <div class="shareLink d-flex align-items-center" (click)="copyLink()">
+            <mat-icon>share</mat-icon>
+            <span>Поделиться</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </ng-template>
+<app-notify [message]="'Ссылка скопирована'" #notify></app-notify>

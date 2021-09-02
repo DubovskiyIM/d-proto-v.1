@@ -22,7 +22,7 @@ export class ChatMessageComponent implements OnInit, OnChanges {
     // debugger;
     if (this.currentUser?._id) {
       // console.log(this.currentUser?._id);
-      console.log(this.messages[id]._id === this.currentUser?._id);
+      // console.log(this.messages[id]._id === this.currentUser?._id);
       // debugger;
     }
     return this.messages[id]._id === this.currentUser?._id;
@@ -44,6 +44,6 @@ export class ChatMessageComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    console.log(this.messages);
+    // console.log(this.messages);
   }
 }

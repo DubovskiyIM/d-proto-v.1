@@ -37,3 +37,13 @@
   -moz-border-radius: 14px !important;
   border-radius: 14px !important;
 }
+.mat-snack-bar-container {
+  width: 500px!important;
+  //max-width: 800px!important;
+  //text-align: center;
+  height: 60px!important;
+  //background-color: bisque;
+  //color: black;
+  font-size: 34px;
+  z-index: 100;
+}

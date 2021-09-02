@@ -18,7 +18,7 @@ export class CardsComponent implements OnInit {
   ngOnInit(): void {}
 
   updateGrid() {
-    console.log('jnkl');
+    // console.log('jnkl');
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 

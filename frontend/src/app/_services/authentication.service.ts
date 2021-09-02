@@ -16,7 +16,7 @@ export class AuthenticationService {
     logout: 'auth/logout',
   };
   private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  public currentUser: Observable<any>;
 
   constructor(
     private http: HttpClient,
@@ -39,6 +39,12 @@ export class AuthenticationService {
     if (!controls) {
       return;
     }
+
+    // this.http.get('/api/auth/google').subscribe((res)=> {
+    //   console.log(res);
+    // })
+    //
+    // return;
     const loginData = {
       email: controls.controls?.username.value,
       password: controls.controls?.password.value,
@@ -54,6 +60,7 @@ export class AuthenticationService {
           if (user) {
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
+            // this.userService.setNewUser(user);
           }
           return user;
         })

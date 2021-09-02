@@ -7,10 +7,6 @@ $cardMedium: 33;
 $cardLarge: 45;
 $cardFontsMain: 'Roboto';
 
-.cardWrapper {
-
-}
-
 
 .cardItem {
   cursor: pointer;
@@ -108,3 +104,6 @@ $cardFontsMain: 'Roboto';
   right: 18px;
 }
 
+.favoriteView {
+  color: red;
+}

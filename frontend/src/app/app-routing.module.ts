@@ -16,6 +16,7 @@ import {SettingsComponent} from "./pages/settings/settings.component";
 const lkRoutes: Routes = [
   { path: 'home', component: MyProfileComponent },
   { path: 'orders', component: MyOrdersComponent },
+  { path: 'messages', component: MessagesComponent, pathMatch: 'full'},
   { path: 'messages/:id', component: MessagesComponent },
   { path: 'create', component: AddProductComponent },
   { path: 'settings', component: SettingsComponent }

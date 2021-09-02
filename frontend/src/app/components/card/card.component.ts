@@ -4,9 +4,12 @@ import {
 import {
   animate, state, style, transition, trigger,
 } from '@angular/animations';
-import { NavigationService } from '../../_services/navigation.service';
-import { CardModalComponent } from "./card-modal/card-modal.component";
+import {NavigationService} from '../../_services/navigation.service';
+import {CardModalComponent} from "./card-modal/card-modal.component";
 import {Subject} from "rxjs";
+import {SocialService} from "../../_services/social.service";
+import {getImageUrl} from '../../_helpers/file-helper'
+
 
 @Component({
   selector: 'app-card',
@@ -35,13 +38,11 @@ import {Subject} from "rxjs";
 })
 export class CardComponent implements OnInit {
   @Input() card;
-
-  isShortView = true;
-
   @Input() isHomePage = false;
   @Input() isProfilePage = true
-
+  isFavoriteCard = false;
   showSocialButtons = false;
+
 
   currentImageCardState = 'initial';
 
@@ -51,16 +52,11 @@ export class CardComponent implements OnInit {
 
   clicked = false;
 
-  constructor(private navigateService: NavigationService) {
+  constructor(private navigateService: NavigationService, private socialService: SocialService) {
   }
 
   @Output() updateGrid = new EventEmitter();
 
-  openModal() {
-
-    // this.isShortView = false;
-    // this.updateGrid.emit();
-  }
 
   public goToProfilePage() {
     this.navigateService.goToProfilePage(this.card?.owner);
@@ -70,12 +66,25 @@ export class CardComponent implements OnInit {
     this.clicked = true;
   }
 
-  addFavoriteProduct() {
+  addFavoriteProduct(event) {
+    event.stopPropagation();
+    this.isFavoriteCard = !this.isFavoriteCard;
+    if (this.isFavoriteCard) {
+      this.socialService.likeProduct(this.card._id).subscribe((res) => {
+        // console.log(res);
+      })
+      return;
+    }
+
+    this.socialService.unlikeProduct(this.card._id).subscribe((res) => {
+
+    })
   }
 
   deleteProduct() {
 
   }
+
   clickOpenModalView() {
     // this.CardModalComponent.openModal();
     // this.openModalSubj.next();
@@ -98,5 +107,16 @@ export class CardComponent implements OnInit {
     this.showSocialButtons = false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
+
+  getImageHref(url: string): string {
+    // console.log(url);
+    // console.log('IMAGE HREF ->', this.card.images[0]);
+    // debugger;
+    if (url) {
+      return getImageUrl(url);
+    }
+  }
 }
