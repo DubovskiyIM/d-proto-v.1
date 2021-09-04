@@ -21,7 +21,11 @@ export class UsersService {
   }
 
   public async setAvatar(id: string, avatarUrl: string) {
-    return await this.userModel.findByIdAndUpdate(id, { avatar: avatarUrl });
+    return this.userModel.findByIdAndUpdate(
+      id,
+      { avatar: avatarUrl },
+      { new: true },
+    );
   }
 
   public async findAll(): Promise<User[]> {

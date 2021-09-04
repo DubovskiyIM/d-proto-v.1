@@ -1,23 +1,32 @@
 import {
-  Get, Post, Patch, Delete, Req, Res,
-  Body, Controller, Param,
-  UseGuards, UseInterceptors, UploadedFile
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Req,
+  Res,
+  Body,
+  Controller,
+  Param,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
-import { FileInterceptor } from "@nestjs/platform-express";
-import { diskStorage } from "multer";
-import { extname } from "path";
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 import { Product } from '@src/models/product.schema';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
-import { IdValidationPipe } from "@src/pipes/id-validation.pipe";
+import { IdValidationPipe } from '@src/pipes/id-validation.pipe';
 import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
 
 @Controller('products')
 export class ProductsController {
-  SERVER_URL:  string  =  "http://localhost:3001/";
+  private SERVER_URL = 'http://localhost:3001/';
   constructor(private readonly productsService: ProductsService) {}
 
   @Post('create')
@@ -31,7 +40,9 @@ export class ProductsController {
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  async findAllByOwner(@Param('id', IdValidationPipe) id: string): Promise<Product[]> {
+  async findAllByOwner(
+    @Param('id', IdValidationPipe) id: string,
+  ): Promise<Product[]> {
     return await this.productsService.findAllByOwner(id);
   }
 
@@ -49,8 +60,9 @@ export class ProductsController {
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   async update(
-      @Param('id', IdValidationPipe) id: string,
-      @Body() updateProductDto: UpdateProductDto): Promise<Product> {
+    @Param('id', IdValidationPipe) id: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
     return await this.productsService.update(id, updateProductDto);
   }
 
@@ -62,47 +74,52 @@ export class ProductsController {
 
   @Post(':id/product')
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(FileInterceptor('file',
-      {
-        storage: diskStorage({
-          destination: './products',
-          filename: (_req, file, cb) => {
-            const randomName = Array(32)
-                .fill(null)
-                .map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
-            return cb(null, `${randomName}${extname(file.originalname)}`)
-          }
-        })
-      })
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './products',
+        filename: (_req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          return cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+    }),
   )
   async uploadImages(
-      @Param('id', IdValidationPipe) id: string,
-      @UploadedFile() files: any[]): Promise<void> {
-    const urls = files.map(file => `${this.SERVER_URL}${file.path}`)
+    @Param('id', IdValidationPipe) id: string,
+    @UploadedFile() files: any[],
+  ): Promise<void> {
+    const urls = files.map((file) => `${this.SERVER_URL}${file.path}`);
     await this.productsService.setImages(id, urls);
   }
 
   @Get('product/:fileId')
   @UseGuards(JwtAuthGuard)
   async serveImages(
-      @Param('fileId', IdValidationPipe) fileId: string,
-      @Res() res): Promise<any> {
+    @Param('fileId', IdValidationPipe) fileId: string,
+    @Res() res,
+  ): Promise<any> {
     res.sendFile(fileId, { root: 'products' });
   }
 
   @Post(':id/like')
   @UseGuards(JwtAuthGuard)
   async like(
-      @Param('id', IdValidationPipe) id: string,
-      @Req() req: RequestWithUser): Promise<void> {
+    @Param('id', IdValidationPipe) id: string,
+    @Req() req: RequestWithUser,
+  ): Promise<void> {
     await this.productsService.likeProduct(req.user.id, id);
   }
 
   @Post(':id/unlike')
   @UseGuards(JwtAuthGuard)
   async unlike(
-      @Param('id', IdValidationPipe) id: string,
-      @Req() req: RequestWithUser): Promise<void> {
+    @Param('id', IdValidationPipe) id: string,
+    @Req() req: RequestWithUser,
+  ): Promise<void> {
     await this.productsService.unlikeProduct(req.user.id, id);
   }
 }
