@@ -6,6 +6,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF, PlatformLocation, CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { NgxMasonryModule } from 'ngx-masonry';
+import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+
 import { AppRoutingModule } from './app-routing.module';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { AppComponent } from './app.component';
@@ -43,6 +45,9 @@ import { DragAndDropFileComponent } from './components/drag-and-drop-file/drag-a
 import { DndDirective } from './_directives/dnd.directive';
 import { RightProfileNavbarComponent } from './components/right-profile-navbar/right-profile-navbar.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { FavoriteDirective } from './_directives/favorite.directive';
+import { NotifyComponent } from './components/notify/notify.component';
+// import { NotifyMessageComponent } from "./components/notify/notify.component";
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -83,6 +88,8 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     DndDirective,
     RightProfileNavbarComponent,
     SettingsComponent,
+    FavoriteDirective,
+    NotifyComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,6 +100,7 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     FormsModule,
     CommonModule,
     NgxMasonryModule,
+    NgxUsefulSwiperModule,
     ReactiveFormsModule,
     SocketIoModule.forRoot(config),
   ],

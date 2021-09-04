@@ -13,8 +13,8 @@ export class ConversationComponent implements OnInit {
 
   constructor(private userService: UserService) {}
 
-  public selectConversation(conversationId: string) {
-    this.changeConversation.emit(conversationId);
+  public selectConversation(conversation) {
+    this.changeConversation.emit(conversation._id);
   }
 
   ngOnInit() {

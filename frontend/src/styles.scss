@@ -11,6 +11,8 @@
 .boldText{
   font-weight: 500;
 }
+
+
 .pointerElement{
   cursor: pointer;
 }
@@ -20,4 +22,28 @@
 }
 ::ng-deep .mat-tab-header-pagination {
   display: none !important;
+}
+.mat-tab-label::ng-deep {
+  min-width: 25px !important;
+  padding: 5px;
+  background-color: transparent;
+  color: red!important;
+  font-size: 43px;
+  font-weight: 700;
+}
+.modal-content  {
+  border: 0!important;
+  -webkit-border-radius: 14px !important;
+  -moz-border-radius: 14px !important;
+  border-radius: 14px !important;
+}
+.mat-snack-bar-container {
+  width: 500px!important;
+  //max-width: 800px!important;
+  //text-align: center;
+  height: 60px!important;
+  //background-color: bisque;
+  //color: black;
+  font-size: 34px;
+  z-index: 100;
 }

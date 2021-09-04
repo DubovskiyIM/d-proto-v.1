@@ -1,4 +1,4 @@
-<div class="cardWrapper" >
+<div class="cardWrapper">
   <div class="cardHeader" *ngIf="!isHomePage">
       <span class="avatarCardHeader" (click)="goToProfilePage()">
         <app-avatar width="30px"></app-avatar>
@@ -9,26 +9,44 @@
   </div>
   <!--  [@changeCardImage]="currentImageCardState"-->
   <div class="cardItem card_medium card">
-    <div class="photoContainer" (mouseover)="changeMouseOverSate()" (mouseleave)="leaveMouseSate()" [ngClass]="{profilePageView: (isHomePage || isProfilePage)}">
+    <div (mouseleave)="leaveMouseSate()"
+         (click)="cardModalComponent.triggerModal()"
+         (mouseover)="changeMouseOverSate()"
+         [ngClass]="{profilePageView: (isHomePage || isProfilePage)}"
+         class="photoContainer"
+
+    >
       <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
-        <span class="crop" (click)="cardModalComponent.triggerModal()">
+        <span class="crop" (click)="cardModalComponent.triggerModal($event)">
           <mat-icon>crop_free</mat-icon>
         </span>
-        <span class="favorite" (click)=addFavoriteProduct() *ngIf="!isHomePage">
+        <span class="favorite" (click)=addFavoriteProduct($event) *ngIf="!isHomePage">
+           <ng-container *ngIf="isFavoriteCard; else defaultFavoriteView">
+                    <mat-icon class="favoriteView">favorite</mat-icon>
+           </ng-container>
+          <ng-template #defaultFavoriteView>
             <mat-icon>favorite_border</mat-icon>
+          </ng-template>
         </span>
         <span class="delete" (click)="deleteProduct()" *ngIf="isHomePage">
            <mat-icon>delete</mat-icon>
         </span>
+
+
       </div>
-      <div class="photoContent" (click)="goToProductPage()">
+      <div class="photoContent" *ngIf="card.images.length else showImageElseBlock">
+        <div class="imageCardWrap" *ngFor="let cardPhoto of card.images">
+          <img [src]="getImageHref(cardPhoto)">
+        </div>
+      </div>
+      <ng-template #showImageElseBlock>
         <img src="https://i.picsum.photos/id/1022/1000/2000.jpg?hmac=o0R55IjBxpioWBx8GaBz84h_ktgoSX1Kz1quH4L8JyY"
              alt="image" *ngIf="card.size === 'medium'" class="defaultState">
         <img src="https://i.picsum.photos/id/48/200/200.jpg?hmac=3FKJwSlm1FM1GD916vZX2Z3HUjHsUXvQM3rYWYXsQvc"
              alt="image" *ngIf="card.size === 'small'">
         <img src="https://i.picsum.photos/id/30/500/200.jpg?hmac=40j93kHi7aLLphS9asc5UfT7ZAwWdKRsb-z2EnzSuHY"
              alt="image" *ngIf="!card.size">
-      </div>
+      </ng-template>
     </div>
   </div>
   <div class="cardFooter">
@@ -41,18 +59,5 @@
   </div>
 </div>
 <div>
-  <app-card-modal [card]="card" #cardModalComponent></app-card-modal>
+  <app-card-modal [card]="card" #cardModalComponent [isHomePage]="isHomePage" #cardModal></app-card-modal>
 </div>
-<!--<ng-template #openModalView>-->
-<!---->
-<!--</ng-template>-->
-<!--<div class="pin_container">-->
-<!--  <div class="card_medium">-->
-<!--    <div class="card card_medium" style="opacity: 1;"app-mo>-->
-<!--      <div class="pin_image">-->
-<!--        <img src="https://i.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"-->
-<!--             alt="image" class="defaultPhoto">-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

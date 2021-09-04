@@ -34,7 +34,7 @@ export class MyProfileComponent implements OnInit {
 
   private getUserCardsList() {
     this.productService.getProductByOwner(this.userProfileData._id).subscribe((res) => {
-      console.log('this', res);
+      // console.log('this', res);
       this.listCards = res;
     })
   }

@@ -1,12 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import { AuthenticationService } from '../../../_services/authentication.service';
+import {switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-chat-message',
   templateUrl: './chat-message.component.html',
   styleUrls: ['./chat-message.component.scss'],
 })
-export class ChatMessageComponent implements OnInit {
+export class ChatMessageComponent implements OnInit, OnChanges {
   @Input() messages: any[] = [];
 
   private currentUser;
@@ -17,9 +18,15 @@ export class ChatMessageComponent implements OnInit {
     });
   }
 
-  // public isMyMessage(id: number): boolean {
-  //   return this.messages[id]?.data?.author?._id === this.currentUser?._id;
-  // }
+  public isMyMessage(id: number): boolean {
+    // debugger;
+    if (this.currentUser?._id) {
+      // console.log(this.currentUser?._id);
+      // console.log(this.messages[id]._id === this.currentUser?._id);
+      // debugger;
+    }
+    return this.messages[id]._id === this.currentUser?._id;
+  }
 
   public isLastMessageInGroup(
     indexGroup: number,
@@ -33,6 +40,10 @@ export class ChatMessageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.messages);
+
+  }
+
+  ngOnChanges(changes) {
+    // console.log(this.messages);
   }
 }

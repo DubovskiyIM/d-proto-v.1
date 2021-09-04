@@ -43,7 +43,7 @@ export class ChatComponent implements AfterViewInit, OnChanges, OnInit {
   }
 
   ngOnInit() {
-    const activeRoomIdMock = '60db831f75ec9d0091d50f44';
+    const activeRoomIdMock = this.chatService.selectedChatUserId;
 
     this.socket.on('connect', () => {
       console.log('connected');

@@ -40,8 +40,15 @@
 
   .following {
     color: black;
+    cursor: pointer;
     text-decoration: none;
+    padding: 12px;
     text-transform: uppercase;
+  }
+
+  .following:hover {
+    border: 2px solid #333333;
+    padding: 10px;
   }
 
   .messageSendSocialButton {
@@ -71,15 +78,20 @@
     margin-top: 60px;
     font-size: 18px;
   }
-
 }
-//::ng-deep .mat-tab-header {
-//  overflow-x: scroll !important;
-//}
-//
-//::ng-deep .mat-tab-label-container {
-//  overflow: visible !important;
-//}
-//::ng-deep .mat-tab-header::-webkit-scrollbar {
-//  display: none;
-//}
+
+@media (max-width: 991.98px) {
+  .following {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .messageSendSocialButton{
+    margin-top: 30px;
+  }
+}
+.subscribedState{
+  font-size: 20px;
+  border: 2px solid #717171;
+  //background-color: #333333;
+}

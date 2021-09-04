@@ -51,7 +51,10 @@ export class NavigationService {
     this.router.navigate(['product', productId]);
   }
 
-  public goToChatPage() {
-    this.router.navigate(['lk/messages']).then();
+  public goToChatPage(selectedUserId?) {
+    // if (selectedUserId){
+      this.router.navigate(['lk/messages/'+ selectedUserId]).then();
+    // }
+    // this.router.navigate(['lk/messages']).then();
   }
 }
