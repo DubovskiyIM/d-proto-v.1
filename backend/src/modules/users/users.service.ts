@@ -1,10 +1,15 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Document, Model } from 'mongoose';
 import { RegisterDto } from '../auth/dto/auth.dto';
 import { User, UserDocument } from '@src/models/user.schema';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { USER_NOT_FOUND } from "@src/modules/users/users.constants";
+import { USER_NOT_FOUND } from '@src/modules/users/users.constants';
 
 @Injectable()
 export class UsersService {
@@ -15,7 +20,7 @@ export class UsersService {
     return await createdUser.save();
   }
 
-  public async setAvatar(id: string, avatarUrl: string){
+  public async setAvatar(id: string, avatarUrl: string) {
     return await this.userModel.findByIdAndUpdate(id, { avatar: avatarUrl });
   }
 
@@ -54,20 +59,27 @@ export class UsersService {
     return await this.userModel.findByIdAndRemove(id);
   }
 
-  public async followUser(userId: string, toFollowId: string) {
+  public async followUser(
+    userId: string,
+    toFollowId: string,
+  ): Promise<User | void> {
     const userToFollow = await this.userModel.findById(toFollowId);
     const currentUser = await this.userModel.findById(userId);
     if (!userToFollow && !currentUser) {
       throw new BadRequestException(USER_NOT_FOUND);
     }
     if (
-        !userToFollow.followers.find(id => id === userId) &&
-        !currentUser.followingUsers.find(id => id === toFollowId)
+      !userToFollow.followers.find((id) => id === userId) &&
+      !currentUser.followingUsers.find((id) => id === toFollowId)
     ) {
-      userToFollow.followers.push(userId);
-      currentUser.followingUsers.push(toFollowId);
-      this.userModel.findByIdAndUpdate(toFollowId, userToFollow).exec();
-      this.userModel.findByIdAndUpdate(userId, currentUser).exec();
+      await userToFollow.followers.push(userId);
+      await currentUser.followingUsers.push(toFollowId);
+      await this.userModel
+        .findByIdAndUpdate(toFollowId, userToFollow as Document)
+        .exec();
+      return await this.userModel
+        .findByIdAndUpdate(userId, currentUser as Document)
+        .exec();
     }
   }
 
@@ -78,13 +90,21 @@ export class UsersService {
       throw new BadRequestException(USER_NOT_FOUND);
     }
     if (
-        userToUnfollow.followers.find(id => id === userId) &&
-        currentUser.followingUsers.find(id => id === toUnfollowId)
+      userToUnfollow.followers.find((id) => id === userId) &&
+      currentUser.followingUsers.find((id) => id === toUnfollowId)
     ) {
-      userToUnfollow.followers = userToUnfollow.followers.filter(id => id !== userId);
-      currentUser.followingUsers = currentUser.followingUsers.filter(id => id !== toUnfollowId);
-      this.userModel.findByIdAndUpdate(toUnfollowId, userToUnfollow).exec();
-      this.userModel.findByIdAndUpdate(userId, currentUser).exec();
+      userToUnfollow.followers = userToUnfollow.followers.filter(
+        (id) => id !== userId,
+      );
+      currentUser.followingUsers = currentUser.followingUsers.filter(
+        (id) => id !== toUnfollowId,
+      );
+      await this.userModel
+        .findByIdAndUpdate(toUnfollowId, userToUnfollow as Document)
+        .exec();
+      await this.userModel
+        .findByIdAndUpdate(userId, currentUser as Document)
+        .exec();
     }
   }
 }

@@ -6,15 +6,15 @@ import { RegisterDto } from './dto/auth.dto';
 import * as bcrypt from 'bcryptjs';
 import { TokenPayload } from '@src/interfaces/TokenPayload.interface';
 import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
-import { WsException } from "@nestjs/websockets";
+import { WsException } from '@nestjs/websockets';
 
 @Injectable()
 export class AuthService {
   public static getAuthToken(cookies: string): string {
     return cookies
-        .split(';')
-        .find(s => s.includes('Authentication='))
-        .split('Authentication=')[1];
+      .split(';')
+      .find((s) => s.includes('Authentication='))
+      .split('Authentication=')[1];
   }
 
   constructor(
@@ -89,9 +89,11 @@ export class AuthService {
     };
   }
 
-  public async verify(token: string, isWs: boolean = false): Promise<[any, User]> {
+  public async verify(token: string, isWs = false): Promise<[any, User]> {
     try {
-      const payload = this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
+      const payload = this.jwtService.verify(token, {
+        secret: process.env.JWT_SECRET,
+      });
       const user = await this.usersService.findById(payload.userId);
 
       if (!user) {
@@ -99,8 +101,8 @@ export class AuthService {
           throw new WsException('Unauthorized access');
         } else {
           throw new HttpException(
-              'Unauthorized access',
-              HttpStatus.BAD_REQUEST
+            'Unauthorized access',
+            HttpStatus.BAD_REQUEST,
           );
         }
       }

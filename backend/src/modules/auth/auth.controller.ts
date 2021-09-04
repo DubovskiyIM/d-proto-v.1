@@ -9,9 +9,8 @@ import {
   HttpCode,
   Req,
   Res,
-  Param,
   UseInterceptors,
-  UploadedFile
+  UploadedFile,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { User } from '@src/models/user.schema';
@@ -23,15 +22,14 @@ import { GoogleAuthGuard } from '@src/common/guards/google-auth.guard';
 import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '@src/common/guards/local-auth.guard';
 
-import { FileInterceptor } from "@nestjs/platform-express";
-import { diskStorage } from  'multer';
-import { extname } from  'path';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
 
 @Controller('auth')
 export class AuthController {
-  SERVER_URL:  string  =  "http://localhost:3001/";
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
@@ -72,15 +70,13 @@ export class AuthController {
       user.password = undefined;
       return await response.send(user);
     } catch (e) {
-      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   // @UseGuards(JwtAuthGuard)
   @Post('logout')
-  async logOut(
-      @Res() response: Response,
-  ): Promise<Response> {
+  async logOut(@Res() response: Response): Promise<Response> {
     response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
     return response.sendStatus(200);
   }
@@ -93,9 +89,7 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
-  async googleAuth(
-      @Res() response: Response,
-  ): Promise<Response> {
+  async googleAuth(@Res() response: Response): Promise<Response> {
     return response;
   }
 
@@ -105,26 +99,23 @@ export class AuthController {
     return await this.authService.googleLogin(req);
   }
 
-  @Post(':id/avatar')
-  @UseInterceptors(FileInterceptor('file',
-      {
-        storage: diskStorage({
-          destination: './avatars',
-          filename: (_req, file, cb) => {
-            const randomName = Array(32)
-                .fill(null)
-                .map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
-            return cb(null, `${randomName}${extname(file.originalname)}`)
-          }
-        })
-      })
+  @Post('avatar')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          return cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+    }),
   )
-  uploadAvatar(@Param('id') id, @UploadedFile() file) {
-    this.usersService.setAvatar(id, `${this.SERVER_URL}${file.path}`);
-  }
-
-  @Get('avatars/:fileId')
-  async serveAvatar(@Param('fileId') fileId, @Res() res): Promise<any> {
-    res.sendFile(fileId, { root: 'avatars' });
+  uploadAvatar(@Req() request: RequestWithUser, @UploadedFile() file) {
+    return this.usersService.setAvatar(request.user.id, `${file.filename}`);
   }
 }
