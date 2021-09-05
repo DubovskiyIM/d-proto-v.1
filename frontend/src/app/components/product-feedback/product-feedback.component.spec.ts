@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarProfileComponent } from './navbar-profile.component';
+import { ProductFeedbackComponent } from './product-feedback.component';
 
-describe('NavbarProfileComponent', () => {
-  let component: NavbarProfileComponent;
-  let fixture: ComponentFixture<NavbarProfileComponent>;
+describe('ProductFeedbackComponent', () => {
+  let component: ProductFeedbackComponent;
+  let fixture: ComponentFixture<ProductFeedbackComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavbarProfileComponent ]
+      declarations: [ ProductFeedbackComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarProfileComponent);
+    fixture = TestBed.createComponent(ProductFeedbackComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

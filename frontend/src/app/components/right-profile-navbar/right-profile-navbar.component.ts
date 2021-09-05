@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {SocialService} from "../../_services/social.service";
 import {UserService} from "../../_services/user.service";
 
@@ -7,7 +7,7 @@ import {UserService} from "../../_services/user.service";
   templateUrl: './right-profile-navbar.component.html',
   styleUrls: ['./right-profile-navbar.component.scss']
 })
-export class RightProfileNavbarComponent implements OnInit {
+export class RightProfileNavbarComponent implements OnInit, OnChanges{
   @Input() profile;
   private userId: string;
   isSubscribedUser: boolean = false;
@@ -15,9 +15,13 @@ export class RightProfileNavbarComponent implements OnInit {
   constructor(private socialService: SocialService, private userService: UserService) {
   }
 
+  ngOnChanges() {
+    console.log(this.profile);
+  }
   ngOnInit(): void {
   this.userService.profileIsSubscribed();
 
+  debugger;
     // setTimeout(() => {
     //   this.socialService.follow(this.profile._id).subscribe((res) => {
     //     console.log(res);

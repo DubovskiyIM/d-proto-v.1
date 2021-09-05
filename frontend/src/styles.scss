@@ -47,3 +47,7 @@
   font-size: 34px;
   z-index: 100;
 }
+.cardPrice:after {
+  content: "\20BD";
+  margin-left: 3px;
+}

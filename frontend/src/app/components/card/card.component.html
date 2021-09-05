@@ -49,12 +49,15 @@
       </ng-template>
     </div>
   </div>
-  <div class="cardFooter">
+  <div class="cardFooter d-flex justify-content-between">
     <span class="cardTitle boldText" (click)="goToProductPage()">
       {{card.title}}
+      <ng-template *ngIf="!card.title">
+        Туфли GUCCI&TYPE
+      </ng-template>
     </span>
-    <span *ngIf="!card.title">
-       Туфли GUCCI&TYPE
+    <span class="cardTitle boldText cardPrice" *ngIf="card.price">
+      {{card.price}}
     </span>
   </div>
 </div>

@@ -1,12 +1,60 @@
 <div class="container">
   <div class="row">
     <div class="col-6">
-      <img [src]="product.image">
+      <!--      <img [src]="product.image">-->
     </div>
     <div class="col-6">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aperiam aspernatur, beatae consequuntur
-      eligendi expedita facilis laboriosam libero minus quas rem repudiandae, sed, sunt ut voluptas voluptates
-      voluptatibus? Nobis!
+      <div class="userInfoLine">
+         <span class="avatarUserInfoHeader" (click)="goToProfilePage()">
+            <app-avatar width="30px"></app-avatar>
+          </span>
+        <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
+            {{product?.owner?.username || 'NAME NOTNAME'}}
+         </span>
+        <div class="d-flex align-items-center">
+          <app-star-ratings></app-star-ratings>
+          <span class="boldText">
+            445 продаж
+          </span>
+        </div>
+      </div>
+      <h1 class="productTitle boldText">{{product?.title}}</h1>
+      <!--      <p *ngIf="product.size"></p>-->
+      <p class="productPrice cardPrice boldText">{{product?.price}}</p>
+
+      <div class="productDescription" *ngIf="product?.description; else productEmptyDescFieldBLick">
+        {{product.description.about}}
+      </div>
+      <ng-template #productEmptyDescFieldBLick>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aperiam aspernatur, beatae consequuntur
+        eligendi expedita facilis laboriosam libero minus quas rem repudiandae, sed, sunt ut voluptas voluptates
+        voluptatibus? Nobis!
+      </ng-template>
+
+
+      <div class="socialButtons d-flex justify-content-start">
+        <button class="btn btn-outline-dark" (click)="openChat()">Написать</button>
+        <div class="shareLink d-flex align-items-center" (click)="copyLink()">
+          <mat-icon>share</mat-icon>
+          <span>Поделиться</span>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="row productFeedbacks">
+    <mat-tab-group mat-align-tabs="start" class="tabs">
+      <mat-tab label="Фото и видео покупателей">
+        <div class="productPhotoFeedback">
+          <app-product-feedback [feedbacks]="productFeedbackList"></app-product-feedback>
+        </div>
+      </mat-tab>
+      <mat-tab label="Отзывы о товаре">Понравилось</mat-tab>
+      <mat-tab label="Подписи">Подписи</mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <div class="row recommendedProducts">
+    <app-cards [listCards]="recommendedProductList"></app-cards>
   </div>
 </div>

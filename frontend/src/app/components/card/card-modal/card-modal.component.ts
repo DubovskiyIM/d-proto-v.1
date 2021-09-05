@@ -11,6 +11,7 @@ import {ChatService} from "../../../_services/chat.service";
 import {eventListeners} from "@popperjs/core";
 import {NotifyComponent} from "../../notify/notify.component";
 import {ClipboardService} from "ngx-clipboard";
+import {SocialService} from "../../../_services/social.service";
 
 @Component({
   selector: 'app-card-modal',
@@ -46,11 +47,12 @@ export class CardModalComponent implements OnInit {
               private userService: UserService,
               private navigateService: NavigationService,
               private chatService: ChatService,
-              private clipboardService: ClipboardService) {
+              private socialService: SocialService
+        ) {
   }
 
   ngOnInit() {
-    console.log(this.card);
+    // console.log(this.card);
   }
 
   triggerModal(event?: Event) {
@@ -95,8 +97,7 @@ export class CardModalComponent implements OnInit {
   }
 
   public copyLink() {
-    const location = window.location.href + 'product/' + this.card._id;
-    this.clipboardService.copyFromContent(location);
+    this.socialService.copyLink(this.card._id);
     this.notify.openSnackBar()
   }
 
