@@ -1,13 +1,19 @@
 import {
-  Request, Controller,
-  Get, Put, Delete,
-  HttpException, HttpStatus, UseGuards, Param
+  Request,
+  Controller,
+  Get,
+  Put,
+  Delete,
+  HttpException,
+  HttpStatus,
+  UseGuards,
+  Param,
 } from '@nestjs/common';
 
 import { RoomsService } from './rooms.service';
 import { Room } from '@src/models/room.schema';
-import { JwtAuthGuard } from "@src/common/guards/jwt-auth.guard";
-import { RequestWithUser } from "@src/interfaces/requestWithUser.interface";
+import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
+import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
 
 @Controller('rooms')
 export class RoomsController {
@@ -21,7 +27,10 @@ export class RoomsController {
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  async getRoomByUser(@Param() param, @Request() req: RequestWithUser): Promise<Room> {
+  async getRoomByUser(
+    @Param() param,
+    @Request() req: RequestWithUser,
+  ): Promise<Room> {
     return this.roomsService.findRoom(param.id, req.user.id);
   }
 
@@ -30,8 +39,8 @@ export class RoomsController {
     const id = req.params.id;
     if (!id)
       throw new HttpException(
-          'ID parameter is missing',
-          HttpStatus.BAD_REQUEST,
+        'ID parameter is missing',
+        HttpStatus.BAD_REQUEST,
       );
 
     await this.roomsService.update(id, req.body);
@@ -42,8 +51,8 @@ export class RoomsController {
     const id = req.params.id;
     if (!id)
       throw new HttpException(
-          'ID parameter is missing',
-          HttpStatus.BAD_REQUEST,
+        'ID parameter is missing',
+        HttpStatus.BAD_REQUEST,
       );
 
     await this.roomsService.delete(id);

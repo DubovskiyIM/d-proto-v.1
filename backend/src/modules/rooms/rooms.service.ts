@@ -3,37 +3,45 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Message, MessageDocument } from '@src/models/message.schema';
-import { Room, RoomDocument } from "@src/models/room.schema";
+import { Room, RoomDocument } from '@src/models/room.schema';
 import { ChatService } from '@src/modules/chat/chat.service';
-import { CreateRoomDto } from "@src/modules/rooms/dto/create-room.dto";
-import { UserDocument } from "@src/models/user.schema";
+import { CreateRoomDto } from '@src/modules/rooms/dto/create-room.dto';
+import { UserDocument } from '@src/models/user.schema';
 
 @Injectable()
 export class RoomsService {
   public room: Room;
   constructor(
-      private readonly chatService: ChatService,
-      @InjectModel('Room') private readonly roomModel: Model<RoomDocument>,
-      @InjectModel('Message') private readonly messageModel: Model<MessageDocument>,
-      @InjectModel('User') private readonly userModel: Model<UserDocument>
+    private readonly chatService: ChatService,
+    @InjectModel('Room') private readonly roomModel: Model<RoomDocument>,
+    @InjectModel('Message')
+    private readonly messageModel: Model<MessageDocument>,
+    @InjectModel('User') private readonly userModel: Model<UserDocument>,
   ) {}
 
   async getAllRooms(roomIds: string[]): Promise<Room[] | null> {
-    return await this.roomModel.find({_id: {$in: roomIds}});
+    return await this.roomModel.find({ _id: { $in: roomIds } });
   }
 
   async findRoom(userId: string, selfId: string): Promise<Room | null> {
-    const room = await this.roomModel.findOne({ users: { $all: [userId, selfId] } });
+    const user1 = await this.userModel.findById(userId);
+    const user2 = await this.userModel.findById(selfId);
+    const room = await this.roomModel.findOne({
+      users: { $all: [userId, selfId] },
+    });
     if (room) {
       return room;
     }
-    const members = [
-      await this.userModel.findById(userId),
-      await this.userModel.findById(selfId)
-    ]
     const newRoom = await this.roomModel.create({});
-    await this.roomModel.updateOne({_id: newRoom._id}, {$push: {users: { $each: members}}});
-    members.forEach(async user => await user.updateOne({$push: {rooms: newRoom._id} }));
+    await this.roomModel.updateOne(
+      { _id: newRoom._id },
+      { $push: { users: user1 } },
+    );
+    await this.roomModel.updateOne(
+      { _id: newRoom._id },
+      { $push: { users: user2 } },
+    );
+
     return await newRoom.save();
   }
 
@@ -44,14 +52,17 @@ export class RoomsService {
   async addMessage(message: Message, id: string): Promise<Room> {
     const room = await this.findById(id);
     const newMessage = await this.messageModel.create(message);
-    await this.roomModel.updateOne({_id: id}, {$push: {messages: newMessage}});
+    await this.roomModel.updateOne(
+      { _id: id },
+      { $push: { messages: newMessage } },
+    );
 
     return room;
   }
 
   async findMessages(id: string, limit: number): Promise<Message[]> {
-    let room = await this.findWithLimit(id, limit);
-    return await this.chatService.getMessagesByIdArray(room.messages)
+    const room = await this.findWithLimit(id, limit);
+    return await this.chatService.getMessagesByIdArray(room.messages);
   }
 
   async findAll(options?: any): Promise<Room[] | null> {
@@ -59,10 +70,7 @@ export class RoomsService {
   }
 
   async findWithLimit(id: string, limit: number): Promise<Room | null> {
-    return await this.roomModel
-        .findById(id)
-        .slice('messages', limit)
-        .exec();
+    return await this.roomModel.findById(id).slice('messages', limit).exec();
   }
 
   async findById(id: string): Promise<Room | null> {
@@ -82,6 +90,6 @@ export class RoomsService {
   }
 
   async getRoomsById(id): Promise<Room[]> {
-    return await this.roomModel.find({'_id': {$in: id}});
+    return await this.roomModel.find({ _id: { $in: id } });
   }
 }

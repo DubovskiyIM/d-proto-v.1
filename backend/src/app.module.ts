@@ -15,8 +15,8 @@ import { OrdersModule } from '@src/modules/orders/orders.module';
 import { ProductsModule } from '@src/modules/products/products.module';
 import { FeedbacksModule } from '@src/modules/feedbacks/feedbacks.module';
 
-import { SharedModule } from "@src/shared/shared.module";
-import { ChatGateway } from "@src/modules/chat/chat.gateway";
+import { SharedModule } from '@src/shared/shared.module';
+import { ChatGateway } from '@src/modules/chat/chat.gateway';
 
 @Module({
   imports: [
@@ -34,7 +34,7 @@ import { ChatGateway } from "@src/modules/chat/chat.gateway";
     FilesModule,
     RoomsModule,
     ChatModule,
-    SharedModule
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [AppService, ChatGateway],
