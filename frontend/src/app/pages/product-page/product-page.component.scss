@@ -1,0 +1,43 @@
+.container {
+  font-family: Roboto, serif;
+}
+.feedbackRow{}
+.productTitle {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.avatarUserInfoHeader {
+  app-avatar {
+    margin-right: 5px;
+  }
+}
+
+.userInfoLine {
+  margin-top: 1rem;
+}
+
+.productPrice {
+  font-size: 1.2rem;
+  margin-right: 5px;
+}
+
+.socialButtons {
+  margin-top: 1rem;
+
+  button {
+    margin-right: 10px;
+  }
+}
+
+.recommendedProducts{
+  margin-top: 2rem;
+}
+.productFeedback{
+  margin-top: 10px;
+}
+.productPhotoFeedback{
+  width: 100%;
+  overflow-x: hidden;
+}

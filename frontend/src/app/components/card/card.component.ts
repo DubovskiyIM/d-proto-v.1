@@ -112,10 +112,12 @@ export class CardComponent implements OnInit {
   }
 
   getImageHref(url: string): string {
-    // console.log(url);
+
     // console.log('IMAGE HREF ->', this.card.images[0]);
     // debugger;
     if (url) {
+      // console.log(getImageUrl(url));
+      // debugger;
       return getImageUrl(url);
     }
   }

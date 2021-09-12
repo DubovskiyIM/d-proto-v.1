@@ -47,6 +47,8 @@ import { RightProfileNavbarComponent } from './components/right-profile-navbar/r
 import { SettingsComponent } from './pages/settings/settings.component';
 import { FavoriteDirective } from './_directives/favorite.directive';
 import { NotifyComponent } from './components/notify/notify.component';
+import { ProductFeedbackComponent } from './components/product-feedback/product-feedback.component';
+import { AvatarDetailComponent } from './components/avatar-detail/avatar-detail.component';
 // import { NotifyMessageComponent } from "./components/notify/notify.component";
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
@@ -90,6 +92,8 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     SettingsComponent,
     FavoriteDirective,
     NotifyComponent,
+    ProductFeedbackComponent,
+    AvatarDetailComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import {filter, map} from "rxjs/operators";
 })
 export class ProductService {
   private static readonly httpActions = {
+    getByID: 'products/product',
     getAll: 'products',
     login: 'auth/login',
     logout: 'auth/logout',
@@ -29,6 +30,10 @@ export class ProductService {
 
   getProductByOwner(ownerID) {
     return this.http.get('api/products/' + ownerID)
+  }
+
+  getProductById(productId) {
+    return this.http.get(`${this.baseUrl}${ProductService.httpActions.getByID}/`+ productId)
   }
 
   toResponseBody() {

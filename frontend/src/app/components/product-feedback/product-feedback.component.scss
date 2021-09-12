@@ -1,0 +1,33 @@
+.imageFeedbackContainer{
+  img{
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
+    0px 1px 3px 0px rgb(0 0 0 / 12%);
+    background: 4px;
+  }
+  //padding: 1rem;
+}
+.feedbackWrap{
+  div {
+
+  }
+}
+.imageFeedbackContainerChild{
+  img{
+    box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
+    0px 1px 3px 0px rgb(0 0 0 / 12%);
+    width: 100%;
+    border-radius: 4px;
+    height: auto;
+    max-height: 150px;
+  }
+}
+.avatarUserInfoHeader app-avatar{
+  margin-right: 5px;
+}
+.userInfoLine{
+  margin-top: 5px;
+  margin-bottom: 1rem;
+}

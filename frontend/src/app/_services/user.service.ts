@@ -61,7 +61,7 @@ export class UserService {
     const options = {
       headers: headers,
     }
-    return this.http.post(`api/auth/${userID}/avatar`, formData, options)
+    return this.http.post(`api/auth/avatar`, formData, options)
 
   }
 }
