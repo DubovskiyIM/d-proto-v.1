@@ -1,0 +1,38 @@
+<div class="feedbackListItem" *ngFor="let feedback of feedbacks">
+  <div class="headerFeedbackList">
+    <app-avatar [width]="'40px'"></app-avatar>
+    <span class="feedbackCardHeaderUserName boldText" (click)="goToProfilePage(feedback.user.id)">
+          {{feedback?.user?.name || 'NAME NOTNAME'}}
+      </span>
+    <span class="feedbackDate">
+            {{feedback.date | date}}
+      </span>
+  </div>
+  <div class="feedbackContent">
+    <app-star-ratings [rating]="4"></app-star-ratings>
+    <p>This dress was beautiful and lightweight, everything I wanted to to be!</p>
+    <div class="purchasedItem" *ngIf="isShowPurchasedItem">
+      <span class="purchasedItemLabel">Купленный товар:</span>
+      <div class="purchasedItemContent d-flex justify-content-start">
+        <span class="minImagePurchasedItem">
+        <img class="purchasedItemMiniature"
+             src="https://loremflickr.com/cache/resized/65535_51111979575_b3c1231449_n_200_200_g.jpg">
+        </span>
+        <span class="purchasedProductName">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam aliquid architecto cumque
+        </span>
+      </div>
+    </div>
+  </div>
+<!--  <div class="feedbackPhoto">-->
+<!--    <img class="purchasedItemMiniature"-->
+<!--         src="https://loremflickr.com/cache/resized/65535_51111979575_b3c1231449_n_200_200_g.jpg">-->
+<!--  </div>-->
+</div>
+<!--  <div class="col-4 feedbackListItemPhotoWrap" >-->
+<!--    <div class="">-->
+<!--      <div class="feedbackListItemPhoto">-->
+
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->

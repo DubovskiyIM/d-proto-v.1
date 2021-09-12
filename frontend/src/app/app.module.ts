@@ -49,6 +49,9 @@ import { FavoriteDirective } from './_directives/favorite.directive';
 import { NotifyComponent } from './components/notify/notify.component';
 import { ProductFeedbackComponent } from './components/product-feedback/product-feedback.component';
 import { AvatarDetailComponent } from './components/avatar-detail/avatar-detail.component';
+import { MoreProductByAuthorComponent } from './components/more-product-by-author/more-product-by-author.component';
+import { ProductFeedbacksListComponent } from './components/product-feedbacks-list/product-feedbacks-list.component';
+import { LikedProductsComponent } from './pages/liked-products/liked-products.component';
 // import { NotifyMessageComponent } from "./components/notify/notify.component";
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
@@ -94,6 +97,9 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     NotifyComponent,
     ProductFeedbackComponent,
     AvatarDetailComponent,
+    MoreProductByAuthorComponent,
+    ProductFeedbacksListComponent,
+    LikedProductsComponent,
   ],
   imports: [
     BrowserModule,

@@ -60,36 +60,46 @@ export class SocialService {
         user: {
           name: 'loky loed',
           avatar: 'https://i.etsystatic.com/iusa/222b1c/84814092/iusa_400x400.84814092_aoru.jpg?version=0',
+          id: '22',
         },
         photo: 'https://i.etsystatic.com/17482531/r/il/ddc82c/3227976850/il_794xN.3227976850_rtve.jpg',
+        date: Date.now(),
       },
       {
         user: {
           name: 'loky loed',
           avatar: 'https://i.etsystatic.com/iusa/222b1c/84814092/iusa_400x400.84814092_aoru.jpg?version=0',
+          id: '22',
         },
         photo: 'https://i.etsystatic.com/17482531/r/il/ddc82c/3227976850/il_794xN.3227976850_rtve.jpg',
+        date: Date.now(),
       },
       {
         user: {
           name: 'loky loed',
           avatar: 'https://i.etsystatic.com/iusa/222b1c/84814092/iusa_400x400.84814092_aoru.jpg?version=0',
+          id: '22',
         },
         photo: 'https://i.etsystatic.com/17482531/r/il/ddc82c/3227976850/il_794xN.3227976850_rtve.jpg',
+        date: Date.now(),
       },
       {
         user: {
           name: 'loky loed',
           avatar: 'https://i.etsystatic.com/iusa/222b1c/84814092/iusa_400x400.84814092_aoru.jpg?version=0',
+          id: '22',
         },
         photo: 'https://i.etsystatic.com/17482531/r/il/ddc82c/3227976850/il_794xN.3227976850_rtve.jpg',
+        date: Date.now(),
       },
       {
         user: {
           name: 'loky loed',
           avatar: 'https://i.etsystatic.com/iusa/222b1c/84814092/iusa_400x400.84814092_aoru.jpg?version=0',
+          id: '22',
         },
         photo: 'https://i.etsystatic.com/17482531/r/il/ddc82c/3227976850/il_794xN.3227976850_rtve.jpg',
+        date: Date.now(),
       },
     ]
   }

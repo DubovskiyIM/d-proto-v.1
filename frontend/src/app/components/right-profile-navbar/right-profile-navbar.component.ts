@@ -21,7 +21,7 @@ export class RightProfileNavbarComponent implements OnInit, OnChanges{
   ngOnInit(): void {
   this.userService.profileIsSubscribed();
 
-  debugger;
+  // debugger;
     // setTimeout(() => {
     //   this.socialService.follow(this.profile._id).subscribe((res) => {
     //     console.log(res);

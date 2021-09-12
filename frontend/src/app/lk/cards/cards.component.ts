@@ -18,13 +18,10 @@ export class CardsComponent implements OnInit {
   ngOnInit(): void {}
 
   updateGrid() {
-    // console.log('jnkl');
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
   goToCreateProduct() {
-    // this.
-    // this.n
     this.navigationService.goToCreateProductPage();
     // this.productService.productCreate().subscribe((res)=> {
     //   console.log(res);

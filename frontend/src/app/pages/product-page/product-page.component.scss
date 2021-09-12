@@ -1,7 +1,7 @@
 .container {
   font-family: Roboto, serif;
 }
-.feedbackRow{}
+
 .productTitle {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -19,7 +19,8 @@
 }
 
 .productPrice {
-  font-size: 1.2rem;
+  font-size: 24px;
+  font-weight: 500;
   margin-right: 5px;
 }
 
@@ -31,13 +32,45 @@
   }
 }
 
-.recommendedProducts{
+.recommendedProductsByAuthor {
   margin-top: 2rem;
 }
-.productFeedback{
+
+.productFeedback {
   margin-top: 10px;
 }
-.productPhotoFeedback{
+
+.productPhotoFeedback {
+  margin-top: 1rem;
   width: 100%;
   overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.productDescription {
+  margin-top: 1rem;
+}
+
+.labelForOrders {
+  font-size: 1rem;
+}
+
+.moreOrdersRecommended {
+  margin-top: 10px;
+}
+
+//.recommendedProducts{
+//  margin-top: 10px;
+//}
+.productStatus {
+  font-size: 16px;
+
+  mat-icon {
+    margin-top: -5px;
+    margin-right: 5px;
+  }
+}
+
+.productBuyDetail {
+  color: #333333;
 }

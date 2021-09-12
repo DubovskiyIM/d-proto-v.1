@@ -12,10 +12,12 @@ import {ProductPageComponent} from "./pages/product-page/product-page.component"
 import { UsersComponent } from  './pages/users/users.component'
 import { AddProductComponent} from './pages/add-product/add-product.component'
 import {SettingsComponent} from "./pages/settings/settings.component";
+import {LikedProductsComponent} from "./pages/liked-products/liked-products.component";
 
 const lkRoutes: Routes = [
   { path: 'home', component: MyProfileComponent },
   { path: 'orders', component: MyOrdersComponent },
+  { path: 'liked-products', component: LikedProductsComponent },
   { path: 'messages', component: MessagesComponent, pathMatch: 'full'},
   { path: 'messages/:id', component: MessagesComponent },
   { path: 'create', component: AddProductComponent },

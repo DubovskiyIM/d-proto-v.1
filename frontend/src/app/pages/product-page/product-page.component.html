@@ -1,14 +1,14 @@
 <div class="container">
   <div class="row">
-    <div class="col-6">
+    <div class="col-7">
       <!--      <img [src]="product.image">-->
     </div>
-    <div class="col-6">
+    <div class="col-5">
       <div class="userInfoLine">
          <span class="avatarUserInfoHeader" (click)="goToProfilePage()">
             <app-avatar width="30px"></app-avatar>
-          </span>
-        <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
+         </span>
+         <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
             {{product?.owner?.username || 'NAME NOTNAME'}}
          </span>
         <div class="d-flex align-items-center">
@@ -20,11 +20,17 @@
       </div>
       <h1 class="productTitle boldText">{{product?.title}}</h1>
       <!--      <p *ngIf="product.size"></p>-->
-      <p class="productPrice cardPrice boldText">{{product?.price}}</p>
+
+      <div class="productBuyDetail d-flex justify-content-between">
+        <span class="productPrice cardPrice boldText">{{product?.price | currency:'':'':'3.0'}}</span>
+        <span class="d-flex align-items-start productStatus"><mat-icon>done</mat-icon>
+          {{product?.status}}</span>
+      </div>
 
       <div class="productDescription" *ngIf="product?.description; else productEmptyDescFieldBLick">
         {{product.description.about}}
       </div>
+
       <ng-template #productEmptyDescFieldBLick>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aperiam aspernatur, beatae consequuntur
         eligendi expedita facilis laboriosam libero minus quas rem repudiandae, sed, sunt ut voluptas voluptates
@@ -49,12 +55,34 @@
           <app-product-feedback [feedbacks]="productFeedbackList"></app-product-feedback>
         </div>
       </mat-tab>
-      <mat-tab label="Отзывы о товаре">Понравилось</mat-tab>
-      <mat-tab label="Подписи">Подписи</mat-tab>
+      <mat-tab label="Отзывы о товаре">
+        <div class="productPhotoFeedback">
+          <app-product-feedbacks-list [feedbacks]="productFeedbackList"></app-product-feedbacks-list>
+        </div>
+      </mat-tab>
+      <mat-tab label="Отзвывы о магазине">
+        <div class="productPhotoFeedback">
+          <app-product-feedbacks-list [feedbacks]="productFeedbackList"></app-product-feedbacks-list>
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </div>
 
+  <div class="row recommendedProductsByAuthor">
+    <div class="col-12">
+      <p class="labelForOrders boldText">Ещё товары этого магазина:</p>
+      <div class="moreOrdersRecommended">
+        <app-more-product-by-author [listCards]="recommendedProductList"></app-more-product-by-author>
+      </div>
+    </div>
+  </div>
+
   <div class="row recommendedProducts">
-    <app-cards [listCards]="recommendedProductList"></app-cards>
+    <div class="col-12">
+      <p class="labelForOrders boldText">Вам также может понравиться:</p>
+      <div class="moreOrdersRecommended">
+        <app-more-product-by-author [listCards]="recommendedProductList"></app-more-product-by-author>
+      </div>
+    </div>
   </div>
 </div>
