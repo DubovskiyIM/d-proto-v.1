@@ -71,7 +71,7 @@ export class User {
   savedProducts: string[];
 
   @Prop()
-  rooms: string[]
+  rooms: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
