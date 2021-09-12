@@ -26,8 +26,13 @@ import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
 
 @Controller('products')
 export class ProductsController {
-  private SERVER_URL = 'http://localhost:3001/';
   constructor(private readonly productsService: ProductsService) {}
+
+  @Get('liked')
+  @UseGuards(JwtAuthGuard)
+  async getLikedProducts(@Req() req: RequestWithUser): Promise<any> {
+    return await this.productsService.getLikedProducts(req.user.id);
+  }
 
   @Post('create')
   @UseGuards(JwtAuthGuard)
@@ -72,12 +77,36 @@ export class ProductsController {
     return await this.productsService.remove(id);
   }
 
-  @Post(':id/product')
+  // @Post(':id/product')
+  // @UseGuards(JwtAuthGuard)
+  // @UseInterceptors(
+  //   FileInterceptor('file', {
+  //     storage: diskStorage({
+  //       destination: './uploads',
+  //       filename: (_req, file, cb) => {
+  //         const randomName = Array(32)
+  //           .fill(null)
+  //           .map(() => Math.round(Math.random() * 16).toString(16))
+  //           .join('');
+  //         return cb(null, `${randomName}${extname(file.originalname)}`);
+  //       },
+  //     }),
+  //   }),
+  // )
+  // async uploadImages(
+  //   @Param('id', IdValidationPipe) id: string,
+  //   @UploadedFile() files: any[],
+  // ): Promise<void> {
+  //   const urls = files.map((file) => `${this.SERVER_URL}${file.path}`);
+  //   await this.productsService.setImages(id, urls);
+  // }
+
+  @Post('upload')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(
-    FileInterceptor('file', {
+    FileInterceptor('files', {
       storage: diskStorage({
-        destination: './products',
+        destination: './uploads',
         filename: (_req, file, cb) => {
           const randomName = Array(32)
             .fill(null)
@@ -88,12 +117,8 @@ export class ProductsController {
       }),
     }),
   )
-  async uploadImages(
-    @Param('id', IdValidationPipe) id: string,
-    @UploadedFile() files: any[],
-  ): Promise<void> {
-    const urls = files.map((file) => `${this.SERVER_URL}${file.path}`);
-    await this.productsService.setImages(id, urls);
+  uploadImage(@Req() request: RequestWithUser, @UploadedFile() file: any) {
+    return this.productsService.setImages(request.user.id, file);
   }
 
   @Get('product/:fileId')
@@ -110,8 +135,9 @@ export class ProductsController {
   async like(
     @Param('id', IdValidationPipe) id: string,
     @Req() req: RequestWithUser,
-  ): Promise<void> {
-    await this.productsService.likeProduct(req.user.id, id);
+  ): Promise<Product> {
+    console.log(id, req.user.id);
+    return await this.productsService.likeProduct(req.user.id, id);
   }
 
   @Post(':id/unlike')
@@ -119,7 +145,7 @@ export class ProductsController {
   async unlike(
     @Param('id', IdValidationPipe) id: string,
     @Req() req: RequestWithUser,
-  ): Promise<void> {
-    await this.productsService.unlikeProduct(req.user.id, id);
+  ): Promise<Product> {
+    return await this.productsService.unlikeProduct(req.user.id, id);
   }
 }
