@@ -1,5 +1,6 @@
-.success {
-  position: relative;
-  color: var(--tui-success-fill);
+.icon{
+  cursor: pointer;
 }
-
+.input:host::ng-deep{
+  width: 95%;
+}

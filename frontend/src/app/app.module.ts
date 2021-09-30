@@ -57,6 +57,7 @@ import {ProductFeedbacksListComponent} from './components/product-feedbacks-list
 import {LikedProductsComponent} from './pages/liked-products/liked-products.component';
 import {SearchLineComponent} from "./components/search-line/search-line.component";
 import {TuiCardModule} from "@taiga-ui/addon-commerce";
+import {TuiImportsModule} from './_modules/tui-imports.module'
 
 // import { NotifyMessageComponent } from "./components/notify/notify.component";
 
@@ -112,22 +113,16 @@ const config: SocketIoConfig = {url: 'localhost:3001', options: {}};
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    TuiRootModule,
     AppRoutingModule,
     TuiCardModule,
     HttpClientModule,
     MaterialImportsModule,
-
     FormsModule,
     CommonModule,
     NgxMasonryModule,
     NgxUsefulSwiperModule,
-
     SocketIoModule.forRoot(config),
-    TuiInputInlineModule,
-    TuiDialogModule,
-    TuiNotificationsModule,
-    TuiInputModule
+    TuiImportsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
