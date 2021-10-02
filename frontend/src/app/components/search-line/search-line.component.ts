@@ -5,7 +5,8 @@ import {
   Inject,
   OnInit,
   Optional, Self,
-  ViewChild
+  EventEmitter,
+  ViewChild, Output
 } from '@angular/core';
 import {FormControl, FormGroup, NgControl, Validators} from "@angular/forms";
 import {TuiPaymentSystem} from "@taiga-ui/addon-commerce";
@@ -19,10 +20,11 @@ import {TuiPrimitiveTextfieldComponent} from "@taiga-ui/core";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchLineComponent extends AbstractTuiControl<string> {
-  private isPasswordHidden = true;
 
   @ViewChild(TuiPrimitiveTextfieldComponent)
   private readonly textfield?: TuiPrimitiveTextfieldComponent;
+
+  @Output() searchClick = new EventEmitter<string>();
 
   constructor(
     @Optional()
@@ -46,27 +48,19 @@ export class SearchLineComponent extends AbstractTuiControl<string> {
   }
 
   get icon(): string {
-    return this.isPasswordHidden ? 'tuiIconHideLarge' : 'tuiIconShowLarge';
+    return  'tuiIconSearch';
   }
 
-  get hint(): string {
-    return this.isPasswordHidden ? 'Show password' : 'Hide password';
-  }
-
-  get inputType(): string {
-    return this.isPasswordHidden ? 'password' : 'text';
-  }
-
-  onValueChange(textValue: string) {
+  public onValueChange(textValue: string) {
     this.updateValue(textValue);
   }
 
-  onFocused(focused: boolean) {
+  public onFocused(focused: boolean) {
     this.updateFocused(focused);
   }
 
-  clickSearch() {
-    this.isPasswordHidden = !this.isPasswordHidden;
+  public clickSearch() {
+    this.searchClick.emit(this.textfield?.value);
   }
 
   protected getFallbackValue(): string {

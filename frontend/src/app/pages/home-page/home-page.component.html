@@ -1,10 +1,11 @@
 <div class="container-fluid">
   <div class="row searchLineWrap">
     <div class="searchLine">
-      <app-search-line></app-search-line>
+      <app-search-line (searchClick)="searchClick($event)"></app-search-line>
     </div>
   </div>
 </div>
 <div class="homeCardsWrap">
+  <app-dialog-prompt></app-dialog-prompt>
   <app-cards [listCards]="listCards" [isHomePage]="false"></app-cards>
 </div>

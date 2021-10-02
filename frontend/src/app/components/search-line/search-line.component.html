@@ -2,21 +2,22 @@
   [invalid]="computedInvalid"
   [focusable]="focusable"
   [tuiTextfieldType]="'text'"
-  [iconContent]="'tuiIconSearch'"
+  [readOnly]="readOnly"
+  [iconContent]="iconContent"
   [value]="value"
   (valueChange)="onValueChange($event)"
+  [tuiTextfieldLabelOutside]="true"
   (focusedChange)="onFocused($event)"
+  (keyup.enter)="clickSearch()"
 >
+  <ng-content></ng-content>
 </tui-primitive-textfield>
 
 <ng-template #iconContent>
   <tui-svg
     class="icon"
-    tuiHintId="not_required"
-    [tuiHint]="hintContent"
     [src]="icon"
     (click)="clickSearch()"
   ></tui-svg>
 </ng-template>
 
-<ng-template #hintContent>{{hint}}</ng-template>

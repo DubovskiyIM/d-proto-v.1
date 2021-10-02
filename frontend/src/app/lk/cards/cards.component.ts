@@ -11,13 +11,15 @@ export class CardsComponent implements OnInit {
   @Input() listCards = [];
   @Input() isHomePage = false;
   @Input() isProfilePage = true;
+  @Input() isCardView = true;
+
   updateMasonryLayout = false;
 
   constructor(private navigationService: NavigationService, private productService: ProductService) {}
 
   ngOnInit(): void {}
 
-  updateGrid() {
+  public updateGrid() {
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 

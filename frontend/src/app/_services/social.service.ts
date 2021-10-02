@@ -51,7 +51,7 @@ export class SocialService {
   }
 
   public getLikedProducts() {
-    return this.http.get(`${this.baseUrl}products/liked`)
+    return this.http.get(`${this.baseUrl}products`)
   }
 
   public getProductFeedbacks() {

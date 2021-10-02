@@ -32,6 +32,10 @@ export class ProductService {
     return this.http.get('api/products/' + ownerID)
   }
 
+  public deleteProductById(productID) {
+    return this.http.delete('api/products/' + productID)
+  }
+
   getProductById(productId) {
     return this.http.get(`${this.baseUrl}${ProductService.httpActions.getByID}/`+ productId)
   }

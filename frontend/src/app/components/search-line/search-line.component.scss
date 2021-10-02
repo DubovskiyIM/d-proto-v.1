@@ -2,5 +2,15 @@
   cursor: pointer;
 }
 .input:host::ng-deep{
+  height: 200px;
+  font-size: 30px!important;
   width: 95%;
+}
+:host {
+  display: block;
+}
+
+.icon {
+  cursor: pointer;
+  pointer-events: auto;
 }

@@ -18,4 +18,8 @@ export class HomePageComponent implements OnInit {
     });
 
   }
+
+  public searchClick(searchLineValue: string) {
+    console.log(searchLineValue);
+  }
 }

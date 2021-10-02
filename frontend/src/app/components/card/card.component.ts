@@ -9,7 +9,9 @@ import {CardModalComponent} from "./card-modal/card-modal.component";
 import {Subject} from "rxjs";
 import {SocialService} from "../../_services/social.service";
 import {getImageUrl} from '../../_helpers/file-helper'
-
+import {ProductService} from "../../_services/product.service";
+import {TuiMobileDialogService} from "@taiga-ui/addon-mobile";
+import {PromptService} from "../dialog-prompt/dialog-prompt.component";
 
 @Component({
   selector: 'app-card',
@@ -40,6 +42,8 @@ export class CardComponent implements OnInit {
   @Input() card;
   @Input() isHomePage = false;
   @Input() isProfilePage = true
+  @Input() isCardView = false;
+
   isFavoriteCard = false;
   showSocialButtons = false;
 
@@ -52,7 +56,12 @@ export class CardComponent implements OnInit {
 
   clicked = false;
 
-  constructor(private navigateService: NavigationService, private socialService: SocialService) {
+  constructor(private navigateService: NavigationService,
+              private socialService: SocialService,
+              private productService: ProductService,
+              private dialogsService: TuiMobileDialogService,
+              private promptService: PromptService
+              ) {
   }
 
   @Output() updateGrid = new EventEmitter();
@@ -81,8 +90,21 @@ export class CardComponent implements OnInit {
     })
   }
 
-  deleteProduct() {
+    deleteProduct(event) {
+    event.stopPropagation();
+    this.promptService
+        .open(
+          'Text',
+        )
+        .subscribe(index => {
+          // Index of clicked button
+          console.log(index);
+        });
 
+    debugger;
+    // this.productService.deleteProductById(this.card._id).subscribe((res) => {
+    //   console.log(res);
+    // })
   }
 
   clickOpenModalView() {

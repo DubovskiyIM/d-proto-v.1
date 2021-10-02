@@ -1,4 +1,4 @@
-<div class="cardWrapper">
+<div class="cardWrapper" *ngIf="isCardView;">
   <div class="cardHeader" *ngIf="!isHomePage">
       <span class="avatarCardHeader" (click)="goToProfilePage()">
         <app-avatar width="30px"></app-avatar>
@@ -28,11 +28,9 @@
             <mat-icon>favorite_border</mat-icon>
           </ng-template>
         </span>
-        <span class="delete" (click)="deleteProduct()" *ngIf="isHomePage">
+        <span class="delete" (click)="deleteProduct($event)" *ngIf="isHomePage">
            <mat-icon>delete</mat-icon>
         </span>
-
-
       </div>
       <div class="photoContent" *ngIf="card.images.length else showImageElseBlock">
         <div class="imageCardWrap" *ngFor="let cardPhoto of card.images">
@@ -61,6 +59,49 @@
     </span>
   </div>
 </div>
+
+<div class="fullViewCardWrapper" *ngIf="!isCardView">
+  <div class="d-flex justify-content-between">
+    <div class="fullViewPhoto">
+      <div (mouseleave)="leaveMouseSate()"
+           (click)="cardModalComponent.triggerModal()"
+           (mouseover)="changeMouseOverSate()"
+           [ngClass]="{profilePageView: (isHomePage || isProfilePage)}"
+           class="photoFullCardViewContainer">
+        <div class="imageFullViewCardWrap">
+          <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
+          <span class="crop" (click)="cardModalComponent.triggerModal($event)">
+            <mat-icon>crop_free</mat-icon>
+          </span>
+            <span class="favorite" (click)=addFavoriteProduct($event) *ngIf="!isHomePage">
+             <ng-container *ngIf="isFavoriteCard; else defaultFavoriteView">
+                      <mat-icon class="favoriteView">favorite</mat-icon>
+             </ng-container>
+            <ng-template #defaultFavoriteView>
+              <mat-icon>favorite_border</mat-icon>
+            </ng-template>
+          </span>
+            <span class="delete" (click)="deleteProduct($event)" *ngIf="isHomePage">
+              <mat-icon>delete</mat-icon>
+          </span>
+          </div>
+
+          <img src="https://i.picsum.photos/id/514/300/300.jpg?hmac=cWjIdfi9OoXTpWCC_x4On9HehQ1N0FSR6MxanIRMcfQ">
+        </div>
+
+      </div>
+    </div>
+    <div class="cardInfoFullView">
+      <h2>{{card.title}}</h2>
+      <span>{{card?.price}}</span>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti ducimus esse est impedit tempore, voluptate
+      voluptatem! Ad, aspernatur aut cumque cupiditate delectus facilis inventore libero natus placeat, praesentium quis
+      ullam!
+    </div>
+  </div>
+</div>
+
+
 <div>
   <app-card-modal [card]="card" #cardModalComponent [isHomePage]="isHomePage" #cardModal></app-card-modal>
 </div>
