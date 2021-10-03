@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Description } from '../../../types/product';
+import { Description } from '@src/types/product';
 
 export class CreateProductDto {
   @ApiProperty({ example: 'Pants', description: 'The title of product' })

@@ -1,20 +1,12 @@
 import { UserDocument } from '@src/models/user.schema';
-import {
-  BadRequestException,
-  Injectable,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import {Document, Model} from 'mongoose';
+import { Document, Model } from 'mongoose';
 import { Product, ProductDocument } from '@src/models/product.schema';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PRODUCT_NOT_FOUND } from '@src/modules/products/products.constants';
 import { USER_NOT_FOUND } from '@src/modules/users/users.constants';
-import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
-import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
-import {use} from "passport";
 
 @Injectable()
 export class ProductsService {
