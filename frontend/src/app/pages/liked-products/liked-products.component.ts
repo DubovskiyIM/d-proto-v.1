@@ -22,6 +22,7 @@ export class LikedProductsComponent implements OnInit {
     this.socialService.getLikedProducts().subscribe((res: any) => {
       this.likedProductList = res;
     })
+    // this.socialService.getSubscribeShops().s
   }
 
   public changeCardView(typeView: string): void {

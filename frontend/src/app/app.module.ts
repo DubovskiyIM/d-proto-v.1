@@ -58,7 +58,9 @@ import {LikedProductsComponent} from './pages/liked-products/liked-products.comp
 import {SearchLineComponent} from "./components/search-line/search-line.component";
 import {TuiCardModule} from "@taiga-ui/addon-commerce";
 import {TuiImportsModule} from './_modules/tui-imports.module';
-import { DialogPromptComponent } from './components/dialog-prompt/dialog-prompt.component'
+import { DialogPromptComponent } from './components/dialog-prompt/dialog-prompt.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { FeedbackModalViewComponent } from './components/feedback-modal-view/feedback-modal-view.component'
 
 
 // import { NotifyMessageComponent } from "./components/notify/notify.component";
@@ -111,6 +113,8 @@ const config: SocketIoConfig = {url: 'localhost:3001', options: {}};
     LikedProductsComponent,
     SearchLineComponent,
     DialogPromptComponent,
+    LoaderComponent,
+    FeedbackModalViewComponent,
 
   ],
   imports: [

@@ -1,0 +1,69 @@
+<ng-template #modalWrapper let-modal>
+  <div class="modalFeedbackCloseIcon">
+    <mat-icon (click)="modal.dismiss('Cross click')">close</mat-icon>
+  </div>
+  <div class="modal-body feedbackModal">
+    <div class="row">
+
+      <div class="col-7 feedbackPhoto">
+        <img class="img-fluid"
+             src="https://i.picsum.photos/id/1058/1000/1000.jpg?hmac=AyQJtBQksybj3Zvm_v6Lgsd4Rs3kRyixrSsDEnEzn44">
+      </div>
+
+      <div class="col-5 feedbackCardInfo">
+        <div class="userInfoLine d-flex">
+          <div class="avatarUserInfoHeader" (click)="goToProfilePage()">
+            <app-avatar [width]="'40px'"></app-avatar>
+          </div>
+          <div class="feedbackModalUserInfoLine" (click)="goToProfilePage()">
+            <p class="boldText textColor-1">{{'name notname'}}</p>
+            <p class="textColor-0">16 янв. 2020</p>
+          </div>
+        </div>
+
+        <div class="feedbackRating">
+          <app-star-ratings></app-star-ratings>
+        </div>
+
+        <div class="modalFeedbackDescriptionWrap">
+          <p class="modalFeedbackDescription textColor-0">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur deleniti eius et omnis voluptates!
+            Culpa
+            ea eligendi illo impedit porro reprehenderit sapiente unde voluptatem? Ab cum fugiat nihil provident
+            sapiente!
+          </p>
+        </div>
+
+        <div class="socialFeedbackButtons d-flex align-items-center">
+          <mat-icon>thumb_up_off_alt</mat-icon>
+          <span class="countSocialFeedbackLikes">
+          0
+          </span>
+        </div>
+
+        <!--        <h2 class="modalHeaderTitle" (click)="goToProductPage()">-->
+        <!--          {{card.title}}-->
+        <!--        </h2>-->
+        <!--        <h3>{{card.price || '2999' }} р</h3>-->
+        <!--        <div class="modalUserInfo d-flex align-items-center" *ngIf="!isHomePage">-->
+        <!--          <app-avatar [width]="'30px'"></app-avatar>-->
+        <!--          <span class="userName">Имя User</span>-->
+        <!--        </div>-->
+        <!--        <h3 class="sizeLabel">размер S</h3>-->
+        <!--        <div class="modalDesc">-->
+        <!--          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi cupiditate debitis doloribus eum, ipsa-->
+        <!--          laboriosam magni, nam qui rerum sit ut vel! Assumenda corporis doloribus, harum hic nemo qui voluptate?-->
+        <!--        </div>-->
+
+        <!--        <div class="socialButton d-flex justify-content-start" *ngIf="!isHomePage">-->
+        <!--          <button class="btn btn-outline-dark" (click)="openChat()">Написать</button>-->
+        <!--          <div class="shareLink d-flex align-items-center" (click)="copyLink()">-->
+        <!--            <mat-icon>share</mat-icon>-->
+        <!--            <span>Поделиться</span>-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+    </div>
+  </div>
+</ng-template>
+<app-notify [message]="'Ссылка скопирована'" #notify></app-notify>

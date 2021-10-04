@@ -1,0 +1,48 @@
+.feedbackPhoto {
+  img {
+    //overflow: hidden;
+    border-radius: 14px 0 0 14px;
+  }
+}
+
+.feedbackModal {
+  max-height: 75vh;
+  min-height: 480px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.feedbackModalUserInfoLine {
+  margin-left: 10px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.feedbackCardInfo {
+  padding: 24px 16px;
+}
+
+.modalFeedbackCloseIcon {
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  top: -35px;
+}
+
+.feedbackRating {
+  margin-top: 10px;
+}
+
+.socialFeedbackButtons {
+  cursor: pointer;
+
+  .countSocialFeedbackLikes {
+    margin-left: 5px;
+  }
+
+}

@@ -17,7 +17,7 @@ import {LikedProductsComponent} from "./pages/liked-products/liked-products.comp
 const lkRoutes: Routes = [
   { path: 'home', component: MyProfileComponent },
   { path: 'orders', component: MyOrdersComponent },
-  { path: 'liked-products', component: LikedProductsComponent },
+  { path: 'favorite', component: LikedProductsComponent },
   { path: 'messages', component: MessagesComponent, pathMatch: 'full'},
   { path: 'messages/:id', component: MessagesComponent },
   { path: 'create', component: AddProductComponent },
