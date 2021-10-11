@@ -1,57 +1,71 @@
 <div class="container-fluid formNewProduct">
   <div class="row">
-    <form [formGroup]="createProductForm" novalidate (ngSubmit)="submit()" class="formGroup">
-      <div class="col-12">
-        <mat-form-field appearance="fill" class="inputTitle">
-          <mat-label>Название</mat-label>
-          <input matInput type="text" name="title" formControlName="productTitle">
-        </mat-form-field>
+    <json-schema-form
+      loadExternalAssets = "true"
+      [schema] = "schema"
+      [widgets] ="widgets"
+      framework = "material-design"
+      (onSubmit) = "submit($event)" >
+  </json-schema-form >
+    <tui-editor
+      class="editor"
+      exampleText="Describe a problem with templates"
+      [(ngModel)]="model"
+    >
+      Describe a problem
+    </tui-editor>
+<!--    <form [formGroup]="createProductForm" novalidate (ngSubmit)="submit()" class="formGroup">-->
+<!--      <div class="col-12">-->
+<!--        <mat-form-field appearance="fill" class="inputTitle">-->
+<!--          <mat-label>Название</mat-label>-->
+<!--          <input matInput type="text" name="title" formControlName="productTitle">-->
+<!--        </mat-form-field>-->
 
-        <mat-form-field appearance="fill" class="descriptionArea">
-          <mat-label>Описание</mat-label>
-          <textarea matInput
-                    name="description"
-                    formControlName="productDescription"
-          ></textarea>
-        </mat-form-field>
+<!--        <mat-form-field appearance="fill" class="descriptionArea">-->
+<!--          <mat-label>Описание</mat-label>-->
+<!--          <textarea matInput-->
+<!--                    name="description"-->
+<!--                    formControlName="productDescription"-->
+<!--          ></textarea>-->
+<!--        </mat-form-field>-->
 
-        <mat-form-field class="tagField" appearance="fill">
-          <mat-chip-list #chipList aria-label="Fruit selection">
-            <mat-chip *ngFor="let fruit of tags" [selectable]="selectable"
-                      [removable]="removable" (removed)="remove(fruit)">
-              {{fruit.name}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input placeholder="Тег"
-                   name="tagg"
-                   formControlName="productTags"
-                   [matChipInputFor]="chipList"
-                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                   [matChipInputAddOnBlur]="addOnBlur"
-                   (matChipInputTokenEnd)="add($event)">
-          </mat-chip-list>
-        </mat-form-field>
-      </div>
-      <div class="col-12">
-        <mat-form-field appearance="fill" floatLabel="always">
-          <mat-label>Цена</mat-label>
-          <input matInput type="number"
-                 class="example-right-align"
-                 placeholder="0"
-                 name="price"
-                 formControlName="productPrice">
-          <span matPrefix>&#x20BD;</span>
-        </mat-form-field>
-      </div>
-      <div class="col-12">
-        <div class="dropFile">
-          <app-drag-and-drop-file (onChanged)="changeFileList($event)"></app-drag-and-drop-file>
-        </div>
-      </div>
-      <div class="col-12">
-        <button class="btn btn-outline-dark" [disabled]="!createProductForm.valid">Добавить</button>
-      </div>
-    </form>
+<!--        <mat-form-field class="tagField" appearance="fill">-->
+<!--          <mat-chip-list #chipList aria-label="Fruit selection">-->
+<!--            <mat-chip *ngFor="let fruit of tags" [selectable]="selectable"-->
+<!--                      [removable]="removable" (removed)="remove(fruit)">-->
+<!--              {{fruit.name}}-->
+<!--              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>-->
+<!--            </mat-chip>-->
+<!--            <input placeholder="Тег"-->
+<!--                   name="tagg"-->
+<!--                   formControlName="productTags"-->
+<!--                   [matChipInputFor]="chipList"-->
+<!--                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
+<!--                   [matChipInputAddOnBlur]="addOnBlur"-->
+<!--                   (matChipInputTokenEnd)="add($event)">-->
+<!--          </mat-chip-list>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-12">-->
+<!--        <mat-form-field appearance="fill" floatLabel="always">-->
+<!--          <mat-label>Цена</mat-label>-->
+<!--          <input matInput type="number"-->
+<!--                 class="example-right-align"-->
+<!--                 placeholder="0"-->
+<!--                 name="price"-->
+<!--                 formControlName="productPrice">-->
+<!--          <span matPrefix>&#x20BD;</span>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-12">-->
+<!--        <div class="dropFile">-->
+<!--          <app-drag-and-drop-file (onChanged)="changeFileList($event)"></app-drag-and-drop-file>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-12">-->
+<!--        <button class="btn btn-outline-dark" [disabled]="!createProductForm.valid">Добавить</button>-->
+<!--      </div>-->
+<!--    </form>-->
   </div>
 
   <!--      <div class="col-12">-->

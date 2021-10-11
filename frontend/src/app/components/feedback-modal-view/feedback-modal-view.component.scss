@@ -22,7 +22,7 @@
 }
 
 .feedbackCardInfo {
-  padding: 24px 16px;
+  padding: 24px 32px 24px 16px;
 }
 
 .modalFeedbackCloseIcon {
@@ -32,6 +32,10 @@
   z-index: 100;
   right: 0;
   top: -35px;
+}
+
+.modalFeedbackDescription {
+  font-size: 16px;
 }
 
 .feedbackRating {

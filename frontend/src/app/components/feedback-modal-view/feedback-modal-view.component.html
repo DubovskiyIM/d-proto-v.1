@@ -12,11 +12,11 @@
 
       <div class="col-5 feedbackCardInfo">
         <div class="userInfoLine d-flex">
-          <div class="avatarUserInfoHeader" (click)="goToProfilePage()">
+          <div class="pointerElement avatarUserInfoHeader" (click)="goToProfilePage()">
             <app-avatar [width]="'40px'"></app-avatar>
           </div>
           <div class="feedbackModalUserInfoLine" (click)="goToProfilePage()">
-            <p class="boldText textColor-1">{{'name notname'}}</p>
+            <p class="boldText pointerElement textColor-1" (click)="goToProfilePage()">{{'name notname'}}</p>
             <p class="textColor-0">16 янв. 2020</p>
           </div>
         </div>

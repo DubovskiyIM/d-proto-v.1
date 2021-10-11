@@ -4,6 +4,9 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProductService} from "../../_services/product.service";
 import {NavigationService} from "../../_services/navigation.service";
+import {TuiInputComponent} from "@taiga-ui/kit";
+import { WidgetLibraryService } from '@ajsf/core';
+import {MaterialInputComponent} from "@ajsf/material";
 
 @Component({
   selector: 'app-add-product',
@@ -14,19 +17,30 @@ export class AddProductComponent implements OnInit {
   createProductForm: FormGroup;
   private fileList = [];
   private uploadFilesList = []
+  public schema = schemaObj;
+  public widgets = {
+    input: MaterialInputComponent,
+    customTag: MaterialInputComponent
+  }
 
-  constructor(private formBuilder: FormBuilder, private productService: ProductService, private navigateService: NavigationService) {
+  constructor(private formBuilder: FormBuilder,
+              private widgetLibrary: WidgetLibraryService,
+              private productService: ProductService, private navigateService: NavigationService) {
     this.createProductForm = formBuilder.group({
       "productTitle": ["", [Validators.required]],
       "productDescription": ["", [Validators.required]],
       "productPrice": ["", [Validators.required]],
       "productTags": ["", [Validators.required]],
     });
+
+    widgetLibrary.registerWidget('input', MaterialInputComponent);
+    console.log(widgetLibrary);
+    debugger;
   }
 
   ngOnInit(): void {
   }
-
+  model = {}
   selectable = true;
   removable = true;
   addOnBlur = true;
@@ -56,7 +70,7 @@ export class AddProductComponent implements OnInit {
     });
   }
 
-  submit() {
+  submit(event?) {
     if (!this.createProductForm.valid) {
       return;
     }
@@ -80,4 +94,69 @@ export class AddProductComponent implements OnInit {
     })
   }
 
+}
+
+const schemaObj = {
+  "type": "object",
+  "title": "Comment",
+  "properties": {
+    "name": {
+      "title": "Название",
+      "type": "string"
+    },
+    "customTag": {
+      "title": "customTag",
+      "type": "string"
+    },
+    "size": {
+      "title": "Размер",
+      "type": "string",
+      "enum": [
+        "46 (S)",
+        "48 (M)",
+        "50 (L)",
+        "52 (L/XL)",
+        "54 (XL)",
+        "56 (XXL)",
+    ]
+    },
+    "condition": {
+      "title": "Состояние",
+      "type": "string",
+      "enum": [
+        "Новое",
+        "Б/y",
+      ]
+    },
+    "who_did": {
+      "title": "Кто это сделал?",
+      "type": "string",
+      "enum": [
+        "Я сделал",
+        "Член моей компании",
+        "Другая компания",
+      ]
+    },
+    "tags": {
+      "title": "Теги",
+      "type": "string"
+    },
+    "materials": {
+      "title": "Материалы",
+      "type": "string"
+    },
+    "price": {
+      "title": "Цена",
+      "type": "number"
+    },
+    "count": {
+      "title": "Колличество",
+      "type": "number"
+    },
+  },
+  "required": [
+    "name",
+    "email",
+    "comment"
+  ]
 }

@@ -12,7 +12,8 @@ export class FeedbackModalViewComponent implements OnInit {
   modalCard: ElementRef;
   closeModal: string;
 
-  constructor(private modalService: NgbModal, private navigateService: NavigationService) { }
+  constructor(private modalService: NgbModal, private navigateService: NavigationService) {
+  }
 
   ngOnInit(): void {
   }
@@ -46,7 +47,8 @@ export class FeedbackModalViewComponent implements OnInit {
   }
 
   public goToProfilePage(): void {
-     this.navigateService.goToProfilePage('22');
+    this.closeOpenedModal();
+    this.navigateService.goToProfilePage('22');
   }
 
 }

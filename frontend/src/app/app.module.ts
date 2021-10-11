@@ -61,6 +61,7 @@ import {TuiImportsModule} from './_modules/tui-imports.module';
 import { DialogPromptComponent } from './components/dialog-prompt/dialog-prompt.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { FeedbackModalViewComponent } from './components/feedback-modal-view/feedback-modal-view.component'
+import {MaterialDesignFrameworkModule} from "@ajsf/material";
 
 
 // import { NotifyMessageComponent } from "./components/notify/notify.component";
@@ -122,6 +123,7 @@ const config: SocketIoConfig = {url: 'localhost:3001', options: {}};
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    MaterialDesignFrameworkModule,
     TuiCardModule,
     HttpClientModule,
     MaterialImportsModule,
