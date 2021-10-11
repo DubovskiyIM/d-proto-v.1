@@ -90,10 +90,8 @@ export class ProductsService {
 
   public async getLikedProducts(userId: string): Promise<Product[]> {
     const user = await this.userModel.findById(userId);
-    const result = await this.productModel
+    return await this.productModel
       .find({ _id: { $in: user.followingProducts } })
       .exec();
-    console.log(result);
-    return result;
   }
 }
