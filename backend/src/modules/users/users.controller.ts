@@ -16,6 +16,7 @@ import { User as UserSchema } from '@src/models/user.schema';
 import { IdValidationPipe } from '@src/pipes/id-validation.pipe';
 import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
 import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
+import { GetFollowersDto } from '@src/modules/users/dto/get-followers.dto';
 
 @Controller('users')
 export class UsersController {
@@ -65,5 +66,13 @@ export class UsersController {
     @Req() req: RequestWithUser,
   ): Promise<void> {
     await this.usersService.unfollowUser(req.user.id, id);
+  }
+
+  @Get('followers')
+  @UseGuards(JwtAuthGuard)
+  async getLikedProducts(
+    @Req() req: RequestWithUser,
+  ): Promise<GetFollowersDto> {
+    return await this.usersService.getFollowers(req.user.id);
   }
 }
