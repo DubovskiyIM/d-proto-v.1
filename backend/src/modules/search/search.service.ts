@@ -10,7 +10,6 @@ export class SearchService
 {
   constructor() {
     super(ConfigSearch.searchConfig(process.env.ELASTIC_SEARCH_URL));
-    console.log(this);
   }
 
   public async insertIndex(bulkData: any): Promise<any> {

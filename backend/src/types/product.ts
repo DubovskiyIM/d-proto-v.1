@@ -20,3 +20,18 @@ export interface Product extends Document {
 export interface GetLikedProducts {
   likedProducts: Product[];
 }
+
+export interface ProductSearchBody {
+  id: string;
+  title: string;
+  image: string;
+  description: string;
+  price: number;
+}
+
+export interface ProductSearchResult {
+  hits: {
+    total: number;
+    hits: Array<{ _source: ProductSearchBody }>;
+  };
+}

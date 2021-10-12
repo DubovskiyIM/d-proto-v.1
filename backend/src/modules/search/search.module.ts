@@ -1,16 +1,22 @@
 import { Module } from '@nestjs/common';
-import { SearchService } from './search.service';
-import { SearchServiceInterface } from './interface/search.service.interface';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
 @Module({
-  imports: [],
-  providers: [
-    {
-      provide: 'SearchServiceInterface',
-      useClass: SearchService,
-    },
+  imports: [
+    ConfigModule,
+    ElasticsearchModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        node: configService.get('ELASTICSEARCH_NODE'),
+        auth: {
+          username: configService.get('ELASTICSEARCH_USERNAME'),
+          password: configService.get('ELASTICSEARCH_PASSWORD'),
+        },
+      }),
+      inject: [ConfigService],
+    }),
   ],
-  controllers: [],
-  exports: [SearchModule],
+  exports: [ElasticsearchModule],
 })
 export class SearchModule {}

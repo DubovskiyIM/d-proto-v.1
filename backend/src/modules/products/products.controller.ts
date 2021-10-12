@@ -10,7 +10,7 @@ import {
   Param,
   UseGuards,
   UseInterceptors,
-  UploadedFile,
+  UploadedFile, Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -56,7 +56,10 @@ export class ProductsController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async findAll(): Promise<Product[]> {
+  async findAll(@Query('search') search: string): Promise<Product[]> {
+    if (search) {
+      return this.productsService.searchForProducts(search);
+    }
     return await this.productsService.findAll();
   }
 
@@ -96,11 +99,11 @@ export class ProductsController {
       }),
     }),
   )
-  uploadImage(
+  async uploadImage(
     @Req() request: RequestWithUser,
     @UploadedFile() file: any,
   ): Promise<Product> {
-    return this.productsService.setImages(request.user.id, file);
+    return await this.productsService.setImages(request.user.id, file);
   }
 
   @Get('product/:fileId')
