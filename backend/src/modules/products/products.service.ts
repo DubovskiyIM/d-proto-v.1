@@ -5,9 +5,9 @@ import { Document, Model } from 'mongoose';
 import { Product, ProductDocument } from '@src/models/product.schema';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { GetLikedProductDto } from '@src/modules/products/dto/get-liked-product.dto';
 import { PRODUCT_NOT_FOUND } from '@src/modules/products/products.constants';
 import { USER_NOT_FOUND } from '@src/modules/users/users.constants';
-import { GetLikedProductDto } from '@src/modules/products/dto/get-liked-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -95,9 +95,7 @@ export class ProductsService {
     }
   }
 
-  public async getLikedProducts(
-    userId: string,
-  ): Promise<{ likedProducts: GetLikedProductDto[] }> {
+  public async getLikedProducts(userId: string): Promise<GetLikedProductDto> {
     const user = (await this.userModel.findById(userId)) as UserDocument;
     const likedProducts = [];
     for (const product of user.followingProducts) {

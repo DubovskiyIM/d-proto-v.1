@@ -16,3 +16,7 @@ export interface Product extends Document {
   created: Date;
   availableQuantity: number;
 }
+
+export interface GetLikedProducts {
+  likedProducts: Product[];
+}

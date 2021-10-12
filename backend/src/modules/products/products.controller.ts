@@ -33,7 +33,7 @@ export class ProductsController {
   @UseGuards(JwtAuthGuard)
   async getLikedProducts(
     @Req() req: RequestWithUser,
-  ): Promise<{ likedProducts: GetLikedProductDto[] }> {
+  ): Promise<GetLikedProductDto> {
     return await this.productsService.getLikedProducts(req.user.id);
   }
 
