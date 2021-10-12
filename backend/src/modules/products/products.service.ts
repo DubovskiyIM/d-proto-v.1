@@ -88,10 +88,15 @@ export class ProductsService {
     }
   }
 
-  public async getLikedProducts(userId: string): Promise<Product[]> {
-    const user = await this.userModel.findById(userId);
-    return await this.productModel
-      .find({ _id: { $in: user.followingProducts } })
-      .exec();
+  public async getLikedProducts(userId: string): Promise<any> {
+    const user = (await this.userModel.findById(userId)) as UserDocument;
+    const likedProducts = [];
+    for (const product of user.followingProducts) {
+      const item = (await this.productModel.findById(
+        product,
+      )) as ProductDocument;
+      likedProducts.push(item);
+    }
+    return { likedProducts };
   }
 }
