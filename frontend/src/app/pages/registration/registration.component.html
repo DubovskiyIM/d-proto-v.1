@@ -1,27 +1,85 @@
 <div class="container registrationPage">
-  <mat-stepper [linear]="'true'" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <ng-container *ngTemplateOutlet="firstRegistrationStep"></ng-container>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-    </mat-step>
-    <mat-step>
-    </mat-step>
-  </mat-stepper>
-
+  <div class="registrationPageWrap">
+    <mat-stepper [linear]="'false'" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <ng-container *ngTemplateOutlet="firstRegistrationStep"></ng-container>
+        <button tuiButton appearance="custom" class="nextStepButton" matStepperNext>Продолжить</button>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+        <ng-container *ngTemplateOutlet="secondRegistrationStep"></ng-container>
+      </mat-step>
+      <mat-step>
+      </mat-step>
+    </mat-stepper>
+  </div>
 </div>
+
 <ng-template #firstRegistrationStep>
   <form [formGroup]="firstFormGroup" class="firstFormGroup">
-    <tui-input class="b-form registrationInput" formControlName="email" >
+    <tui-input class="b-form registrationInput" formControlName="email">
       Email адрес
     </tui-input>
     <tui-input class="b-form registrationInput" formControlName="username">
       Введите username
     </tui-input>
-    <tui-input-password  class="b-form registrationInput" formControlName="password" type="password">
+    <tui-input-password class="b-form registrationInput" formControlName="password" type="password">
       Введите пароль
     </tui-input-password>
-    <button tuiButton appearance="custom" class="nextStepButton">Продолжить</button>
+  </form>
+
+</ng-template>
+
+
+<ng-template #secondRegistrationStep>
+  <form [formGroup]="secondFormGroup" class="firstFormGroup">
+    <tui-input class="b-form registrationInput" formControlName="name">
+      Введите имя
+    </tui-input>
+
+
+    <div tuiGroup class="d-flex justify-content-start" [collapsed]="true">
+      <tui-radio-block
+        formControlName="gender"
+        item="man"
+        size="l"
+      >
+        Мужской
+      </tui-radio-block>
+      <tui-radio-block
+        formControlName="gender"
+        item="female"
+        size="l"
+      >
+        Женский
+      </tui-radio-block>
+      <tui-radio-block
+        formControlName="gender"
+        item="other"
+        size="l"
+        value="other"
+      >
+        Другое
+      </tui-radio-block>
+    </div>
+
+
+
+    <tui-text-area
+      class="field-large"
+      formControlName="about"
+    >
+      Добавьте описание
+    </tui-text-area>
+
+
+
+<!--    <tui-input class="b-form registrationInput" formControlName="username">-->
+<!--      Введите username-->
+<!--    </tui-input>-->
+<!--    <tui-input-password class="b-form registrationInput" formControlName="password" type="password">-->
+<!--      Введите пароль-->
+<!--    </tui-input-password>-->
+    <button tuiButton appearance="custom" class="nextStepButton" (click)="secondStepSend()">Продолжить</button>
   </form>
 
 </ng-template>

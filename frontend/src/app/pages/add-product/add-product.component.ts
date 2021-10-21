@@ -5,8 +5,14 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProductService} from "../../_services/product.service";
 import {NavigationService} from "../../_services/navigation.service";
 import {TuiInputComponent} from "@taiga-ui/kit";
-import { WidgetLibraryService } from '@ajsf/core';
-import {MaterialInputComponent} from "@ajsf/material";
+import {MY_FORM_MODEL} from './schemas/ng-schema'
+
+import {
+  DynamicCheckboxModel,
+  DynamicFormModel, DynamicFormService,
+  DynamicInputModel,
+  DynamicRadioGroupModel
+} from "@ng-dynamic-forms/core";
 
 @Component({
   selector: 'app-add-product',
@@ -18,24 +24,19 @@ export class AddProductComponent implements OnInit {
   private fileList = [];
   private uploadFilesList = []
   public schema = schemaObj;
-  public widgets = {
-    input: MaterialInputComponent,
-    customTag: MaterialInputComponent
-  }
+  formModel: DynamicFormModel = MY_FORM_MODEL;
+  formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private widgetLibrary: WidgetLibraryService,
-              private productService: ProductService, private navigateService: NavigationService) {
+              private formService: DynamicFormService,
+              private productService: ProductService, private navigateService: NavigationService,) {
     this.createProductForm = formBuilder.group({
       "productTitle": ["", [Validators.required]],
       "productDescription": ["", [Validators.required]],
       "productPrice": ["", [Validators.required]],
       "productTags": ["", [Validators.required]],
     });
-
-    widgetLibrary.registerWidget('input', MaterialInputComponent);
-    console.log(widgetLibrary);
-    debugger;
+    this.formGroup = this.formService.createFormGroup(this.formModel);
   }
 
   ngOnInit(): void {
@@ -106,7 +107,7 @@ const schemaObj = {
     },
     "customTag": {
       "title": "customTag",
-      "type": "string"
+      "type": "customTag"
     },
     "size": {
       "title": "Размер",
@@ -149,6 +150,13 @@ const schemaObj = {
       "title": "Цена",
       "type": "number"
     },
+    "radiobuttons": {
+      "type": "string",
+      "enum": [
+        "Select me!",
+        "No me!"
+      ]
+    },
     "count": {
       "title": "Колличество",
       "type": "number"
@@ -160,3 +168,4 @@ const schemaObj = {
     "comment"
   ]
 }
+

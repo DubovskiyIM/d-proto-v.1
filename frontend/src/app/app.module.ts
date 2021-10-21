@@ -1,5 +1,5 @@
 import {NgDompurifySanitizer} from "@tinkoff/ng-dompurify";
-import {TuiRootModule, TuiDialogModule, TuiNotificationsModule, TUI_SANITIZER} from "@taiga-ui/core";
+import {TuiRootModule, TuiDialogModule, TuiNotificationsModule, TUI_SANITIZER, TuiGroupModule} from "@taiga-ui/core";
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
@@ -61,7 +61,7 @@ import {TuiImportsModule} from './_modules/tui-imports.module';
 import { DialogPromptComponent } from './components/dialog-prompt/dialog-prompt.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { FeedbackModalViewComponent } from './components/feedback-modal-view/feedback-modal-view.component'
-import {MaterialDesignFrameworkModule} from "@ajsf/material";
+import {DynamicFormsMaterialUIModule} from "@ng-dynamic-forms/ui-material";
 
 
 // import { NotifyMessageComponent } from "./components/notify/notify.component";
@@ -123,10 +123,10 @@ const config: SocketIoConfig = {url: 'localhost:3001', options: {}};
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MaterialDesignFrameworkModule,
     TuiCardModule,
     HttpClientModule,
     MaterialImportsModule,
+    DynamicFormsMaterialUIModule,
     FormsModule,
     CommonModule,
     NgxMasonryModule,
