@@ -1,5 +1,6 @@
 .registrationPage {
-  .nextStepButton{
+
+  .nextStepButton {
     width: 40%;
     margin-left: 30%;
     margin-top: 10px;
@@ -7,13 +8,53 @@
     //margin: 0 auto;
   }
 
+  .stepButtonWrap {
+    width: 60%;
+    margin: 0 auto;
+  }
+
+
+  .secondStepRegistration {
+    width: 60%;
+    margin: 0 auto;
+
+    .secondFormNextStepButton {
+      width: 50%;
+    }
+    .skipStepButton{
+      margin-top: 20px;
+      width: 30%;
+    }
+  }
+
   .firstFormGroup {
     width: 60%;
     margin: 0 auto;
-    .registrationInput{
-      margin-top: 20px;
 
+    .registrationInput {
+      margin-top: 20px;
     }
+  }
+
+  .secondFormGroup {
+    width: 60%;
+    margin: 0 auto;
+
+    .registrationInput {
+      margin-top: 20px;
+    }
+  }
+
+  .labelForRecommendedStep{
+    margin-left: 1.25rem;
+    padding-bottom: 0;
+  }
+
+  .image {
+    display: block;
+    max-width: calc(100% + 2.5rem);
+    margin: -1.25rem -1.25rem 1.25rem;
+    border-radius: var(--tui-radius-l) var(--tui-radius-l) 0 0;
   }
 
   .tui-group > * {
@@ -21,7 +62,7 @@
     min-width: 0;
   }
 
-  .registrationGenderBtnGroup{
+  .registrationGenderBtnGroup {
     display: flex;
   }
 
@@ -44,5 +85,23 @@
     }
   }
 
+  .recommendedCardsWrap{
+    width: fit-content;
+    margin: 1.25rem;
+    padding: 0;
+  }
+
+  .recommendedIsland{
+    max-width: 300px;
+    margin-bottom: 1.5rem;
+  }
+  .cardNameStyle{
+    position: absolute;
+    bottom: -3em;
+  }
+  .regStylesCardImg{
+    border-radius: 0.625rem;
+    max-height: 400px;
+  }
 
 }

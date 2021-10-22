@@ -35,6 +35,10 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  public getCurrentUserPropertyValue(propName: string): any | null{
+    return this.currentUserValue[propName] || null;
+  }
+
   public login(controls) {
     if (!controls) {
       return;

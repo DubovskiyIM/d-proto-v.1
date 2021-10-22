@@ -62,6 +62,8 @@ import { DialogPromptComponent } from './components/dialog-prompt/dialog-prompt.
 import { LoaderComponent } from './components/loader/loader.component';
 import { FeedbackModalViewComponent } from './components/feedback-modal-view/feedback-modal-view.component'
 import {DynamicFormsMaterialUIModule} from "@ng-dynamic-forms/ui-material";
+import { ComboBoxSelectComponent } from './components/combo-box-select/combo-box-select.component';
+import { HistoryOrdersCardsComponent } from './components/history-orders-cards/history-orders-cards.component';
 
 
 // import { NotifyMessageComponent } from "./components/notify/notify.component";
@@ -116,6 +118,8 @@ const config: SocketIoConfig = {url: 'localhost:3001', options: {}};
     DialogPromptComponent,
     LoaderComponent,
     FeedbackModalViewComponent,
+    ComboBoxSelectComponent,
+    HistoryOrdersCardsComponent,
 
   ],
   imports: [

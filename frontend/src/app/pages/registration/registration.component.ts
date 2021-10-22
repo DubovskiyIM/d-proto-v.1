@@ -1,6 +1,24 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CdkStepper} from "@angular/cdk/stepper";
+import {tuiPure} from "@taiga-ui/cdk";
+import {Observable, of, timer} from "rxjs";
+import {map, mapTo, share, startWith, switchMap, tap} from 'rxjs/operators';
+import {TuiFileLike} from "@taiga-ui/kit";
+import {TuiCountryIsoCode} from '@taiga-ui/i18n';
+
+class RejectedFile {
+  constructor(readonly file: TuiFileLike, readonly reason: string) {}
+}
+
+function convertRejected({file, reason}: RejectedFile): TuiFileLike {
+  return {
+    name: file.name,
+    size: file.size,
+    type: file.type,
+    content: reason,
+  };
+}
 
 @Component({
   selector: 'app-registration',
@@ -11,10 +29,21 @@ import {CdkStepper} from "@angular/cdk/stepper";
   providers: [{ provide: CdkStepper }]
 })
 export class RegistrationComponent implements OnInit {
-  isLinear = false;
+  @ViewChild("stepper", {static: false})
+  stepper: any;
+
+  isStepperLinear = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  readonly avatarControl = new FormControl();
+  readonly countries: ReadonlyArray<TuiCountryIsoCode> = [
+    TuiCountryIsoCode.RU,
+    TuiCountryIsoCode.KZ,
+    TuiCountryIsoCode.UA,
+    TuiCountryIsoCode.BY,
+  ];
 
+  countryIsoCode = TuiCountryIsoCode.RU;
 
 
   constructor(private _formBuilder: FormBuilder) {
@@ -31,6 +60,8 @@ export class RegistrationComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(6)]],
       gender: ['', []],
       about: ['', []],
+      phone: [],
+      dateOfBirth: [],
     });
   }
 
@@ -38,10 +69,69 @@ export class RegistrationComponent implements OnInit {
     console.log(this.secondFormGroup.controls);
   }
 
+  public saveFirstStep() {
+    // debugger;
+
+    // debugger;
+    // if (this.firstFormGroup.invalid) {
+    //   return;
+    // }
+    this.stepper.next();
+    this.isStepperLinear = false;
+    // this.firstFormGroup.disable();
+
+    // this.stepper.next();
+  }
 
 
 
+  @tuiPure
+  get loading$(): Observable<ReadonlyArray<File>> {
+    return this.requests$.pipe(
+      map(file => (file instanceof File ? [file] : [])),
+      startWith([]),
+    );
+  }
 
+  @tuiPure
+  get rejected$(): Observable<ReadonlyArray<TuiFileLike>> {
+    return this.requests$.pipe(
+      map(file => (file instanceof RejectedFile ? [convertRejected(file)] : [])),
+      tap(({length}) => {
+        if (length) {
+          this.avatarControl.setValue(null);
+        }
+      }),
+      startWith([]),
+    );
+  }
+
+  @tuiPure
+  private get requests$(): Observable<RejectedFile | File | null> {
+    return this.avatarControl.valueChanges.pipe(
+      switchMap(file =>
+        file ? this.serverRequest(file).pipe(startWith(file)) : of(null),
+      ),
+      share(),
+    );
+  }
+
+  private serverRequest(file: File): Observable<RejectedFile | File | null> {
+    const delay = Math.round(Math.random() * 5000 + 500);
+    const result =
+      delay % 2
+        ? null
+        : new RejectedFile(file, 'Server responded for odd number of time');
+
+    return timer(delay).pipe(mapTo(result));
+  }
+
+
+  public pinRegistrationCard(event: Event): void{
+    event.preventDefault();
+    event.stopPropagation();
+
+  }
 
 
 }

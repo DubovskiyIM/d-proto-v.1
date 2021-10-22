@@ -139,6 +139,8 @@ import {
 } from '@taiga-ui/addon-table';
 import {NgDompurifySanitizer} from '@tinkoff/ng-dompurify';
 import {PolymorpheusModule} from '@tinkoff/ng-polymorpheus';
+import {TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE} from '@taiga-ui/i18n';
+import {of} from "rxjs";
 
 @NgModule({
   exports: [
@@ -269,7 +271,10 @@ import {PolymorpheusModule} from '@tinkoff/ng-polymorpheus';
     TuiFilterByInputPipeModule,
   ],
   providers: [
-    // A workaround because StackBlitz does not support assets
+    {
+      provide: TUI_LANGUAGE,
+      useValue: of(TUI_RUSSIAN_LANGUAGE),
+    },
     {
       provide: APP_INITIALIZER,
       multi: true,

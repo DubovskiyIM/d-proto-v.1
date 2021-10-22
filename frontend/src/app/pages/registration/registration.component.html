@@ -1,21 +1,28 @@
 <div class="container registrationPage">
-  <div class="registrationPageWrap">
-    <mat-stepper [linear]="'false'" #stepper>
-      <mat-step [stepControl]="firstFormGroup">
-        <ng-container *ngTemplateOutlet="firstRegistrationStep"></ng-container>
-        <button tuiButton appearance="custom" class="nextStepButton" matStepperNext>Продолжить</button>
-      </mat-step>
-      <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-        <ng-container *ngTemplateOutlet="secondRegistrationStep"></ng-container>
-      </mat-step>
-      <mat-step>
-      </mat-step>
-    </mat-stepper>
-  </div>
+  <mat-stepper [linear]="isStepperLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup" label="Регистрация">
+      <ng-container *ngTemplateOutlet="firstRegistrationStep"></ng-container>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" label="Заполнение профиля">
+      <ng-container *ngTemplateOutlet="secondRegistrationStep"></ng-container>
+      <div class="d-flex justify-content-between secondStepRegistration">
+        <button tuiButton appearance="custom" class="secondFormNextStepButton" matStepperNext>Продолжить</button>
+        <button tuiButton appearance="secondary" class="skipStepButton" matStepperNext>Пропустить</button>
+      </div>
+    </mat-step>
+    <mat-step label="Подбор рекомендаций">
+      <p class="tui-text_body-xl labelForRecommendedStep">
+        Выберите любимые стили:
+      </p>
+      <ng-container *ngTemplateOutlet="thirdRegistrationStep">
+      </ng-container>
+      <button tuiButton appearance="custom" class="nextStepButton" matStepperNext>Завершить</button>
+    </mat-step>
+  </mat-stepper>
 </div>
 
 <ng-template #firstRegistrationStep>
-  <form [formGroup]="firstFormGroup" class="firstFormGroup">
+  <form [formGroup]="firstFormGroup" class="firstFormGroup" (submit)="saveFirstStep()">
     <tui-input class="b-form registrationInput" formControlName="email">
       Email адрес
     </tui-input>
@@ -25,19 +32,18 @@
     <tui-input-password class="b-form registrationInput" formControlName="password" type="password">
       Введите пароль
     </tui-input-password>
+    <button tuiButton appearance="custom" type="submit" class="nextStepButton">Продолжить</button>
   </form>
-
-</ng-template>
+  </ng-template>
 
 
 <ng-template #secondRegistrationStep>
-  <form [formGroup]="secondFormGroup" class="firstFormGroup">
+  <form [formGroup]="secondFormGroup" class="secondFormGroup">
     <tui-input class="b-form registrationInput" formControlName="name">
       Введите имя
     </tui-input>
 
-
-    <div tuiGroup class="d-flex justify-content-start" [collapsed]="true">
+    <div tuiGroup [collapsed]="true" class="registrationInput d-flex justify-content-start">
       <tui-radio-block
         formControlName="gender"
         item="man"
@@ -62,24 +68,73 @@
       </tui-radio-block>
     </div>
 
+    <div class="registrationInput d-flex justify-content-between">
+      <div class="col-6">
+        <tui-input-date formControlName="dateOfBirth" class="tui-space_right-2">Введите дату рождения</tui-input-date>
+      </div>
+      <div class="col-6">
+        <app-combo-box-select></app-combo-box-select>
+      </div>
+    </div>
 
+    <tui-input-file
+      class="registrationInput"
+      link="Загрузите свой аватар"
+      accept="image/*"
+      [formControl]="avatarControl"
+      [loadingFiles]="loading$ | async"
+      [rejectedFiles]="rejected$ | async"
+    ></tui-input-file>
 
     <tui-text-area
-      class="field-large"
+      class="field-large registrationInput"
       formControlName="about"
     >
       Добавьте описание
     </tui-text-area>
 
-
-
-<!--    <tui-input class="b-form registrationInput" formControlName="username">-->
-<!--      Введите username-->
-<!--    </tui-input>-->
-<!--    <tui-input-password class="b-form registrationInput" formControlName="password" type="password">-->
-<!--      Введите пароль-->
-<!--    </tui-input-password>-->
-    <button tuiButton appearance="custom" class="nextStepButton" (click)="secondStepSend()">Продолжить</button>
+    <div class="registrationInput">
+      <tui-input-phone-international
+        class="w-75"
+        formControlName="phone"
+        [countries]="countries"
+        [(countryIsoCode)]="countryIsoCode"
+        [tuiTextfieldLabelOutside]="true"
+      ></tui-input-phone-international>
+    </div>
   </form>
 
+</ng-template>
+
+<ng-template #thirdRegistrationStep>
+  <div class="d-flex justify-content-start">
+    <div class="recommendedIsland">
+      <a
+        tuiIsland
+        href="#"
+        (click)="pinRegistrationCard($event)"
+        size="l"
+        [hoverable]="true"
+        class="recommendedCardsWrap"
+      >
+        <img class="regStylesCardImg" alt="Taiga"
+             [src]="'https://threadcurve.com/wp-content/uploads/2021/05/semi-formal-style-men-may072021.jpg'"/>
+        <p class="tui-text_body-l-2 cardNameStyle">Классический стиль</p>
+      </a>
+    </div>
+    <div class="recommendedIsland">
+      <a
+        tuiIsland
+        href="#"
+        (click)="pinRegistrationCard($event)"
+        size="l"
+        [hoverable]="true"
+        class="recommendedCardsWrap"
+      >
+        <img class="regStylesCardImg" alt="Taiga"
+             [src]="'https://cdn.cliqueinc.com/posts/83049/casual-style-83049-1584637214442-promo.700x0c.jpg'"/>
+        <p class="tui-text_body-l-2 cardNameStyle">Casual стиль</p>
+      </a>
+    </div>
+  </div>
 </ng-template>

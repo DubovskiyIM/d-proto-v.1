@@ -20,9 +20,9 @@
         <span class="crop" (click)="cardModalComponent.triggerModal($event)">
           <mat-icon>crop_free</mat-icon>
         </span>
-        <span class="favorite" (click)=addFavoriteProduct($event) *ngIf="!isHomePage">
+        <span class="favorite" (click)=favoriteProduct($event) *ngIf="!isHomePage">
            <ng-container *ngIf="isFavoriteCard; else defaultFavoriteView">
-                    <mat-icon class="favoriteView">favorite</mat-icon>
+               <mat-icon class="favoriteView">favorite</mat-icon>
            </ng-container>
           <ng-template #defaultFavoriteView>
             <mat-icon>favorite_border</mat-icon>
@@ -70,11 +70,11 @@
            class="photoFullCardViewContainer">
         <div class="imageFullViewCardWrap">
           <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
-          <span class="crop" (click)="cardModalComponent.triggerModal($event)">
-            <mat-icon>crop_free</mat-icon>
-          </span>
-            <span class="favorite" (click)=addFavoriteProduct($event) *ngIf="!isHomePage">
-             <ng-container *ngIf="isFavoriteCard; else defaultFavoriteView">
+            <span class="crop" (click)="cardModalComponent.triggerModal($event)">
+              <mat-icon>crop_free</mat-icon>
+            </span>
+            <span class="favorite" (click)=favoriteProduct($event) *ngIf="!isHomePage">
+              <ng-container *ngIf="isFavoriteCard; else defaultFavoriteView">
                       <mat-icon class="favoriteView">favorite</mat-icon>
              </ng-container>
             <ng-template #defaultFavoriteView>
@@ -85,7 +85,6 @@
               <mat-icon>delete</mat-icon>
           </span>
           </div>
-
           <img src="https://i.picsum.photos/id/514/300/300.jpg?hmac=cWjIdfi9OoXTpWCC_x4On9HehQ1N0FSR6MxanIRMcfQ">
         </div>
 

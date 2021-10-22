@@ -7,6 +7,7 @@ import {filter, map} from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductService {
   private static readonly httpActions = {
     getByID: 'products/product',
@@ -30,6 +31,16 @@ export class ProductService {
 
   getProductByOwner(ownerID) {
     return this.http.get('api/products/' + ownerID)
+  }
+
+  public getProductByOwnerForCreateOrder(ownerID) {
+    return this.http.get('api/products/' + ownerID).pipe(map((value: any) => {
+      let result = [];
+      value.forEach((item) => {
+        result.push(new CreateOrderData(item.title, item._id, 'https://source.unsplash.com/c_GmwfHBDzk/200x200'))
+      })
+      return result;
+    }))
   }
 
   public deleteProductById(productID) {
@@ -74,5 +85,16 @@ export class ProductService {
       return  this.http.post('api/files/upload', formData, options)
 
     }
+  }
+}
+class CreateOrderData {
+  constructor(
+    readonly name: string,
+    readonly code: string,
+    readonly avatarUrl: string | null = null,
+  ) {}
+
+  toString(): string {
+    return `${this.name}`;
   }
 }
