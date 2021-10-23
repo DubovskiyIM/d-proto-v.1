@@ -20,6 +20,7 @@ export class CreateOrderDto {
   public status: OrderStatus;
   public feedback: Feedback;
 
+  // TODO Get orders by owner get orders by seller. Get my orders^ get ordera
   private trackNumber: string;
   private buyerId: string;
   private products: string[];
