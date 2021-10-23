@@ -1,20 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '../../_services/authentication.service';
-import { first } from 'rxjs/operators';
-import { Title } from '@angular/platform-browser';
-import { NavigationService } from '../../_services/navigation.service';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../../_services/authentication.service';
+import {first} from 'rxjs/operators';
+import {Title} from '@angular/platform-browser';
+import {NavigationService} from '../../_services/navigation.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup = new FormGroup({
@@ -93,6 +89,7 @@ export class LoginComponent implements OnInit {
   }
 
   public register(): void {
+    // debugger;
     if (this.registrationForm?.invalid) {
       return;
     }
