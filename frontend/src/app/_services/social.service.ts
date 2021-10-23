@@ -54,6 +54,11 @@ export class SocialService {
     return this.http.get(`${this.baseUrl}products/liked`)
   }
 
+  public getSubscribeShops() {
+    // return this.http.get('')
+  }
+
+
   public getProductFeedbacks() {
     return [
       {

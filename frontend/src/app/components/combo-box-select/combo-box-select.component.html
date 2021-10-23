@@ -1,0 +1,52 @@
+<form *tuiLet="items$ | async as items" class="b-form">
+
+  <ng-container *ngIf="!isMultiSelect else multiSelect">
+    <tui-combo-box
+      tuiTextfieldExampleText="Введите название"
+      [formControl]="control"
+      [valueContent]="content"
+      (searchChange)="onSearchChange($event)"
+    >
+      {{ label || 'Выберите город' }}
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="items"
+        [itemContent]="content"
+      ></tui-data-list-wrapper>
+    </tui-combo-box>
+  </ng-container>
+
+  <ng-template #multiSelect>
+    <tui-multi-select
+      *tuiLet="items$ | async as items"
+      #component
+      class="control"
+      [formControl]="control"
+      [tuiTextfieldLabelOutside]="true"
+      [expandable]="false"
+      [tuiDropdownMaxHeight]="'400'"
+      (searchChange)="onSearchChange($event)"
+    >
+      {{ label }}
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="items"
+        [itemContent]="content"
+      >
+      </tui-data-list-wrapper>
+    </tui-multi-select>
+  </ng-template>
+</form>
+
+<ng-template #content let-data>
+  <div class="template">
+    <tui-avatar
+      *ngIf="data.avatarUrl"
+      class="avatar"
+      size="xs"
+      [avatarUrl]="data.avatarUrl || null"
+      [text]="data.toString()"
+    ></tui-avatar>
+    <div class="name">{{data}}</div>
+  </div>
+</ng-template>

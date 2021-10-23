@@ -52,6 +52,13 @@ $cardFontsMain: 'Roboto';
   border-radius: 5px;
 }
 
+.photoFullCardViewContainer {
+  width: 200px;
+  max-height: 300px;
+  border-radius: 5px;
+}
+
+
 .profilePageView {
   width: 300px;
   max-height: 400px;
@@ -94,6 +101,17 @@ $cardFontsMain: 'Roboto';
   }
 }
 
+.imageFullViewCardWrap {
+
+  img {
+    cursor: pointer;
+    opacity: 1;
+    border-radius: $cardBorderRadius;
+    width: 100%;
+    max-height: 200px;
+  }
+}
+
 .delete {
   mat-icon {
     font-size: 32px;
@@ -107,3 +125,14 @@ $cardFontsMain: 'Roboto';
 .favoriteView {
   color: red;
 }
+
+.cardInfoFullView {
+  width: 70%;
+  margin-right: 8%;
+  margin-left: 2%;
+}
+.fullViewCardWrapper{
+  //border: 1px solid black;
+}
+
+

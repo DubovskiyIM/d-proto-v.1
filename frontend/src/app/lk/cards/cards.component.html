@@ -5,7 +5,13 @@
 <!--      &lt;!&ndash;      <app-card [card]="listCards[0]" [isHomePage]="isHomePage" (updateGrid)="updateGrid()"></app-card>&ndash;&gt;-->
 <!--    </div>-->
     <div ngxMasonryItem class="masonry-item" *ngFor="let item of listCards">
-      <app-card [card]="item" [isHomePage]="isHomePage"  [isProfilePage]="isProfilePage" (updateGrid)="updateGrid()"></app-card>
+      <app-card
+        [card]="item"
+        [isHomePage]="isHomePage"
+        [isProfilePage]="isProfilePage"
+        (updateGrid)="updateGrid()"
+        [isCardView]="isCardView"
+      ></app-card>
     </div>
   </ngx-masonry>
 </div>

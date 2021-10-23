@@ -4,6 +4,15 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProductService} from "../../_services/product.service";
 import {NavigationService} from "../../_services/navigation.service";
+import {TuiInputComponent} from "@taiga-ui/kit";
+import {MY_FORM_MODEL} from './schemas/ng-schema'
+
+import {
+  DynamicCheckboxModel,
+  DynamicFormModel, DynamicFormService,
+  DynamicInputModel,
+  DynamicRadioGroupModel
+} from "@ng-dynamic-forms/core";
 
 @Component({
   selector: 'app-add-product',
@@ -14,19 +23,31 @@ export class AddProductComponent implements OnInit {
   createProductForm: FormGroup;
   private fileList = [];
   private uploadFilesList = []
+  public schema = schemaObj;
+  formModel: DynamicFormModel = MY_FORM_MODEL;
+  formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private productService: ProductService, private navigateService: NavigationService) {
-    this.createProductForm = formBuilder.group({
-      "productTitle": ["", [Validators.required]],
-      "productDescription": ["", [Validators.required]],
-      "productPrice": ["", [Validators.required]],
-      "productTags": ["", [Validators.required]],
-    });
+  constructor(private formBuilder: FormBuilder,
+              private formService: DynamicFormService,
+              private productService: ProductService, private navigateService: NavigationService,) {
+    /*    this.createProductForm = formBuilder.group({
+          "productTitle": ["", [Validators.required]],
+          "productDescription": ["", [Validators.required]],
+          "productPrice": ["", [Validators.required]],
+          "productTags": ["", [Validators.required]],
+        });*/
+    // this.formGroup = this.formService.createFormGroup(this.formModel);
   }
 
   ngOnInit(): void {
+    const formModelJson = this.productService.getCreateProductSchema();
+    this.formModel = this.formService.fromJSON(formModelJson);
+    this.formGroup = this.formService.createFormGroup(this.formModel);
+
+
   }
 
+  model = {}
   selectable = true;
   removable = true;
   addOnBlur = true;
@@ -56,7 +77,7 @@ export class AddProductComponent implements OnInit {
     });
   }
 
-  submit() {
+  submit(event?) {
     if (!this.createProductForm.valid) {
       return;
     }
@@ -81,3 +102,76 @@ export class AddProductComponent implements OnInit {
   }
 
 }
+
+const schemaObj = {
+  "type": "object",
+  "title": "Comment",
+  "properties": {
+    "name": {
+      "title": "Название",
+      "type": "string"
+    },
+    "customTag": {
+      "title": "customTag",
+      "type": "customTag"
+    },
+    "size": {
+      "title": "Размер",
+      "type": "string",
+      "enum": [
+        "46 (S)",
+        "48 (M)",
+        "50 (L)",
+        "52 (L/XL)",
+        "54 (XL)",
+        "56 (XXL)",
+      ]
+    },
+    "condition": {
+      "title": "Состояние",
+      "type": "string",
+      "enum": [
+        "Новое",
+        "Б/y",
+      ]
+    },
+    "who_did": {
+      "title": "Кто это сделал?",
+      "type": "string",
+      "enum": [
+        "Я сделал",
+        "Член моей компании",
+        "Другая компания",
+      ]
+    },
+    "tags": {
+      "title": "Теги",
+      "type": "string"
+    },
+    "materials": {
+      "title": "Материалы",
+      "type": "string"
+    },
+    "price": {
+      "title": "Цена",
+      "type": "number"
+    },
+    "radiobuttons": {
+      "type": "string",
+      "enum": [
+        "Select me!",
+        "No me!"
+      ]
+    },
+    "count": {
+      "title": "Колличество",
+      "type": "number"
+    },
+  },
+  "required": [
+    "name",
+    "email",
+    "comment"
+  ]
+}
+

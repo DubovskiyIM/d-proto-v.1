@@ -31,6 +31,7 @@ export class RightProfileNavbarComponent implements OnInit, OnChanges{
 
   public follow(): void {
     this.userId = this.profile._id;
+    // debugger;
     if (this.isSubscribedUser) {
       this.unfollow()
       return;

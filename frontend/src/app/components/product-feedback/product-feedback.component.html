@@ -3,7 +3,7 @@
   <div class="col-6">
     <div class="row d-flex align-items-start">
       <div class="col-8 feedbackWrap">
-        <div class="imageFeedbackContainer">
+        <div class="imageFeedbackContainer"  (click)="feedbackModalComponent.triggerModal()">
           <img [src]="feedbacks[0]?.photo">
         </div>
         <div class="userInfoLine">
@@ -84,3 +84,5 @@
   </div>
   <!--    </ng-container>-->
 </div>
+
+<app-feedback-modal-view #feedbackModalComponent ></app-feedback-modal-view>

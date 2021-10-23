@@ -9,7 +9,10 @@ import {CardModalComponent} from "./card-modal/card-modal.component";
 import {Subject} from "rxjs";
 import {SocialService} from "../../_services/social.service";
 import {getImageUrl} from '../../_helpers/file-helper'
-
+import {ProductService} from "../../_services/product.service";
+import {TuiMobileDialogService} from "@taiga-ui/addon-mobile";
+import {PromptService} from "../dialog-prompt/dialog-prompt.component";
+import {AuthenticationService} from "../../_services/authentication.service";
 
 @Component({
   selector: 'app-card',
@@ -40,10 +43,12 @@ export class CardComponent implements OnInit {
   @Input() card;
   @Input() isHomePage = false;
   @Input() isProfilePage = true
+  @Input() isCardView = false;
+
+  @Output() updateGrid = new EventEmitter();
+
   isFavoriteCard = false;
   showSocialButtons = false;
-
-
   currentImageCardState = 'initial';
 
   openModalSubj: Subject<void> = new Subject<void>();
@@ -52,10 +57,18 @@ export class CardComponent implements OnInit {
 
   clicked = false;
 
-  constructor(private navigateService: NavigationService, private socialService: SocialService) {
+  constructor(private navigateService: NavigationService,
+              private socialService: SocialService,
+              private authenticationService: AuthenticationService,
+              private productService: ProductService,
+              private dialogsService: TuiMobileDialogService,
+              private promptService: PromptService
+              ) {
   }
-
-  @Output() updateGrid = new EventEmitter();
+  ngOnInit(): void {
+    // debugger;
+    this.isFavoriteCard  = this.card.likes.includes(this.authenticationService.getCurrentUserPropertyValue('_id'));
+  }
 
 
   public goToProfilePage() {
@@ -66,23 +79,38 @@ export class CardComponent implements OnInit {
     this.clicked = true;
   }
 
-  addFavoriteProduct(event) {
+  favoriteProduct(event) {
     event.stopPropagation();
-    this.isFavoriteCard = !this.isFavoriteCard;
+    // this.isFavoriteCard = !this.isFavoriteCard;
     if (this.isFavoriteCard) {
-      this.socialService.likeProduct(this.card._id).subscribe((res) => {
-        // console.log(res);
+      this.socialService.unlikeProduct(this.card._id).subscribe((res) => {
+        this.isFavoriteCard = false;
       })
       return;
     }
 
-    this.socialService.unlikeProduct(this.card._id).subscribe((res) => {
-
+    this.socialService.likeProduct(this.card._id).subscribe((res) => {
+      this.isFavoriteCard = true;
+      // console.log(res);
     })
+
   }
 
-  deleteProduct() {
+    deleteProduct(event) {
+    event.stopPropagation();
+    this.promptService
+        .open(
+          'Text',
+        )
+        .subscribe(index => {
+          // Index of clicked button
+          console.log(index);
+        });
 
+    // debugger;
+    // this.productService.deleteProductById(this.card._id).subscribe((res) => {
+    //   console.log(res);
+    // })
   }
 
   clickOpenModalView() {
@@ -107,9 +135,7 @@ export class CardComponent implements OnInit {
     this.showSocialButtons = false;
   }
 
-  ngOnInit(): void {
 
-  }
 
   getImageHref(url: string): string {
 

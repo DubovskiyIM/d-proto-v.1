@@ -1,0 +1,15 @@
+.textColor-0 {
+  color: var(--tui-base-08)
+}
+
+.textColor-1 {
+  color: var(--tui-text-01);
+}
+
+.textColor-2 {
+  color: var(--tui-text-02);
+}
+
+.textColor-3 {
+  color: var(--tui-text-03);
+}

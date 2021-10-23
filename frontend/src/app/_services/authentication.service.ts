@@ -35,6 +35,10 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  public getCurrentUserPropertyValue(propName: string): any | null{
+    return this.currentUserValue[propName] || null;
+  }
+
   public login(controls) {
     if (!controls) {
       return;
@@ -82,9 +86,9 @@ export class AuthenticationService {
       username: controls?.username.value,
       email: controls?.email.value,
       password: controls?.password.value,
-      name: controls?.name.value,
-      phone: controls.phone.value,
     };
+    // name: controls?.name.value,
+    //   phone: controls.phone.value,
 
     return this.http.post<any>(
       `${this.baseUrl}${AuthenticationService.httpActions.register}`,
