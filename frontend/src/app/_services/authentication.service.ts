@@ -86,9 +86,9 @@ export class AuthenticationService {
       username: controls?.username.value,
       email: controls?.email.value,
       password: controls?.password.value,
-      name: controls?.name.value,
-      phone: controls.phone.value,
     };
+    // name: controls?.name.value,
+    //   phone: controls.phone.value,
 
     return this.http.post<any>(
       `${this.baseUrl}${AuthenticationService.httpActions.register}`,

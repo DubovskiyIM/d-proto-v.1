@@ -30,17 +30,23 @@ export class AddProductComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private formService: DynamicFormService,
               private productService: ProductService, private navigateService: NavigationService,) {
-    this.createProductForm = formBuilder.group({
-      "productTitle": ["", [Validators.required]],
-      "productDescription": ["", [Validators.required]],
-      "productPrice": ["", [Validators.required]],
-      "productTags": ["", [Validators.required]],
-    });
-    this.formGroup = this.formService.createFormGroup(this.formModel);
+    /*    this.createProductForm = formBuilder.group({
+          "productTitle": ["", [Validators.required]],
+          "productDescription": ["", [Validators.required]],
+          "productPrice": ["", [Validators.required]],
+          "productTags": ["", [Validators.required]],
+        });*/
+    // this.formGroup = this.formService.createFormGroup(this.formModel);
   }
 
   ngOnInit(): void {
+    const formModelJson = this.productService.getCreateProductSchema();
+    this.formModel = this.formService.fromJSON(formModelJson);
+    this.formGroup = this.formService.createFormGroup(this.formModel);
+
+
   }
+
   model = {}
   selectable = true;
   removable = true;
@@ -119,7 +125,7 @@ const schemaObj = {
         "52 (L/XL)",
         "54 (XL)",
         "56 (XXL)",
-    ]
+      ]
     },
     "condition": {
       "title": "Состояние",

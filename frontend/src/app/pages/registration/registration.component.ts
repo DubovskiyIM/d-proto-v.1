@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CdkStepper} from "@angular/cdk/stepper";
 import {tuiPure} from "@taiga-ui/cdk";
@@ -6,9 +14,12 @@ import {Observable, of, timer} from "rxjs";
 import {map, mapTo, share, startWith, switchMap, tap} from 'rxjs/operators';
 import {TuiFileLike} from "@taiga-ui/kit";
 import {TuiCountryIsoCode} from '@taiga-ui/i18n';
+import {TuiNotificationsService} from "@taiga-ui/core";
+import {AuthenticationService} from "../../_services/authentication.service";
 
 class RejectedFile {
-  constructor(readonly file: TuiFileLike, readonly reason: string) {}
+  constructor(readonly file: TuiFileLike, readonly reason: string) {
+  }
 }
 
 function convertRejected({file, reason}: RejectedFile): TuiFileLike {
@@ -26,7 +37,7 @@ function convertRejected({file, reason}: RejectedFile): TuiFileLike {
   styleUrls: ['./registration.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: CdkStepper }]
+  providers: [{provide: CdkStepper}]
 })
 export class RegistrationComponent implements OnInit {
   @ViewChild("stepper", {static: false})
@@ -46,14 +57,17 @@ export class RegistrationComponent implements OnInit {
   countryIsoCode = TuiCountryIsoCode.RU;
 
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    @Inject(TuiNotificationsService) private readonly notificationsService: TuiNotificationsService,) {
   }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
-      password: ['', Validators.required, Validators.minLength(8)]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
 
     this.secondFormGroup = this._formBuilder.group({
@@ -72,17 +86,20 @@ export class RegistrationComponent implements OnInit {
   public saveFirstStep() {
     // debugger;
 
-    // debugger;
-    // if (this.firstFormGroup.invalid) {
-    //   return;
-    // }
+    debugger;
+    if (this.firstFormGroup.invalid) {
+      return;
+    }
+    this.authenticationService.registration(this.firstFormGroup.controls).subscribe((res) => {
+      console.log(res);
+    });
+
     this.stepper.next();
     this.isStepperLinear = false;
     // this.firstFormGroup.disable();
 
     // this.stepper.next();
   }
-
 
 
   @tuiPure
@@ -127,7 +144,7 @@ export class RegistrationComponent implements OnInit {
   }
 
 
-  public pinRegistrationCard(event: Event): void{
+  public pinRegistrationCard(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
 
