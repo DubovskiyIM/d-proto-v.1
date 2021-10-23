@@ -79,6 +79,7 @@ export class ProductsService {
     }
   }
 
+  // TODO Why it doesnt work
   public async unlikeProduct(
     userId: string,
     productId: string,
