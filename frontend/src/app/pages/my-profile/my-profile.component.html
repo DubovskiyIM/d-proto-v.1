@@ -1,6 +1,21 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-9">
+      <a
+        tuiButton
+        class=""
+        [routerLink]="['../create']"
+        appearance="flat"
+        [icon]="icon"
+        (click)="showDialog(template)"
+      >
+        Добавить товар
+      </a>
+      <ng-template #icon>
+        <mat-icon class="createOrdersAddIcon tui-space_left-1">add</mat-icon>
+      </ng-template>
+
+
       <app-cards [listCards]="listCards" [isHomePage]="true"></app-cards>
 <!--      <mat-tab-group mat-align-tabs="start" class="tabs">-->
 <!--        <mat-tab label="Магазин">-->
@@ -17,3 +32,6 @@
     </div>
   </div>
 </div>
+
+<ng-template #template let-observer>
+</ng-template>

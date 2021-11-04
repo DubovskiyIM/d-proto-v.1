@@ -1,20 +1,13 @@
 <div class="container-fluid formNewProduct">
   <div class="row">
-    <div class="col-6">
-<!--      <swi-->
-    </div>
-    <div class="col-6">
+    <div class="col-12">
       <div class="addProductWrap">
         <form [formGroup]="formGroup">
           <dynamic-material-form [group]="formGroup" [model]="formModel"></dynamic-material-form>
         </form>
-        <tui-editor
-          class="editor"
-          exampleText="Describe a problem with templates"
-          [(ngModel)]="model"
-        >
-          Describe a problem
-        </tui-editor>
+        <ng-template modelType="INPUT" modelId="name">
+          sfsdfsdfsdfsdf
+        </ng-template>
       </div>
     </div>
 

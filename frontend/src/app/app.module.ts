@@ -1,7 +1,7 @@
 import {NgDompurifySanitizer} from "@tinkoff/ng-dompurify";
 import {TuiRootModule, TuiDialogModule, TuiNotificationsModule, TUI_SANITIZER, TuiGroupModule} from "@taiga-ui/core";
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, Type} from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -64,6 +64,13 @@ import { FeedbackModalViewComponent } from './components/feedback-modal-view/fee
 import {DynamicFormsMaterialUIModule} from "@ng-dynamic-forms/ui-material";
 import { ComboBoxSelectComponent } from './components/combo-box-select/combo-box-select.component';
 import { HistoryOrdersCardsComponent } from './components/history-orders-cards/history-orders-cards.component';
+import { CustomTagControlComponent } from './components/_scheme-controls/dynamic-custom-form-control/custom-tag-control/custom-tag-control.component';
+import { DynamicCustomFormControlComponent } from './components/_scheme-controls/dynamic-custom-form-control/dynamic-custom-form-control.component';
+import {DYNAMIC_FORM_CONTROL_MAP_FN, DynamicFormControl, DynamicFormControlModel} from "@ng-dynamic-forms/core";
+import { DynamicCustomEditorComponent } from './components/_scheme-controls/dynamic-custom-editor/dynamic-custom-editor.component';
+import { CustomEditorComponent } from './components/_scheme-controls/dynamic-custom-editor/custom-editor/custom-editor.component';
+import { DynamicCustomInputComponent } from './components/_scheme-controls/dynamic-custom-input/dynamic-custom-input.component';
+import { CustomInputControlComponent } from './components/_scheme-controls/dynamic-custom-input/custom-input-control/custom-input-control.component';
 
 
 // import { NotifyMessageComponent } from "./components/notify/notify.component";
@@ -120,6 +127,12 @@ const config: SocketIoConfig = {url: 'localhost:3001', options: {}};
     FeedbackModalViewComponent,
     ComboBoxSelectComponent,
     HistoryOrdersCardsComponent,
+    CustomTagControlComponent,
+    DynamicCustomFormControlComponent,
+    DynamicCustomEditorComponent,
+    CustomEditorComponent,
+    DynamicCustomInputComponent,
+    CustomInputControlComponent,
 
   ],
   imports: [
@@ -147,9 +160,25 @@ const config: SocketIoConfig = {url: 'localhost:3001', options: {}};
       deps: [PlatformLocation],
     },
     CookieService,
-    {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}
+    {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer},
+    {
+      provide: DYNAMIC_FORM_CONTROL_MAP_FN,
+      useValue: (model: DynamicFormControlModel): Type<DynamicFormControl> | null  => {
+
+        switch (model.type === 'INPUT' ? model.name : model.type ) {
+          case 'INPUT':
+            return DynamicCustomInputComponent
+          case 'TAGS':
+            return DynamicCustomFormControlComponent;
+          case 'EDITOR':
+            return DynamicCustomEditorComponent;
+
+        }
+      }
+    }
   ],
   bootstrap: [AppComponent],
+  entryComponents: [DynamicCustomFormControlComponent]
 })
 export class AppModule {
 }

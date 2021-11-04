@@ -3,6 +3,8 @@ import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRespo
 import { APP_BASE_HREF } from '@angular/common';
 import {pipe} from "rxjs";
 import {filter, map} from "rxjs/operators";
+import {DynamicFormModel, DynamicInputModel} from "@ng-dynamic-forms/core";
+import {DynamicMaterialChipsComponent} from "@ng-dynamic-forms/ui-material";
 
 @Injectable({
   providedIn: 'root'
@@ -107,10 +109,34 @@ class CreateOrderData {
 export const schemaCreateProduct = [
   {
     "type": "INPUT",
-    "id": "sampleInput",
-    "label": "Sample Input",
-    "maxLength": 42,
-    "placeholder": "Sample input"
+    "id": 'title',
+    "inputType": "text",
+    "label": 'Введите название',
+    "name": 'INPUT',
+  },
+  {
+    "type": "INPUT",
+    "id": 'price',
+    "inputType": "number",
+    "label": 'Цена',
+    "name": 'INPUT',
+  },
+  {
+    "type": "INPUT",
+    "label": 'Введите подходящие теги',
+    "id": 'tags',
+    "name": 'TAGS',
+    "modelType": 'TAG',
+  },
+  {
+    "type": "INPUT",
+    "id": 'type',
+    "name": 'TAGS',
+  },
+  {
+    "type": "INPUT",
+    "id": 'description',
+    "name": 'EDITOR',
   },
   {
     "type": "RADIO_GROUP",
@@ -138,3 +164,43 @@ export const schemaCreateProduct = [
     "label": "I do agree"
   }
 ]
+
+const exmpl2: DynamicFormModel = [
+
+  new DynamicInputModel({
+    id: "sampleInput",
+    multiple: true
+  }),
+  new DynamicInputModel({
+    id: "sampleInput2",
+    name: 'customControl',
+    multiple: true
+  }),
+
+  // new DynamicRadioGroupModel<string>({
+  //
+  //   id: "sampleRadioGroup",
+  //   label: "Sample Radio Group",
+  //   options: [
+  //     {
+  //       label: "Option 1",
+  //       value: "option-1",
+  //     },
+  //     {
+  //       label: "Option 2",
+  //       value: "option-2"
+  //     },
+  //     {
+  //       label: "Option 3",
+  //       value: "option-3"
+  //     }
+  //   ],
+  //   value: "option-3"
+  // }),
+  //
+  // new DynamicCheckboxModel({
+  //
+  //   id: "sampleCheckbox",
+  //   label: "I do agree"
+  // })
+];

@@ -1,0 +1,10 @@
+<app-custom-tag-control
+  [name]="model.id"
+  [ngClass]="[getClass('element', 'control'), getClass('grid', 'control')]"
+  (blur)="onBlur($event)"
+  (change)="onChange($event)"
+  (focus)="onFocus($event)"
+  [label]="model?.label"
+  [group]="group"
+>
+</app-custom-tag-control>

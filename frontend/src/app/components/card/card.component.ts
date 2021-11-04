@@ -43,7 +43,7 @@ export class CardComponent implements OnInit {
   @Input() card;
   @Input() isHomePage = false;
   @Input() isProfilePage = true
-  @Input() isCardView = false;
+  @Input() isCardView = true;
 
   @Output() updateGrid = new EventEmitter();
 

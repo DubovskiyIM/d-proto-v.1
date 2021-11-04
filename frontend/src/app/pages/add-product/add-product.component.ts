@@ -7,6 +7,7 @@ import {NavigationService} from "../../_services/navigation.service";
 import {TuiInputComponent} from "@taiga-ui/kit";
 import {MY_FORM_MODEL} from './schemas/ng-schema'
 
+
 import {
   DynamicCheckboxModel,
   DynamicFormModel, DynamicFormService,
@@ -42,9 +43,10 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
     const formModelJson = this.productService.getCreateProductSchema();
     this.formModel = this.formService.fromJSON(formModelJson);
+    // console.log(JSON.stringify(formModelJson));
+    // this.formModel = formModelJson;
     this.formGroup = this.formService.createFormGroup(this.formModel);
-
-
+    console.log(this.formGroup);
   }
 
   model = {}
