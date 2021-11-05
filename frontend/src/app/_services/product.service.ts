@@ -3,7 +3,7 @@ import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRespo
 import { APP_BASE_HREF } from '@angular/common';
 import {pipe} from "rxjs";
 import {filter, map} from "rxjs/operators";
-import {DynamicFormModel, DynamicInputModel} from "@ng-dynamic-forms/core";
+import {DynamicFormModel, DynamicInputModel, DynamicSelectModel} from "@ng-dynamic-forms/core";
 import {DynamicMaterialChipsComponent} from "@ng-dynamic-forms/ui-material";
 
 @Injectable({
@@ -109,29 +109,24 @@ class CreateOrderData {
 export const schemaCreateProduct = [
   {
     "type": "INPUT",
-    "id": 'title',
+    "id": 'productTitle',
     "inputType": "text",
     "label": 'Введите название',
     "name": 'INPUT',
   },
   {
     "type": "INPUT",
-    "id": 'price',
+    "id": 'productPrice',
     "inputType": "number",
     "label": 'Цена',
     "name": 'INPUT',
   },
   {
     "type": "INPUT",
-    "label": 'Введите подходящие теги',
-    "id": 'tags',
+    "label": 'Добавьте подходящие теги',
+    "id": 'productTag',
     "name": 'TAGS',
     "modelType": 'TAG',
-  },
-  {
-    "type": "INPUT",
-    "id": 'type',
-    "name": 'TAGS',
   },
   {
     "type": "INPUT",
@@ -139,8 +134,40 @@ export const schemaCreateProduct = [
     "name": 'EDITOR',
   },
   {
+    "type": "SELECT",
+    "id": "size",
+    "label": "Sample Radio Group",
+    "options": [
+      {
+        "label": "46 (S)",
+        "value": "46 (S)",
+      },
+      {
+        "label": "48 (M)",
+        "value": "48 (M)"
+      },
+      {
+        "label": "50 (L)",
+        "value": "50 (L)"
+      },
+      {
+        "label": "52 (L/XL)",
+        "value": '52 (L/XL)'
+      },
+      {
+        "label": "54 (XL)",
+        "value": '54 (XL)'
+      },
+      {
+        "label": "56 (XXL)",
+        "value": "56 (XXL)"
+      }
+    ],
+    "value": "46 (S)"
+  },
+  {
     "type": "RADIO_GROUP",
-    "id": "sampleRadioGroup",
+    "id": "who_did",
     "label": "Sample Radio Group",
     "options": [
       {
@@ -170,6 +197,25 @@ const exmpl2: DynamicFormModel = [
   new DynamicInputModel({
     id: "sampleInput",
     multiple: true
+  }),
+  new DynamicSelectModel({
+    id: 'sdsf',
+    name: 'control',
+    options: [
+      {
+        label: "Option 1",
+        value: "option-1",
+      },
+      {
+        label: "Option 2",
+        value: "option-2"
+      },
+      {
+        label: "Option 3",
+        value: "option-3"
+      }
+    ],
+    value: 'option-3'
   }),
   new DynamicInputModel({
     id: "sampleInput2",

@@ -1,25 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {ProductService} from "../../_services/product.service";
 import {NavigationService} from "../../_services/navigation.service";
-import {TuiInputComponent} from "@taiga-ui/kit";
 import {MY_FORM_MODEL} from './schemas/ng-schema'
-
-
-import {
-  DynamicCheckboxModel,
-  DynamicFormModel, DynamicFormService,
-  DynamicInputModel,
-  DynamicRadioGroupModel
-} from "@ng-dynamic-forms/core";
+import {DynamicFormModel, DynamicFormService} from "@ng-dynamic-forms/core";
 
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.scss']
+  styleUrls: ['./add-product.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
+
 export class AddProductComponent implements OnInit {
   createProductForm: FormGroup;
   private fileList = [];
@@ -27,6 +21,7 @@ export class AddProductComponent implements OnInit {
   public schema = schemaObj;
   formModel: DynamicFormModel = MY_FORM_MODEL;
   formGroup: FormGroup;
+  form_layout = MY_FORM_LAYOUT;
 
   constructor(private formBuilder: FormBuilder,
               private formService: DynamicFormService,
@@ -43,6 +38,7 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
     const formModelJson = this.productService.getCreateProductSchema();
     this.formModel = this.formService.fromJSON(formModelJson);
+    console.log(this.formModel);
     // console.log(JSON.stringify(formModelJson));
     // this.formModel = formModelJson;
     this.formGroup = this.formService.createFormGroup(this.formModel);
@@ -104,7 +100,38 @@ export class AddProductComponent implements OnInit {
   }
 
 }
+export const MY_FORM_LAYOUT = {
 
+  "productTitle": {
+    element: {
+      label: ""
+    },
+    grid: {
+      control: "w-50",
+      label: ""
+    }
+  },
+  "productPrice": {
+    grid: {
+      control: "width-10",
+    }
+  },
+  "productTag": {
+    grid: {
+      control: "w-50",
+    }
+  },
+  "myOtherFormControlModelId": {
+
+    element: {
+      label: "control-label"
+    },
+    grid: {
+      control: "col-sm-9",
+      label: "col-sm-3"
+    }
+  }
+};
 const schemaObj = {
   "type": "object",
   "title": "Comment",

@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  Renderer2, ViewChild
+} from '@angular/core';
 import {
   DynamicFormControlComponent,
   DynamicFormControlCustomEvent,
@@ -13,7 +22,7 @@ import {FormGroup} from "@angular/forms";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class DynamicCustomInputComponent extends DynamicFormControlComponent  {
+export class DynamicCustomInputComponent extends DynamicFormControlComponent implements OnInit {
   @Input() group: FormGroup;
   @Input() layout;
   @Input() model: any;
@@ -23,7 +32,14 @@ export class DynamicCustomInputComponent extends DynamicFormControlComponent  {
   @Output() customEvent: EventEmitter<DynamicFormControlCustomEvent> = new EventEmitter();
   @Output() focus: EventEmitter<any> = new EventEmitter();
 
-  constructor(protected layoutService: DynamicFormLayoutService, protected validationService: DynamicFormValidationService) {
+  constructor(protected layoutService: DynamicFormLayoutService, protected validationService: DynamicFormValidationService,
+              private elRef: ElementRef,
+              private renderer: Renderer2
+              ) {
     super(layoutService, validationService);
+  }
+
+  ngOnInit() {
+    this.renderer.addClass(this.elRef.nativeElement.parentElement?.parentElement, this.getClass('grid', 'control'));
   }
 }

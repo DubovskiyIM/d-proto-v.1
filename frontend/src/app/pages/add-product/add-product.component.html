@@ -1,9 +1,7 @@
 <div class="container-fluid formNewProduct">
-  <div class="row">
-    <div class="col-12">
-      <div class="addProductWrap">
+  <div class="addProductWrap">
         <form [formGroup]="formGroup">
-          <dynamic-material-form [group]="formGroup" [model]="formModel"></dynamic-material-form>
+          <dynamic-material-form [group]="formGroup" [model]="formModel" [layout]="form_layout" class="row"></dynamic-material-form>
         </form>
         <ng-template modelType="INPUT" modelId="name">
           sfsdfsdfsdfsdf
@@ -63,7 +61,7 @@
     <!--        <button class="btn btn-outline-dark" [disabled]="!createProductForm.valid">Добавить</button>-->
     <!--      </div>-->
     <!--    </form>-->
-  </div>
+<!--  </div>-->
 
   <!--      <div class="col-12">-->
   <!--                <mat-form-field appearance="fill" class="descriptionArea">-->
@@ -80,4 +78,4 @@
   <!--      </div>-->
   <!--    </div>-->
   <!--  </div>-->
-</div>
+<!--</div>-->

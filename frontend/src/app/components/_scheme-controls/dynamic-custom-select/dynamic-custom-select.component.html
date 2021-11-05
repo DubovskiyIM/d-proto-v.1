@@ -1,0 +1,9 @@
+<app-custom-select-control
+  [name]="model.id"
+  [ngClass]="[getClass('element', 'control'), getClass('grid', 'control')]"
+  (blur)="onBlur($event)"
+  (change)="onChange($event)"
+  (focus)="onFocus($event)"
+  [group]="group"
+  [model]="model"
+></app-custom-select-control>

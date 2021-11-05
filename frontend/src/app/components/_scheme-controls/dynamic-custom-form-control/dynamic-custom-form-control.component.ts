@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output, Renderer2,
+  ViewChild
+} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {
   DynamicFormControlComponent,
@@ -16,7 +25,7 @@ import {TuiInputTagComponent} from "@taiga-ui/kit";
   styleUrls: ['./dynamic-custom-form-control.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicCustomFormControlComponent extends DynamicFormControlComponent  {
+export class DynamicCustomFormControlComponent extends DynamicFormControlComponent implements OnInit {
   @Input() group: FormGroup;
   @Input() layout;
   @Input() model: any;
@@ -26,7 +35,14 @@ export class DynamicCustomFormControlComponent extends DynamicFormControlCompone
   @Output() customEvent: EventEmitter<DynamicFormControlCustomEvent> = new EventEmitter();
   @Output() focus: EventEmitter<any> = new EventEmitter();
 
-  constructor(protected layoutService: DynamicFormLayoutService, protected validationService: DynamicFormValidationService) {
+  constructor(protected layoutService: DynamicFormLayoutService,
+              protected validationService: DynamicFormValidationService,
+              private elRef: ElementRef,
+              private renderer: Renderer2) {
     super(layoutService, validationService);
+  }
+
+  ngOnInit() {
+    this.renderer.addClass(this.elRef.nativeElement.parentElement?.parentElement, this.getClass('grid', 'control'));
   }
 }

@@ -1,0 +1,30 @@
+<ng-container [formGroup]="group">
+  <div *ngIf="inputType === 'SELECT'">
+    <tui-select
+      [formControlName]="name"
+      [tuiTextfieldLabelOutside]="true"
+    >
+<!--      {{model?.label}}-->
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="items"
+      ></tui-data-list-wrapper>
+    </tui-select>
+  </div>
+  <div *ngIf="inputType === 'MULTI'">
+<!--    <tui-multi-select-->
+<!--      class="b-form"-->
+<!--      [formControl]="control"-->
+<!--      [formControlName]="name"-->
+<!--      [tuiTextfieldLabelOutside]="true"-->
+<!--      [(search)]="search"-->
+<!--    >-->
+<!--      {{model?.label}}-->
+<!--      <tui-data-list-wrapper-->
+<!--        *tuiDataList-->
+<!--        tuiMultiSelectGroup-->
+<!--        [items]="filter(search)"-->
+<!--      ></tui-data-list-wrapper>-->
+<!--    </tui-multi-select>-->
+  </div>
+</ng-container>
