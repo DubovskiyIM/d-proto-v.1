@@ -1,1 +1,77 @@
-<p>my-orders works!</p>
+<div class="container-fluid myOrdersPage">
+  <div class="row">
+    <div class="col-12">
+      <button
+        tuiButton
+        type="button"
+        class=""
+        appearance="flat"
+        [icon]="icon"
+        (click)="showDialog(template)"
+      >
+        Добавить отправление
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="tui-text_h5 tui-space_top-2">
+        История:
+      </div>
+      <div class="historyOrdersWrap">
+        <app-history-orders-cards [historyOrdersList]="listCards"></app-history-orders-cards>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #icon>
+  <mat-icon class="createOrdersAddIcon tui-space_left-1">add</mat-icon>
+</ng-template>
+
+
+
+<ng-template #template let-observer>
+  <div class="createOrderModal">
+    <span class="tui-text_h5">
+      Добавление отслеживания
+    </span>
+    <form class="b-form tui-space_top-5" [formGroup]="createOrderForm" (submit)="createOrder($event)">
+      <div class="createOrderModalItem">
+        <app-combo-box-select
+          [control]="createOrderForm.controls.selectUserFromOrder"
+          [inputDatabaseMockData]="databaseMockData"
+          [label]="labelForCombobox"
+        ></app-combo-box-select>
+      </div>
+
+      <tui-input
+        tuiTextfieldExampleText="0123456789123"
+        formControlName="trackNumber"
+        tuiHintContent="Трек-номер внутреннего почтового отправления обычно состоит из 13 символов (внутрироссийский идентификатор состоит из 14 цифр)"
+        [tuiTextfieldCleaner]="true"
+        class="createOrderModalItem"
+      >
+        Трек-номер<span class="tui-required"></span>
+      </tui-input>
+
+      <div class="createOrderModalItem">
+        <app-combo-box-select
+          [label]="'Добавьте товар'"
+          [control]="createOrderForm.controls.selectedProducts"
+          [isMultiSelect]="true"
+          [inputDatabaseMockData]="myEnabledProductList"
+        ></app-combo-box-select>
+      </div>
+
+      <div class="createOrdersButtonFooter d-flex justify-content-between">
+        <button tuiButton type="submit" size="m">
+          Добавить
+        </button>
+        <button tuiButton type="button" size="m" (click)="observer.complete()" appearance="secondary">
+          Закрыть
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+

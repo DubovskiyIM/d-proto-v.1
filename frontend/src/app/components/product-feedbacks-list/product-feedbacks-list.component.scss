@@ -1,0 +1,58 @@
+.feedbackCardHeaderUserName{
+  margin-left: 10px;
+}
+.feedbackDate{
+  margin-left: 5px;
+  color: #6c757d;
+}
+
+.feedbackContent {
+  margin-top: 10px;
+}
+
+.purchasedItem{
+  margin-top: 10px;
+  .purchasedItemLabel{
+    color: #6c757d;
+  }
+}
+
+.minImagePurchasedItem{
+  cursor: pointer;
+  img {
+    width: 60px;
+    height: auto;
+    box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
+    0px 1px 3px 0px rgb(0 0 0 / 12%);
+    border-radius: 4px;
+  }
+  margin-right: 10px;
+}
+
+.headerFeedbackList{
+  width: 100%;
+}
+.feedbackContentRating{
+  width: 100%;
+}
+.purchasedItemContent{
+  margin-top: 10px;
+  color: #6c757d;
+}
+
+.feedbackListItem{
+  margin: 2rem 0;
+}
+.feedbackListItem:first-child{
+  margin-top: 1rem;
+}
+
+.feedbackListItemPhotoWrap{
+  margin-top: 3rem;
+  img {
+    height: 100%;
+  }
+}
+.feedbackPhoto{
+  width: 40%;
+}

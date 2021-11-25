@@ -1,6 +1,7 @@
 import { Product } from './product';
 
 export class User {
+  _id?: string;
   avatar?: string;
   username?: string;
   password?: string;

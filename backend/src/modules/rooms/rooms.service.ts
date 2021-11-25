@@ -1,42 +1,68 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
-import {InjectModel} from '@nestjs/mongoose';
-import {Model} from 'mongoose';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
-import {Message, MessageDocument} from '@src/models/message.schema';
-import {Room, RoomDocument} from "@src/models/room.schema";
-import {ChatService} from '@src/modules/chat/chat.service';
-import {CreateRoomDto} from "@src/modules/rooms/dto/create-room.dto";
+import { Message, MessageDocument } from '@src/models/message.schema';
+import { Room, RoomDocument } from '@src/models/room.schema';
+import { ChatService } from '@src/modules/chat/chat.service';
+import { CreateRoomDto } from '@src/modules/rooms/dto/create-room.dto';
+import { UserDocument } from '@src/models/user.schema';
 
 @Injectable()
 export class RoomsService {
+  public room: Room;
   constructor(
-      private readonly chatService: ChatService,
-      @InjectModel('Room') private readonly roomModel: Model<RoomDocument>,
-      @InjectModel('Message') private readonly messageModel: Model<MessageDocument>
+    private readonly chatService: ChatService,
+    @InjectModel('Room') private readonly roomModel: Model<RoomDocument>,
+    @InjectModel('Message')
+    private readonly messageModel: Model<MessageDocument>,
+    @InjectModel('User') private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async create(dto: CreateRoomDto): Promise<Room> {
-    return this.roomModel.create(dto);
+  async getAllRooms(roomIds: string[]): Promise<Room[] | null> {
+    return await this.roomModel.find({ _id: { $in: roomIds } });
+  }
+
+  async findRoom(userId: string, selfId: string): Promise<Room | null> {
+    const user1 = await this.userModel.findById(userId);
+    const user2 = await this.userModel.findById(selfId);
+    const room = await this.roomModel.findOne({
+      users: { $all: [userId, selfId] },
+    });
+    if (room) {
+      return room;
+    }
+    const newRoom = await this.roomModel.create({});
+    await this.roomModel.updateOne(
+      { _id: newRoom._id },
+      { $push: { users: user1 } },
+    );
+    await this.roomModel.updateOne(
+      { _id: newRoom._id },
+      { $push: { users: user2 } },
+    );
+
+    return await newRoom.save();
+  }
+
+  async createRoom(createRoomDto: CreateRoomDto): Promise<Room> {
+    return await this.roomModel.create(createRoomDto);
   }
 
   async addMessage(message: Message, id: string): Promise<Room> {
     const room = await this.findById(id);
     const newMessage = await this.messageModel.create(message);
-    await this.roomModel.updateOne({_id: id}, {$push: {messages: newMessage}});
+    await this.roomModel.updateOne(
+      { _id: id },
+      { $push: { messages: newMessage } },
+    );
 
     return room;
   }
 
   async findMessages(id: string, limit: number): Promise<Message[]> {
-    let room = await this.findWithLimit(id, limit);
-
-    if (!room) {
-      const userRoom = new this.roomModel({ _id: id, name: id, is_user: true });
-      room = await this.create(userRoom);
-    }
-    const messages = await this.chatService.getMessagesByIdArray(room.messages);
-    console.log(messages);
-    return messages
+    const room = await this.findWithLimit(id, limit);
+    return await this.chatService.getMessagesByIdArray(room.messages);
   }
 
   async findAll(options?: any): Promise<Room[] | null> {
@@ -44,11 +70,7 @@ export class RoomsService {
   }
 
   async findWithLimit(id: string, limit: number): Promise<Room | null> {
-    return await this.roomModel
-        .findById(id)
-        .slice('messages', limit)
-        // .populate('messages.user', { _id: 1, username: 1, email: 1 })
-        .exec();
+    return await this.roomModel.findById(id).slice('messages', limit).exec();
   }
 
   async findById(id: string): Promise<Room | null> {
@@ -65,5 +87,9 @@ export class RoomsService {
 
   async delete(id: string): Promise<Room | null> {
     return await this.roomModel.findByIdAndRemove(id).exec();
+  }
+
+  async getRoomsById(id): Promise<Room[]> {
+    return await this.roomModel.find({ _id: { $in: id } });
   }
 }

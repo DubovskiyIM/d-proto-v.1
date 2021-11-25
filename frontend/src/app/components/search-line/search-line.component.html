@@ -1,0 +1,23 @@
+<tui-primitive-textfield
+  [invalid]="computedInvalid"
+  [focusable]="focusable"
+  [tuiTextfieldType]="'text'"
+  [readOnly]="readOnly"
+  [iconContent]="iconContent"
+  [value]="value"
+  (valueChange)="onValueChange($event)"
+  [tuiTextfieldLabelOutside]="true"
+  (focusedChange)="onFocused($event)"
+  (keyup.enter)="clickSearch()"
+>
+  <ng-content></ng-content>
+</tui-primitive-textfield>
+
+<ng-template #iconContent>
+  <tui-svg
+    class="icon"
+    [src]="icon"
+    (click)="clickSearch()"
+  ></tui-svg>
+</ng-template>
+

@@ -1,11 +1,66 @@
-.pointer {
-  cursor: pointer;
+//.pointer {
+//  cursor: pointer;
+//}
+//
+//input.ng-dirty.ng-invalid {
+//  border: solid red 2px;
+//}
+//
+//input.ng-touched.ng-valid {
+//  border: solid green 2px;
+//}
+
+
+tui-wrapper[data-appearance='custom'] {
+  margin-top: 20px;
+
+  background: #bc71c9;
+  color: #fff;
+
+  &[data-state='hovered'] {
+    background: #a381ff;
+  }
+
+  &[data-state='pressed'] {
+    background: #8f75d1;
+  }
+
+  &[data-state='disabled'] {
+    background: #eaecee;
+  }
 }
 
-input.ng-dirty.ng-invalid {
-  border: solid red 2px;
-}
+.loginPage {
+  margin-top: 10px;
 
-input.ng-touched.ng-valid {
-  border: solid green 2px;
+  .imageBlock {
+    border-radius: 14px;
+    margin-right: 20px;
+    width: 40%;
+    background-image: url("https://images.pexels.com/photos/5709661/pexels-photo-5709661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 90vh;
+  }
+
+  .loginFormBlock {
+    .controlLoginWrap{
+      width: 70%;
+      margin: 0 auto;
+    }
+    width: 60%;
+    height: 90vh;
+  }
+
+  .privatePolicy {
+    color: var(--tui-text-01);
+    text-align: center;
+
+    span {
+      color: var(--tui-text-02);
+    }
+  }
 }

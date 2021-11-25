@@ -1,0 +1,44 @@
+<div class="container-fluid">
+  <div class="row">
+    <h2 class="labelFavoriteItem">Избранные магазины</h2>
+    <div class="col-12 subscribersList d-flex justify-content-start">
+      <div class="subscribersItem text-center">
+        <app-avatar [width]="'100px'"></app-avatar>
+        <p class="subscribersUserName">Name Notname</p>
+      </div>
+      <div class="subscribersItem text-center">
+        <app-avatar></app-avatar>
+        <p class="subscribersUserName">Name Notname</p>
+      </div>
+    </div>
+    </div>
+  <div class="row favoriteWrap">
+    <div class="col-12">
+      <h2 class="labelFavoriteItem">Избранные продукты</h2>
+      <div class="favoriteFilters d-flex justify-content-between">
+        <div>
+          <button class="btn btn-sm btn-outline-dark">Фильтр</button>
+        </div>
+        <div class="btn btn-group" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked (click)="changeCardView('card')">
+          <label class="btn btn-sm btn-outline-dark btnToggleView" for="btnradio1">
+            <mat-icon>apps</mat-icon>
+          </label>
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" (click)="changeCardView('fullView')">
+          <label class="btn btn-sm btn-outline-dark btnToggleView" for="btnradio2">
+            <mat-icon>view_agenda</mat-icon>
+          </label>
+        </div>
+      </div>
+      <div class="likedProductsList">
+        <app-cards
+          [listCards]="likedProductList"
+          [isHomePage]="false"
+          [isCardView]="orderIsCardView"
+          #fullViewCards
+        ></app-cards>
+      </div>
+    </div>
+  </div>
+</div>
+<!--view_agenda-->

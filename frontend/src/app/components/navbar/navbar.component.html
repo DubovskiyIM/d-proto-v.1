@@ -1,0 +1,12 @@
+<div class="containerSidenav">
+  <div class="avatar">
+    <app-avatar [imageUrl]="user?.avatar"></app-avatar>
+  </div>
+  <h4 class="myName" (click)="goHomePage()">{{user.username}}</h4>
+  <app-star-ratings [rating]="rating" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></app-star-ratings>
+  <p class="designation text-light text-center">
+    {{rating}}
+    <span class="countFeedback text-light">(124)</span></p>
+  <mat-divider></mat-divider>
+  <app-lk-navbar-items></app-lk-navbar-items>
+</div>

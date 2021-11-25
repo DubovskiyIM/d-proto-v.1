@@ -1,29 +1,106 @@
-<div class="card card_medium" style="opacity: 1;">
-  <div class="pin_title">22</div>
-  <div class="pin_modal">
-    <div class="modal_head">
-      <div class="save_card">Save</div>
-    </div>
-    card
-    <div class="modal_foot">
-      <div class="destination">
-        <div class="pint_mock_icon_container">
-          <img src="./assets/img/upper-right-arrow.png" alt="destination" class="pint_mock_icon">
-        </div>n
-        <span>22</span>
+<div class="cardWrapper" *ngIf="isCardView;">
+  <div class="cardHeader" *ngIf="!isHomePage">
+      <span class="avatarCardHeader" (click)="goToProfilePage()">
+        <app-avatar width="30px"></app-avatar>
+      </span>
+    <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
+        {{card?.owner?.username}}
+      </span>
+  </div>
+  <!--  [@changeCardImage]="currentImageCardState"-->
+  <div class="cardItem card_medium card">
+    <div (mouseleave)="leaveMouseSate()"
+         (click)="cardModalComponent.triggerModal()"
+         (mouseover)="changeMouseOverSate()"
+         [ngClass]="{profilePageView: (isHomePage || isProfilePage)}"
+         class="photoContainer"
+
+    >
+      <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
+        <span class="crop" (click)="cardModalComponent.triggerModal($event)">
+          <mat-icon>crop_free</mat-icon>
+        </span>
+        <span class="favorite" (click)=favoriteProduct($event) *ngIf="!isHomePage">
+           <ng-container *ngIf="isFavoriteCard; else defaultFavoriteView">
+               <mat-icon class="favoriteView">favorite</mat-icon>
+           </ng-container>
+          <ng-template #defaultFavoriteView>
+            <mat-icon>favorite_border</mat-icon>
+          </ng-template>
+        </span>
+        <span class="delete" (click)="deleteProduct($event)" *ngIf="isHomePage">
+           <mat-icon>delete</mat-icon>
+        </span>
       </div>
-
-<!--      <div class="pint_mock_icon_container">-->
-<!--        <img src="./assets/img/send.png" alt="send" class="pint_mock_icon">-->
-<!--      </div>-->
-
-<!--      <div class="pint_mock_icon_container">-->
-<!--        <img src="./assets/img/ellipse.png" alt="edit" class="pint_mock_icon">-->
-<!--      </div>-->
+      <div class="photoContent" *ngIf="card.images.length else showImageElseBlock">
+        <div class="imageCardWrap" *ngFor="let cardPhoto of card.images">
+          <img [src]="getImageHref(cardPhoto)">
+        </div>
+      </div>
+      <ng-template #showImageElseBlock>
+        <img src="https://i.picsum.photos/id/1022/1000/2000.jpg?hmac=o0R55IjBxpioWBx8GaBz84h_ktgoSX1Kz1quH4L8JyY"
+             alt="image" *ngIf="card.size === 'medium'" class="defaultState">
+        <img src="https://i.picsum.photos/id/48/200/200.jpg?hmac=3FKJwSlm1FM1GD916vZX2Z3HUjHsUXvQM3rYWYXsQvc"
+             alt="image" *ngIf="card.size === 'small'">
+        <img src="https://i.picsum.photos/id/30/500/200.jpg?hmac=40j93kHi7aLLphS9asc5UfT7ZAwWdKRsb-z2EnzSuHY"
+             alt="image" *ngIf="!card.size">
+      </ng-template>
     </div>
   </div>
-
-  <div class="pin_image">
-    <img src="https://i.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI" alt="image">
+  <div class="cardFooter d-flex justify-content-between">
+    <span class="cardTitle boldText" (click)="goToProductPage()">
+      {{card.title}}
+      <ng-template *ngIf="!card.title">
+        Туфли GUCCI&TYPE
+      </ng-template>
+    </span>
+    <span class="cardTitle boldText cardPrice" *ngIf="card.price">
+      {{card.price}}
+    </span>
   </div>
+</div>
+
+<div class="fullViewCardWrapper" *ngIf="!isCardView">
+  <div class="d-flex justify-content-between">
+    <div class="fullViewPhoto">
+      <div (mouseleave)="leaveMouseSate()"
+           (click)="cardModalComponent.triggerModal()"
+           (mouseover)="changeMouseOverSate()"
+           [ngClass]="{profilePageView: (isHomePage || isProfilePage)}"
+           class="photoFullCardViewContainer">
+        <div class="imageFullViewCardWrap">
+          <div class="d-flex justify-content-between modalSocialHeaderIcon" *ngIf="showSocialButtons">
+            <span class="crop" (click)="cardModalComponent.triggerModal($event)">
+              <mat-icon>crop_free</mat-icon>
+            </span>
+            <span class="favorite" (click)=favoriteProduct($event) *ngIf="!isHomePage">
+              <ng-container *ngIf="isFavoriteCard; else defaultFavoriteView">
+                      <mat-icon class="favoriteView">favorite</mat-icon>
+             </ng-container>
+            <ng-template #defaultFavoriteView>
+              <mat-icon>favorite_border</mat-icon>
+            </ng-template>
+          </span>
+            <span class="delete" (click)="deleteProduct($event)" *ngIf="isHomePage">
+              <mat-icon>delete</mat-icon>
+          </span>
+          </div>
+          <img src="https://i.picsum.photos/id/514/300/300.jpg?hmac=cWjIdfi9OoXTpWCC_x4On9HehQ1N0FSR6MxanIRMcfQ">
+        </div>
+
+      </div>
+    </div>
+    <div class="cardInfoFullView">
+      <h2>{{card.title}}</h2>
+      <p>{{card?.price}}</p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti ducimus esse est impedit tempore, voluptate
+      voluptatem! Ad, aspernatur aut cumque cupiditate delectus facilis inventore libero natus placeat, praesentium quis
+      ullam!
+    </div>
+  </div>
+</div>
+
+
+<div>
+  <app-card-modal [card]="card" #cardModalComponent [isHomePage]="isHomePage"></app-card-modal>
 </div>

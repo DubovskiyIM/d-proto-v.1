@@ -1,35 +1,17 @@
-.menu-button {
-  width: 100%;
+.example-container {
+  //width: 500px;
+  //height: 300px;
+  height: 100vh;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
   display: flex;
+  height: 100%;
   align-items: center;
-  justify-content: flex-start;
-  font-size: 1rem;
-
-  mat-icon {
-    margin-right: 8px;
-  }
+  justify-content: center;
 }
 
-.avatar {
-  margin-top: 16px;
-}
-
-.name {
-  margin: 8px 0;
-  font-weight: normal;
-}
-
-.designation {
-  font-size: 1.1rem;
-  margin-top: 2px;
-}
-
-mat-divider {
-  margin-top: 16px;
-  margin-bottom: 16px;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.menu-button a {
-  text-decoration: none;
+.example-sidenav {
+  padding: 20px;
 }

@@ -43,7 +43,7 @@ export class ChatComponent implements AfterViewInit, OnChanges, OnInit {
   }
 
   ngOnInit() {
-    const activeRoomIdMock = '60db831f75ec9d0091d50f44';
+    const activeRoomIdMock = this.chatService.selectedChatUserId;
 
     this.socket.on('connect', () => {
       console.log('connected');
@@ -60,8 +60,14 @@ export class ChatComponent implements AfterViewInit, OnChanges, OnInit {
     });
 
     this.socket.on('message', (messages) => {
-      console.log(messages);
-      // this.messages = messages.forEach();
+      if (!messages) {
+        return;
+      }
+      if (messages.length) {
+        this.messages = messages;
+      } else {
+        this.messages.push(messages);
+      }
     });
   }
 

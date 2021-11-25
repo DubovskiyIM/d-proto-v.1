@@ -10,18 +10,18 @@ import { NavigationService } from './navigation.service';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
   private static readonly httpActions = {
     register: 'auth/register',
     login: 'auth/login',
     logout: 'auth/logout',
   };
-  public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<any>;
 
   constructor(
     private http: HttpClient,
     @Inject(APP_BASE_HREF) private baseUrl: string,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
   ) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser'))
@@ -35,10 +35,20 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  public getCurrentUserPropertyValue(propName: string): any | null{
+    return this.currentUserValue[propName] || null;
+  }
+
   public login(controls) {
     if (!controls) {
       return;
     }
+
+    // this.http.get('/api/auth/google').subscribe((res)=> {
+    //   console.log(res);
+    // })
+    //
+    // return;
     const loginData = {
       email: controls.controls?.username.value,
       password: controls.controls?.password.value,
@@ -54,6 +64,7 @@ export class AuthenticationService {
           if (user) {
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
+            // this.userService.setNewUser(user);
           }
           return user;
         })
@@ -62,6 +73,7 @@ export class AuthenticationService {
 
   public logout() {
     localStorage.removeItem('currentUser');
+    this.http.post(`${this.baseUrl}${AuthenticationService.httpActions.logout}`, {}).subscribe(()=> {});
     this.currentUserSubject.next(null);
     this.navigationService.exit();
   }
@@ -74,9 +86,9 @@ export class AuthenticationService {
       username: controls?.username.value,
       email: controls?.email.value,
       password: controls?.password.value,
-      name: controls?.name.value,
-      phone: controls.phone.value,
     };
+    // name: controls?.name.value,
+    //   phone: controls.phone.value,
 
     return this.http.post<any>(
       `${this.baseUrl}${AuthenticationService.httpActions.register}`,
@@ -84,5 +96,6 @@ export class AuthenticationService {
     );
   }
 
-  public resetPassword(email: string) {}
+  public resetPassword(email: string) {
+  }
 }

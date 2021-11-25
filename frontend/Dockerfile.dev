@@ -8,6 +8,7 @@ COPY package.json .
 
 ## install only the packages defined in the package-lock.json (faster than the normal npm install)
 RUN yarn install
+RUN yarn add masonry-layout
 RUN yarn global add @angular/cli@7.3.9
 # Copy the contents of the project to the image
 COPY . .

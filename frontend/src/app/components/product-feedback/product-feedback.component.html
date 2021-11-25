@@ -1,0 +1,88 @@
+<div class="row feedbackRow">
+  <!--    <ng-container *ngFor="let feedback of feedbacks">-->
+  <div class="col-6">
+    <div class="row d-flex align-items-start">
+      <div class="col-8 feedbackWrap">
+        <div class="imageFeedbackContainer"  (click)="feedbackModalComponent.triggerModal()">
+          <img [src]="feedbacks[0]?.photo">
+        </div>
+        <div class="userInfoLine">
+         <span class="avatarUserInfoHeader" (click)="goToProfilePage()">
+               <app-avatar [width]="'30px'"></app-avatar>
+          </span>
+          <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
+            {{feedbacks[0]?.user.name || 'NAME NOTNAME'}}
+         </span>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="imageFeedbackContainerChild">
+          <img [src]="feedbacks[0]?.photo">
+          <div class="userInfoLine">
+           <span class="avatarUserInfoHeader" (click)="goToProfilePage()">
+                 <app-avatar [width]="'30px'"></app-avatar>
+            </span>
+            <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
+              {{feedbacks[0]?.user.name || 'NAME NOTNAME'}}
+           </span>
+          </div>
+        </div>
+        <div class="imageFeedbackContainerChild">
+          <img [src]="feedbacks[0]?.photo">
+        </div>
+        <div class="userInfoLine">
+         <span class="avatarUserInfoHeader" (click)="goToProfilePage()">
+               <app-avatar [width]="'30px'"></app-avatar>
+          </span>
+          <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
+            {{feedbacks[0]?.user.name || 'NAME NOTNAME'}}
+         </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="row d-flex align-items-start">
+      <div class="col-8 feedbackWrap">
+        <div class="imageFeedbackContainer">
+          <img [src]="feedbacks[0]?.photo">
+        </div>
+        <div class="userInfoLine">
+         <span class="avatarUserInfoHeader" (click)="goToProfilePage()">
+               <app-avatar [width]="'30px'"></app-avatar>
+          </span>
+          <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
+            {{feedbacks[0]?.user.name || 'NAME NOTNAME'}}
+         </span>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="imageFeedbackContainerChild">
+          <img [src]="feedbacks[0]?.photo">
+          <div class="userInfoLine">
+           <span class="avatarUserInfoHeader" (click)="goToProfilePage()">
+                 <app-avatar [width]="'30px'"></app-avatar>
+            </span>
+            <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
+              {{feedbacks[0]?.user.name || 'NAME NOTNAME'}}
+           </span>
+          </div>
+        </div>
+        <div class="imageFeedbackContainerChild">
+          <img [src]="feedbacks[0]?.photo">
+        </div>
+        <div class="userInfoLine">
+         <span class="avatarUserInfoHeader" (click)="goToProfilePage()">
+               <app-avatar [width]="'30px'"></app-avatar>
+          </span>
+          <span class="avatarCardHeaderUserName boldText" (click)="goToProfilePage()">
+            {{feedbacks[0]?.user.name || 'NAME NOTNAME'}}
+         </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--    </ng-container>-->
+</div>
+
+<app-feedback-modal-view #feedbackModalComponent ></app-feedback-modal-view>

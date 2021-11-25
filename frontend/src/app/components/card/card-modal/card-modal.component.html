@@ -1,0 +1,50 @@
+<ng-template #modalWrapper let-modal>
+  <div class="modalHeader d-flex justify-content-end">
+    <mat-icon (click)="modal.dismiss('Cross click')">close</mat-icon>
+  </div>
+  <div class="modal-body productModal">
+    <div class="row">
+      <div class="col-6">
+        <div class="swiperWrap">
+          <swiper [config]="config">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="https://loremflickr.com/g/600/400/paris" alt="img 1"></div>
+              <div class="swiper-slide"><img src="https://loremflickr.com/400/400/brazil,rio" alt="img 2"></div>
+              <div class="swiper-slide"><img src="https://loremflickr.com/600/400/paris,girl/all" alt="img 3"></div>
+              <div class="swiper-slide"><img src="https://loremflickr.com/g/600/400/paris" alt="img 4"></div>
+              <div class="swiper-slide"><img src="https://loremflickr.com/600/400/brazil,rio" alt="img 5"></div>
+              <div class="swiper-slide"><img src="https://loremflickr.com/600/400/paris,girl/all" alt="img 6"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </swiper>
+        </div>
+      </div>
+      <div class="col-6 cardInfo">
+        <h2 class="modalHeaderTitle" (click)="goToProductPage()">
+          {{card.title}}
+        </h2>
+        <h3>{{card.price || '2999' }} р</h3>
+        <div class="modalUserInfo d-flex align-items-center" *ngIf="!isHomePage">
+          <app-avatar [width]="'30px'"></app-avatar>
+          <span class="userName">Имя User</span>
+        </div>
+        <h3 class="sizeLabel">размер S</h3>
+        <div class="modalDesc">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi cupiditate debitis doloribus eum, ipsa
+          laboriosam magni, nam qui rerum sit ut vel! Assumenda corporis doloribus, harum hic nemo qui voluptate?
+        </div>
+
+        <div class="socialButton d-flex justify-content-start" *ngIf="!isHomePage">
+          <button class="btn btn-outline-dark" (click)="openChat()">Написать</button>
+          <div class="shareLink d-flex align-items-center" (click)="copyLink()">
+            <mat-icon>share</mat-icon>
+            <span>Поделиться</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<app-notify [message]="'Ссылка скопирована'" #notify></app-notify>

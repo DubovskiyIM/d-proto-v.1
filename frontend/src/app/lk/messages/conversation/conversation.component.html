@@ -1,11 +1,11 @@
 <mat-list>
-  <mat-list-item *ngFor="let conversation of conversations" (click)="selectConversation(conversation.id)"
+  <mat-list-item *ngFor="let conversation of conversations" (click)="selectConversation(conversation)"
                  class="conversation-card">
     <div class="avatar align-items-center d-flex">
       <app-avatar [width]="'80px'"></app-avatar>
     </div>
     <div class="messageData">
-      <span class="chatUserName w-85">{{conversation.user_name}}</span>
+      <span class="chatUserName">{{conversation.users[0]}}</span>
       <span class="lastMessageTime">12: 23</span>
       <p class="lastMessage"><span class="text-primary">Вы:</span> sdf sf Lorem ipsum dolor sit amet, consectetur
       </p>

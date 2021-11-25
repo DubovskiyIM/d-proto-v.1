@@ -1,0 +1,39 @@
+<div class="profileBar">
+  <div class="userName">{{profile?.username}}</div>
+  <div class="name d-flex align-items-center">{{profile?.name || "Васильев Егор" }}
+    <mat-icon *ngIf="true">verified</mat-icon>
+  </div>
+  <div class="avatarProfile">
+    <app-avatar [width]="'170px'" [imageUrl]="profile?.avatar"></app-avatar>
+  </div>
+  <div class="rating d-flex align-items-center">
+    <mat-icon>star</mat-icon>
+    <span>4.2</span>
+  </div>
+  <div class="socialButtons">
+    <div class="row">
+      <div class="col-12">
+        <ng-container *ngIf="!isSubscribedUser">
+          <a class="following" (click)="follow()">Подписаться</a>
+        </ng-container>
+        <ng-container *ngIf="isSubscribedUser">
+          <a class="following subscribedState" (click)="unfollow()">Отписаться</a>
+        </ng-container>
+        <a href="#" class="messageSendSocialButton">Написать</a>
+      </div>
+    </div>
+  </div>
+  <div class="countSale">
+    <div class="countNumber d-flex align-items-center">
+      <mat-icon>sell</mat-icon>
+      301 продано
+    </div>
+    <div class="lastSeen d-flex align-items-center">
+      <mat-icon>flash_on</mat-icon>
+      Последняя активность 6 часов назад
+    </div>
+  </div>
+  <div class="description">
+    Молодой дизайнер. Шью для вас.
+  </div>
+</div>

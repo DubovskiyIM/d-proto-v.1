@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "@nestjs/platform-ws": "^7.6.18"
+  },
+  "dependencies": {
+    "masonry-layout": "^4.2.2"
   }
 }

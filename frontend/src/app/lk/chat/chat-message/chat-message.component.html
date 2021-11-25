@@ -1,27 +1,35 @@
-<ng-container *ngFor="let groupMessage of messages; let indexGroup = index">
-  <ng-container *ngFor="let message of groupMessage.data.messages; let indexMessageInGroup = index">
-    <div *ngIf="isMyMessage(indexGroup); then myMessage else hisMessage">
+<div class="" *ngIf="messages.length">
+  <ng-container *ngFor="let message of messages; let indexMessageInGroup = index">
+    <!--    {{message?.message}}-->
+    <div *ngIf="!isMyMessage(indexMessageInGroup); then myMessage else hisMessage">
     </div>
-
     <ng-template #myMessage>
       <div class="d-flex justify-content-start">
-        <div class="bd-highlight messageContainer"  [ngClass]="{lastMessageStyle: isLastMessageInGroup(indexGroup, indexMessageInGroup)}">
+        <div class="bd-highlight messageContainer"
+        >
+          <!--          [ngClass]="{lastMessageStyle: isLastMessageInGroup(indexMessageInGroup, indexMessageInGroup)}"-->
           <div class="bd-highlight text">
-            {{message.content}}
+            {{message?.message}}
           </div>
-          <div class="mt-auto flex-shrink-1 bd-highlight text-end dataTime">{{message.time | date:'hh:mm'}}</div>
+          <!--            <div class="mt-auto flex-shrink-1 bd-highlight text-end dataTime">{{message.time | date:'hh:mm'}}</div>-->
         </div>
       </div>
     </ng-template>
     <ng-template #hisMessage>
       <div class="d-flex justify-content-end">
-        <div class="bd-highlight messageContainer hisMessage"  [ngClass]="{lastMessageStyle: isLastMessageInGroup(indexGroup, indexMessageInGroup)}">
+        <div class="bd-highlight messageContainer hisMessage"
+        >
+          <!--          [ngClass]="{lastMessageStyle: isLastMessageInGroup(indexMessageInGroup, indexMessageInGroup)}"-->
           <div class="bd-highlight text">
-            {{message.content}}
+            {{message?.message}}
           </div>
-          <div class="mt-auto flex-shrink-1 bd-highlight text-end dataTime">{{message.time | date:'hh:mm'}}</div>
+          <!--            <div class="mt-auto flex-shrink-1 bd-highlight text-end dataTime">{{message.time | date:'hh:mm'}}</div>-->
         </div>
       </div>
     </ng-template>
+    <!--  <ng-container *ngFor="let message of groupMessage.data.messages;">-->
+
+
+    <!--  </ng-container>-->
   </ng-container>
-</ng-container>
+</div>

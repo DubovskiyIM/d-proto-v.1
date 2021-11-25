@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import { ChatService } from '../../_services/chat.service';
+import {switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-messages',
@@ -7,31 +9,37 @@ import { Router } from '@angular/router';
   styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
-  public conversations = [
-    {
-      id: '22',
-      user_name: 'Carl',
-    },
-    {
-      id: '13',
-      user_name: 'name',
-    },
-    {
-      id: '44',
-      user_name: 'name',
-    },
-  ];
-  public selectedChatDialog = this.conversations[0];
+  public conversations = [];
+  public selectedChatDialog;
+  private selectedUserId;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private chatService: ChatService, private route: ActivatedRoute,) {}
 
   public changeChatDialog(chatDialogId: string) {
     this.conversations.find((item) => {
-      if (item.id === chatDialogId) {
+      if (item._id === chatDialogId) {
         this.selectedChatDialog = item;
+        this.chatService.getMessage().subscribe((messages) => {
+          console.log(messages);
+        })
+        console.log('SELECTED DIALOG ->', this.selectedChatDialog);
       }
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.chatService.getRooms().subscribe((rooms) => {
+      this.conversations = rooms;
+      this.selectedChatDialog = this.conversations[0];
+    });
+    this.route.paramMap.pipe(
+      switchMap((params) => params.getAll('id')),
+    )
+      .subscribe((data) => {
+        this.selectedUserId = data;
+        // console.log(data);
+        // this.product = this.productService.getProductById(this.productId);
+        // console.log(this.product);
+      });
+  }
 }

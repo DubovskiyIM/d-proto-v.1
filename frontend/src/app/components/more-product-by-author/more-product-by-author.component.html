@@ -1,0 +1,8 @@
+<div class="containerCards">
+  <ngx-masonry>
+    <div ngxMasonryItem class="masonry-item" *ngFor="let item of listCards.slice(0,4)">
+      <app-card [card]="item"></app-card>
+    </div>
+  </ngx-masonry>
+</div>
+

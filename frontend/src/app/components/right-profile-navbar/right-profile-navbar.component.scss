@@ -1,0 +1,99 @@
+.profileBar {
+  font-family: Roboto;
+  position: fixed;
+  border-left: 1px solid #333333;
+  padding-left: 20px;
+  padding-top: 40px;
+  height: 100%;
+
+  .userName {
+    font-size: 18px;
+  }
+
+  .name {
+    color: #717171;
+    margin-top: 10px;
+    font-size: 20px;
+  }
+
+  .rating {
+    font-size: 20px;
+    margin-top: 5px;
+
+    span {
+      font-weight: 500;
+      font-size: 20px;
+    }
+  }
+
+  .avatarProfile {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .socialButtons {
+    font-weight: 400;
+    font-size: 20px;
+    margin-top: 40px;
+
+  }
+
+  .following {
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 12px;
+    text-transform: uppercase;
+  }
+
+  .following:hover {
+    border: 2px solid #333333;
+    padding: 10px;
+  }
+
+  .messageSendSocialButton {
+    margin-left: 30px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: black;
+  }
+  .countSale{
+    padding-top: 40px;
+  }
+  .lastSeen{
+    margin-top: 10px;
+    font-size: 16px;
+    mat-icon{
+      margin-right: 10px;
+    }
+  }
+  .countNumber{
+    font-size: 16px;
+    mat-icon{
+      margin-right: 10px;
+    }
+  }
+
+  .description{
+    margin-top: 60px;
+    font-size: 18px;
+  }
+
+
+}
+
+@media (max-width: 991.98px) {
+  .following {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .messageSendSocialButton{
+    margin-top: 30px;
+  }
+}
+.subscribedState{
+  font-size: 20px;
+  border: 2px solid #717171;
+  //background-color: #333333;
+}

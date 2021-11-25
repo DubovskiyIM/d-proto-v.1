@@ -2,14 +2,24 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 
-import { Product } from './product.schema';
-
 export type UserDocument = User & Document;
+
+export class Address {
+  addr1: string;
+  addr2: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: number;
+}
 
 @Schema()
 export class User {
   @Prop({ required: true })
   username: string;
+
+  @Prop()
+  avatar: string;
 
   @Prop({ required: true })
   password: string;
@@ -23,9 +33,7 @@ export class User {
   @Prop()
   email: string;
 
-  @Prop({
-    type: Object,
-  })
+  @Prop({ type: Address })
   address: {
     addr1: string;
     addr2: string;
@@ -50,29 +58,20 @@ export class User {
   @Prop({ default: Date.now })
   created: Date;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  })
-  followers: User[];
+  @Prop()
+  followers: string[];
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  })
-  followingUsers: User[];
+  @Prop()
+  followingUsers: string[];
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-  })
-  followingProducts: Product[];
+  @Prop()
+  followingProducts: string[];
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-  })
-  saved: Product[];
+  @Prop()
+  savedProducts: string[];
+
+  @Prop()
+  rooms: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
