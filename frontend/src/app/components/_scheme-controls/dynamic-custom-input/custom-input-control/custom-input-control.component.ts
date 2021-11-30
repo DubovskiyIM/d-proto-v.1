@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-custom-input-control',
@@ -9,19 +9,18 @@ import {ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR} from "@angular/forms
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CustomInputControlComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomInputControlComponent implements ControlValueAccessor, OnInit {
   @Input() name: string;
   @Input() group: FormGroup;
   @Input() model: any;
-  inputType: string = 'text';
+  inputType = 'text';
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.inputType = this.model?.inputType ?? 'text';
@@ -37,5 +36,4 @@ export class CustomInputControlComponent implements ControlValueAccessor, OnInit
   registerOnTouched() {}
 
   writeValue() {}
-
 }
