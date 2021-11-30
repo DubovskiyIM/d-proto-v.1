@@ -29,7 +29,7 @@ export const OUTERWEAR_LAYOUT = {
       label: '',
     },
   },
-  type_outwear: {
+  type_outerwear: {
     element: {
       control: 'w-50',
       label: '',
@@ -42,6 +42,10 @@ export const OUTERWEAR_LAYOUT = {
   size: {
     element: {
       control: 'w-50',
+      label: '',
+    },
+    grid: {
+      control: 'col-6',
       label: '',
     },
   }

@@ -4,7 +4,7 @@
       [formControlName]="name"
       [tuiTextfieldLabelOutside]="true"
     >
-<!--      {{model?.label}}-->
+      {{(model.options?.value) ?? model?.label}}
       <tui-data-list-wrapper
         *tuiDataList
         [items]="items"

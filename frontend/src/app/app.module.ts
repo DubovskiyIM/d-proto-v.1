@@ -76,6 +76,7 @@ import { CustomSelectControlComponent } from './components/_scheme-controls/dyna
 import { DynamicCustomRadioGroupComponent } from './components/_scheme-controls/dynamic-custom-radio-group/dynamic-custom-radio-group.component';
 import { CustomRadioGroupComponent } from './components/_scheme-controls/dynamic-custom-radio-group/custom-radio-group/custom-radio-group.component';
 import { CategoryProductComponent } from './components/category-product/category-product.component';
+import { DynamicCustomFileComponent } from './components/_scheme-controls/dynamic-custom-file/dynamic-custom-file.component';
 
 // import { NotifyMessageComponent } from "./components/notify/notify.component";
 
@@ -142,6 +143,7 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
     DynamicCustomRadioGroupComponent,
     CustomRadioGroupComponent,
     CategoryProductComponent,
+    DynamicCustomFileComponent,
   ],
   imports: [
     BrowserModule,
@@ -183,6 +185,8 @@ const config: SocketIoConfig = { url: 'localhost:3001', options: {} };
             return DynamicCustomSelectComponent;
           case 'RADIO_GROUP':
             return DynamicCustomRadioGroupComponent;
+          case 'FILE':
+            // return
         }
       },
     },

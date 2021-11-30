@@ -1,5 +1,5 @@
 .formNewProduct{
-  .ng-dynamic-forms-input{
+  dynamic-material-form-control {
     margin-bottom: 10px;
   }
   .width-10 {
@@ -22,6 +22,24 @@
   .category-product{
     margin-bottom: 10px;
   }
+
+  tui-wrapper[data-appearance='custom'] {
+    background: #bc71c9;
+    color: #fff;
+
+    &[data-state='hovered'] {
+      background: #a381ff;
+    }
+
+    &[data-state='pressed'] {
+      background: #8f75d1;
+    }
+
+    &[data-state='disabled'] {
+      background: #eaecee;
+    }
+  }
+
 }
 //
 //.inputTitle{

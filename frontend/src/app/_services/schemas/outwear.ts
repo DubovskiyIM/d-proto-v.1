@@ -22,7 +22,7 @@ export const OutwearSchema = [
   },
   {
     type: 'SELECT',
-    id: 'type_outwear',
+    id: 'type_outerwear',
     label: 'Тип',
     options: [
       {

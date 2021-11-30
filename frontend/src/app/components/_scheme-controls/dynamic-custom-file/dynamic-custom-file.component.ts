@@ -1,28 +1,19 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  Renderer2
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import {
   DynamicFormControlComponent,
   DynamicFormControlCustomEvent,
   DynamicFormLayoutService,
   DynamicFormValidationService,
 } from '@ng-dynamic-forms/core';
-import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-dynamic-custom-select',
-  templateUrl: './dynamic-custom-select.component.html',
-  styleUrls: ['./dynamic-custom-select.component.scss'],
+  selector: 'app-dynamic-custom-file',
+  templateUrl: './dynamic-custom-file.component.html',
+  styleUrls: ['./dynamic-custom-file.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicCustomSelectComponent extends DynamicFormControlComponent implements OnInit{
+export class DynamicCustomFileComponent extends DynamicFormControlComponent implements OnInit {
   @Input() group: FormGroup;
   @Input() layout;
   @Input() model: any;
@@ -31,12 +22,11 @@ export class DynamicCustomSelectComponent extends DynamicFormControlComponent im
   @Output() change: EventEmitter<any> = new EventEmitter();
   @Output() customEvent: EventEmitter<DynamicFormControlCustomEvent> = new EventEmitter();
   @Output() focus: EventEmitter<any> = new EventEmitter();
-
   constructor(
     protected layoutService: DynamicFormLayoutService,
     protected validationService: DynamicFormValidationService,
     private elRef: ElementRef,
-    private renderer: Renderer2,
+    private renderer: Renderer2
   ) {
     super(layoutService, validationService);
   }
