@@ -15,12 +15,41 @@ export class NavbarComponent implements OnInit {
   public isLogged: true;
   public user: User;
   isOpenedMenu = false;
-  @Input() navLinks: {
-    link: string;
-    label: string;
-  }[];
+  public navLinks = [
+    {
+      link: 'lk/orders',
+      label: 'Заказы',
+      subLinks: [
+        {
+          link: 'lk/orders',
+          label: 'Мои покупки',
+        },
+        {
+          link: 'lk/orders',
+          label: 'Заказы магазина',
+        }
+      ]
+    },
+    {
+      link: 'lk/favorite',
+      label: 'Избранное',
+    },
+    {
+      link: 'messages',
+      label: 'Сообщения',
+    },
+    {
+      link: 'messages',
+      label: 'Уведомления',
+    },
+    {
+      link: 'lk/settings',
+      label: 'Настройки',
+    },
+  ];
+  // navLinks2 = [1,2,3];
 
-  @ViewChild('sideBarMenu', { static: false })
+  @ViewChild('sideBarMenu', {static: false})
   sideBarMenu: ElementRef;
 
   public starColor: StarRatingColor = StarRatingColor.accent;
@@ -29,7 +58,8 @@ export class NavbarComponent implements OnInit {
 
   public starColorW: StarRatingColor = StarRatingColor.warn;
 
-  constructor(private auth: AuthenticationService, private navigateService: NavigationService, private renderer: Renderer2) {}
+  constructor(private auth: AuthenticationService, private navigateService: NavigationService, private renderer: Renderer2) {
+  }
 
   ngOnInit() {
     this.auth.currentUser.subscribe((res) => {
