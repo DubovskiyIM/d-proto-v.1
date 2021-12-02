@@ -43,12 +43,53 @@
 
 /* Google Fonts Import Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+//*{
+//  margin: 0;
+//  padding: 0;
+//  box-sizing: border-box;
+//  font-family: 'Poppins', sans-serif;
+//}
+//
+//mat-icon{
+//  margin: inherit;
+//  padding: inherit;
+//}
+
+.sidebar{
+  .toggleMenu{
+    cursor: pointer;
+    color: white;
+    font-size: 35px;
+    width: 35px;
+    //text-align: right;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 28px;
+    //margin-right: 16px;
+  }
+
 }
+
+.sidebar.close{
+  .toggleMenu{
+    //cursor: pointer;
+    //color: white;
+    //font-size: 35px;
+    //width: 35px;
+    ////text-align: right;
+    //margin-left: auto;
+    //margin-right: auto;
+    //margin-right: 16px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
+
+.toggleMenuBtn{
+  display: flex;
+}
+
 .sidebar{
   //position: fixed;
   //top: 0;
@@ -58,6 +99,7 @@
   width: 260px;
   background: #11101d;
   z-index: 10000;
+  border-radius: 14px;
   transition: all 0.5s ease;
 }
 .sidebar.close{
