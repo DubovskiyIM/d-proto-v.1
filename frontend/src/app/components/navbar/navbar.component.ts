@@ -3,12 +3,12 @@ import { User } from '../../_interfaces/user';
 import { StarRatingColor } from '../star-ratings/star-ratings.component';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { NavigationService } from '../../_services/navigation.service';
-import {MyProfileComponent} from "../../pages/my-profile/my-profile.component";
-import {MyOrdersComponent} from "../../lk/my-orders/my-orders.component";
-import {LikedProductsComponent} from "../../pages/liked-products/liked-products.component";
-import {MessagesComponent} from "../../lk/messages/messages.component";
-import {AddProductComponent} from "../../pages/add-product/add-product.component";
-import {SettingsComponent} from "../../pages/settings/settings.component";
+import { MyProfileComponent } from '../../pages/my-profile/my-profile.component';
+import { MyOrdersComponent } from '../../lk/my-orders/my-orders.component';
+import { LikedProductsComponent } from '../../pages/liked-products/liked-products.component';
+import { MessagesComponent } from '../../lk/messages/messages.component';
+import { AddProductComponent } from '../../pages/add-product/add-product.component';
+import { SettingsComponent } from '../../pages/settings/settings.component';
 
 @Component({
   selector: 'app-navbar',
@@ -26,12 +26,12 @@ export class NavbarComponent implements OnInit {
     {
       link: '',
       label: 'Уведомления',
-      icon: 'bx bx-heart'
+      icon: 'bx bx-heart',
     },
     {
       link: '/lk/settings',
       label: 'Настройки',
-      icon: 'bx bxs-cog'
+      icon: 'bx bxs-cog',
     },
   ];
 
@@ -48,13 +48,13 @@ export class NavbarComponent implements OnInit {
         {
           link: '/lk/orders',
           label: 'Заказы магазина',
-        }
-      ]
+        },
+      ],
     },
     {
       link: '/lk/favorite',
       label: 'Избранное',
-      icon: 'bx bx-heart'
+      icon: 'bx bx-heart',
     },
     {
       link: '/lk/messages',
@@ -63,10 +63,10 @@ export class NavbarComponent implements OnInit {
     },
   ];
   // bx bx-slider-alt
-// <i class=''></i>
+  // <i class=''></i>
   // navLinks2 = [1,2,3];
 
-  @ViewChild('sideBarMenu', {static: false})
+  @ViewChild('sideBarMenu', { static: false })
   sideBarMenu: ElementRef;
 
   public starColor: StarRatingColor = StarRatingColor.accent;
@@ -75,8 +75,7 @@ export class NavbarComponent implements OnInit {
 
   public starColorW: StarRatingColor = StarRatingColor.warn;
 
-  constructor(private auth: AuthenticationService, private navigateService: NavigationService, private renderer: Renderer2) {
-  }
+  constructor(private auth: AuthenticationService, private navigateService: NavigationService, private renderer: Renderer2) {}
 
   ngOnInit() {
     this.auth.currentUser.subscribe((res) => {
@@ -108,15 +107,14 @@ export class NavbarComponent implements OnInit {
   }
 
   public goToPage(event, navItem): void {
+    event.preventDefault();
+
     if (navItem.subLinks?.length) {
-      event.preventDefault();
       return;
     }
-    debugger;
+
     this.navigateService.goToPageByLink(navItem.link);
   }
 
-  public showSubMenu() {
-
-  }
+  public showSubMenu() {}
 }
