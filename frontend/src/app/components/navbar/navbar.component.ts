@@ -3,6 +3,12 @@ import { User } from '../../_interfaces/user';
 import { StarRatingColor } from '../star-ratings/star-ratings.component';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { NavigationService } from '../../_services/navigation.service';
+import {MyProfileComponent} from "../../pages/my-profile/my-profile.component";
+import {MyOrdersComponent} from "../../lk/my-orders/my-orders.component";
+import {LikedProductsComponent} from "../../pages/liked-products/liked-products.component";
+import {MessagesComponent} from "../../lk/messages/messages.component";
+import {AddProductComponent} from "../../pages/add-product/add-product.component";
+import {SettingsComponent} from "../../pages/settings/settings.component";
 
 @Component({
   selector: 'app-navbar',
@@ -15,38 +21,49 @@ export class NavbarComponent implements OnInit {
   public isLogged: true;
   public user: User;
   isOpenedMenu = false;
+
+  public navLinksBottom = [
+    {
+      link: '',
+      label: 'Уведомления',
+      icon: 'bx bx-heart'
+    },
+    {
+      link: '/lk/settings',
+      label: 'Настройки',
+      icon: 'bx bxs-cog'
+    },
+  ];
+
   public navLinks = [
     {
-      link: 'lk/orders',
+      link: '/lk/orders',
       label: 'Заказы',
+      icon: 'bx bx-package',
       subLinks: [
         {
-          link: 'lk/orders',
+          link: '/lk/orders',
           label: 'Мои покупки',
         },
         {
-          link: 'lk/orders',
+          link: '/lk/orders',
           label: 'Заказы магазина',
         }
       ]
     },
     {
-      link: 'lk/favorite',
+      link: '/lk/favorite',
       label: 'Избранное',
+      icon: 'bx bx-heart'
     },
     {
-      link: 'messages',
+      link: '/lk/messages',
       label: 'Сообщения',
-    },
-    {
-      link: 'messages',
-      label: 'Уведомления',
-    },
-    {
-      link: 'lk/settings',
-      label: 'Настройки',
+      icon: 'bx bx-message-square-detail',
     },
   ];
+  // bx bx-slider-alt
+// <i class=''></i>
   // navLinks2 = [1,2,3];
 
   @ViewChild('sideBarMenu', {static: false})
@@ -88,5 +105,18 @@ export class NavbarComponent implements OnInit {
 
   public goHomePage() {
     this.navigateService.goToLKHomePage();
+  }
+
+  public goToPage(event, navItem): void {
+    if (navItem.subLinks?.length) {
+      event.preventDefault();
+      return;
+    }
+    debugger;
+    this.navigateService.goToPageByLink(navItem.link);
+  }
+
+  public showSubMenu() {
+
   }
 }

@@ -51,6 +51,10 @@ export class NavigationService {
     this.router.navigate(['product', productId]);
   }
 
+  public goToPageByLink(link: string): void {
+    this.router.navigateByUrl(link).then();
+  }
+
   public goToChatPage(selectedUserId?) {
     // if (selectedUserId){
       this.router.navigate(['lk/messages/'+ selectedUserId]).then();
