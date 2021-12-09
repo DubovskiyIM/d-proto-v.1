@@ -3,6 +3,8 @@
     "@nestjs/platform-ws": "^7.6.18"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^7.7.1",
+    "@nestjs/elasticsearch": "^8.0.0",
     "masonry-layout": "^4.2.2"
   }
 }

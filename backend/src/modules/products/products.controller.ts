@@ -11,6 +11,7 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -23,6 +24,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
 import { IdValidationPipe } from '@src/pipes/id-validation.pipe';
 import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
+import { GetLikedProductDto } from '@src/modules/products/dto/get-liked-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -30,7 +32,9 @@ export class ProductsController {
 
   @Get('liked')
   @UseGuards(JwtAuthGuard)
-  async getLikedProducts(@Req() req: RequestWithUser): Promise<any> {
+  async getLikedProducts(
+    @Req() req: RequestWithUser,
+  ): Promise<GetLikedProductDto> {
     return await this.productsService.getLikedProducts(req.user.id);
   }
 
@@ -53,7 +57,10 @@ export class ProductsController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async findAll(): Promise<Product[]> {
+  async findAll(@Query('search') search: string): Promise<Product[]> {
+    if (search) {
+      return this.productsService.searchForProducts(search);
+    }
     return await this.productsService.findAll();
   }
 
@@ -77,30 +84,6 @@ export class ProductsController {
     return await this.productsService.remove(id);
   }
 
-  // @Post(':id/product')
-  // @UseGuards(JwtAuthGuard)
-  // @UseInterceptors(
-  //   FileInterceptor('file', {
-  //     storage: diskStorage({
-  //       destination: './uploads',
-  //       filename: (_req, file, cb) => {
-  //         const randomName = Array(32)
-  //           .fill(null)
-  //           .map(() => Math.round(Math.random() * 16).toString(16))
-  //           .join('');
-  //         return cb(null, `${randomName}${extname(file.originalname)}`);
-  //       },
-  //     }),
-  //   }),
-  // )
-  // async uploadImages(
-  //   @Param('id', IdValidationPipe) id: string,
-  //   @UploadedFile() files: any[],
-  // ): Promise<void> {
-  //   const urls = files.map((file) => `${this.SERVER_URL}${file.path}`);
-  //   await this.productsService.setImages(id, urls);
-  // }
-
   @Post('upload')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(
@@ -117,8 +100,11 @@ export class ProductsController {
       }),
     }),
   )
-  uploadImage(@Req() request: RequestWithUser, @UploadedFile() file: any) {
-    return this.productsService.setImages(request.user.id, file);
+  async uploadImage(
+    @Req() request: RequestWithUser,
+    @UploadedFile() file: any,
+  ): Promise<Product> {
+    return await this.productsService.setImages(request.user.id, file);
   }
 
   @Get('product/:fileId')
@@ -136,7 +122,6 @@ export class ProductsController {
     @Param('id', IdValidationPipe) id: string,
     @Req() req: RequestWithUser,
   ): Promise<Product> {
-    console.log(id, req.user.id);
     return await this.productsService.likeProduct(req.user.id, id);
   }
 

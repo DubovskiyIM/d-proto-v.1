@@ -17,10 +17,13 @@ import { FeedbacksModule } from '@src/modules/feedbacks/feedbacks.module';
 
 import { SharedModule } from '@src/shared/shared.module';
 import { ChatGateway } from '@src/modules/chat/chat.gateway';
+import { SearchModule } from '@src/modules/search/search.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -34,6 +37,7 @@ import { ChatGateway } from '@src/modules/chat/chat.gateway';
     FilesModule,
     RoomsModule,
     ChatModule,
+    SearchModule,
     SharedModule,
   ],
   controllers: [AppController],

@@ -35,6 +35,7 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
+  // TODO Change phone by password on 1st step
   @Post('register')
   async register(@Body() userDTO: RegisterDto): Promise<User> {
     try {
@@ -55,6 +56,8 @@ export class AuthController {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  // TODO On second step : name^ gender^ birthdate^ city^ avatar^ images^ description^ about^ phone^
 
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)

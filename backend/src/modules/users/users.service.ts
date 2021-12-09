@@ -10,6 +10,8 @@ import { RegisterDto } from '../auth/dto/auth.dto';
 import { User, UserDocument } from '@src/models/user.schema';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { USER_NOT_FOUND } from '@src/modules/users/users.constants';
+import {GetFollowersDto} from "@src/modules/users/dto/get-followers.dto";
+import {ProductDocument} from "@src/models/product.schema";
 
 @Injectable()
 export class UsersService {
@@ -110,5 +112,17 @@ export class UsersService {
         .findByIdAndUpdate(userId, currentUser as Document)
         .exec();
     }
+  }
+
+  public async getFollowers(userId: string): Promise<GetFollowersDto> {
+    const user = (await this.userModel.findById(userId)) as UserDocument;
+    const followers = [];
+    for (const usr of user.followingProducts) {
+      const item = (await this.userModel.findById(
+        usr,
+      )) as UserDocument;
+      followers.push(item);
+    }
+    return { followers };
   }
 }

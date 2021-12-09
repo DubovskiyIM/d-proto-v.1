@@ -15,4 +15,4 @@ const getMongoOptions = () => ({
 });
 
 export const getMongoString = (configService: ConfigService) =>
-    configService.get('MONGO_URI');
+  configService.get('MONGO_URI');

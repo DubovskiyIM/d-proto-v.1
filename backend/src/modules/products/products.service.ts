@@ -1,24 +1,19 @@
 import { UserDocument } from '@src/models/user.schema';
-import {
-  BadRequestException,
-  Injectable,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import {Document, Model} from 'mongoose';
+import { Document, Model } from 'mongoose';
 import { Product, ProductDocument } from '@src/models/product.schema';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { GetLikedProductDto } from '@src/modules/products/dto/get-liked-product.dto';
 import { PRODUCT_NOT_FOUND } from '@src/modules/products/products.constants';
 import { USER_NOT_FOUND } from '@src/modules/users/users.constants';
-import { JwtAuthGuard } from '@src/common/guards/jwt-auth.guard';
-import { RequestWithUser } from '@src/interfaces/requestWithUser.interface';
-import {use} from "passport";
+import ProductsSearchService from '@src/modules/products/productsSearch.service';
 
 @Injectable()
 export class ProductsService {
   constructor(
+    private readonly productsSearchService: ProductsSearchService,
     @InjectModel('Product') private productModel: Model<ProductDocument>,
     @InjectModel('User') private userModel: Model<UserDocument>,
   ) {}
@@ -53,11 +48,14 @@ export class ProductsService {
     return this.productModel.findByIdAndRemove(id);
   }
 
-  public async setImages(id, images: string[]) {
+  public async setImages(id: string, images: string[]): Promise<Product> {
     return this.productModel.findByIdAndUpdate(id, { images }, { new: true });
   }
 
-  public async likeProduct(userId: string, productId: string) {
+  public async likeProduct(
+    userId: string,
+    productId: string,
+  ): Promise<Product> {
     const productToLike = await this.productModel.findById(productId);
     const currentUser = await this.userModel.findById(userId);
     if (!productToLike) {
@@ -81,7 +79,11 @@ export class ProductsService {
     }
   }
 
-  public async unlikeProduct(userId, productId) {
+  // TODO Why it doesnt work
+  public async unlikeProduct(
+    userId: string,
+    productId: string,
+  ): Promise<Product> {
     const productToUnlike = await this.productModel.findById(productId);
     if (!productToUnlike) {
       throw new BadRequestException(PRODUCT_NOT_FOUND);
@@ -96,12 +98,24 @@ export class ProductsService {
     }
   }
 
-  public async getLikedProducts(userId: string): Promise<Product[]> {
-    const user = await this.userModel.findById(userId);
-    const result = await this.productModel
-      .find({ _id: { $in: user.followingProducts } })
-      .exec();
-    console.log(result);
-    return result;
+  public async getLikedProducts(userId: string): Promise<GetLikedProductDto> {
+    const user = (await this.userModel.findById(userId)) as UserDocument;
+    const likedProducts = [];
+    for (const product of user.followingProducts) {
+      const item = (await this.productModel.findById(
+        product,
+      )) as ProductDocument;
+      likedProducts.push(item);
+    }
+    return { likedProducts };
+  }
+
+  async searchForProducts(text: string) {
+    const results = await this.productsSearchService.search(text);
+    const ids = results.map((result) => result.id);
+    if (!ids.length) {
+      return [];
+    }
+    return this.productModel.find({ _id: { $in: ids } });
   }
 }
