@@ -1,12 +1,159 @@
-<div class="containerSidenav">
-  <div class="avatar">
-    <app-avatar [imageUrl]="user?.avatar"></app-avatar>
+<!--<div class="containerSidenav">-->
+<!--  <div class="avatar">-->
+<!--    <app-avatar [imageUrl]="user?.avatar"></app-avatar>-->
+<!--  </div>-->
+<!--  <h4 class="myName" (click)="goHomePage()">{{user.username}}</h4>-->
+<!--  <app-star-ratings [rating]="rating" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></app-star-ratings>-->
+<!--  <p class="designation text-light text-center">-->
+<!--    {{rating}}-->
+<!--    <span class="countFeedback text-light">(124)</span></p>-->
+<!--  <mat-divider></mat-divider>-->
+<!--  <app-lk-navbar-items></app-lk-navbar-items>-->
+<!--</div>-->
+
+
+<div class="sidebar close" #sideBarMenu>
+  <div class="d-flex">
+    <div class="logo-details" *ngIf="isOpenedMenu">
+      <i class='bx bxl-c-plus-plus'></i>
+      <span class="logo_name">SHOOTS</span>
+    </div>
+    <div class="toggleMenuBtn">
+      <mat-icon (click)="toggleNavbar()" class="toggleMenu">menu</mat-icon>
+    </div>
   </div>
-  <h4 class="myName" (click)="goHomePage()">{{user.username}}</h4>
-  <app-star-ratings [rating]="rating" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></app-star-ratings>
-  <p class="designation text-light text-center">
-    {{rating}}
-    <span class="countFeedback text-light">(124)</span></p>
-  <mat-divider></mat-divider>
-  <app-lk-navbar-items></app-lk-navbar-items>
+  <ul class="nav-links">
+
+    <li *ngFor="let link of navLinks">
+      <div class="iocn-link">
+        <tui-hosted-dropdown [content]="content">
+          <a href="#" (click)="goToPage($event, link)">
+            <ng-container *ngIf="link.icon">
+              <i [ngClass]="link.icon"></i>
+            </ng-container>
+            <span class="link_name">{{link.label}}</span>
+          </a>
+<!--          <i class='bx bxs-chevron-down arrow' *ngIf="link.subLinks" (click)="showSubMenu()"></i>-->
+        </tui-hosted-dropdown>
+      </div>
+
+      <ng-template #content>
+        <div *ngIf="link.subLinks">
+
+          <tui-data-list role="menu">
+            <tui-opt-group>
+              <a
+                *ngFor="let subLink of link.subLinks"
+                tuiOption
+                role="menuitemradio"
+                routerLinkActive
+                [routerLink]="subLink.link"
+              >
+                {{subLink.label}}
+              </a>
+            </tui-opt-group>
+
+          </tui-data-list>
+        </div>
+      </ng-template>
+
+      <!--      <ul class="sub-menu" *ngIf="link.subLinks && !isOpenedMenu">-->
+      <!--        <li *ngFor="let subLink of link.subLinks"><a class="link_name" [routerLink]="subLink.link">{{subLink.label}}</a>-->
+      <!--        </li>-->
+      <!--      </ul>-->
+
+      <!--      <ul *ngIf="isOpenedMenu && link.subLinks">-->
+      <!--        <div *ngFor="let subLink of link.subLinks">-->
+      <!--          <tui-hosted-dropdown [content]="content">-->
+      <!--            <li>-->
+      <!--              <a class="link_name" [routerLink]="subLink.link">{{subLink.label}}</a>-->
+      <!--            </li>-->
+      <!--          </tui-hosted-dropdown>-->
+
+      <!--        </div>-->
+      <!--      </ul>-->
+
+
+    </li>
+
+    <!--    {-->
+    <!--    link: 'messages',-->
+    <!--    label: 'Уведомления',-->
+    <!--    icon: 'notifications',-->
+    <!--    },-->
+    <!--    {-->
+    <!--    link: 'lk/settings',-->
+    <!--    label: 'Настройки',-->
+    <!--    icon: ''-->
+    <!--    },-->
+    <div class="bottom_buttons">
+
+      <li *ngFor="let link of navLinksBottom">
+        <div class="iocn-link showMenu">
+          <a [routerLink]="link.link">
+            <ng-container *ngIf="link.icon">
+              <i [ngClass]="link.icon"></i>
+            </ng-container>
+            <span class="link_name">{{link.label}}</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' *ngIf="link.subLinks"></i>
+        </div>
+        <ul class="sub-menu" *ngIf="link.subLinks" [ngClass]="(isOpenedMenu) ? 'subMenuOpened' : ''">
+          <li *ngFor="let subLink of link.subLinks" [ngClass]="(isOpenedMenu) ? 'showMenu' : ''"><a class="link_name"
+                                                                                                    [routerLink]="subLink.link">{{subLink.label}}</a>
+          </li>
+
+          <!--              <tui-opt-group *ngFor="let group of groups" [label]="group.label">-->
+          <!--                <a-->
+          <!--                  *ngFor="let item of group.items"-->
+          <!--                  #rla="routerLinkActive"-->
+          <!--                  tuiOption-->
+          <!--                  role="menuitemradio"-->
+          <!--                  routerLinkActive-->
+          <!--                  [attr.aria-checked]="rla.isActive"-->
+          <!--                  [routerLink]="item.routerLink"-->
+          <!--                >-->
+          <!--                  {{item.label}}-->
+          <!--                  <tui-svg *ngIf="rla.isActive" src="tuiIconCheckLarge"></tui-svg>-->
+          <!--                </a>-->
+          <!--              </tui-opt-group>-->
+          <!--            </tui-data-list>-->
+          <!--          </ng-template>-->
+
+        </ul>
+      </li>
+
+      <!--      <li>-->
+      <!--        <div class="iocn-link">-->
+      <!--          <a href="#">-->
+      <!--            <i class="bx bxs-cog"></i>-->
+      <!--            <span class="link_name">Настройки</span>-->
+      <!--          </a>-->
+      <!--        </div>-->
+      <!--      </li>-->
+
+
+      <!--      <li>-->
+      <!--        <div class="iocn-link">-->
+      <!--          <a href="#">-->
+      <!--            <i class="bx bxs-cog"></i>-->
+      <!--            <span class="link_name">Настройки</span>-->
+      <!--          </a>-->
+      <!--        </div>-->
+      <!--      </li>-->
+    </div>
+    <li>
+      <div class="profile-details">
+        <div class="profile-content">
+          <img src="https://source.unsplash.com/c_GmwfHBDzk/200x200" alt="profileImg">
+        </div>
+        <div class="name-job">
+          <div class="profile_name">Prem Shahi</div>
+          <div class="job">Web Desginer</div>
+        </div>
+        <i class='bx bx-log-out'></i>
+      </div>
+    </li>
+  </ul>
 </div>
+

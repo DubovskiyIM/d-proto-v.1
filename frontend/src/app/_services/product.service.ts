@@ -1,13 +1,15 @@
-import {Inject, Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
-import {pipe} from "rxjs";
-import {filter, map} from "rxjs/operators";
+import { pipe } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { DynamicFormModel, DynamicInputModel, DynamicSelectModel } from '@ng-dynamic-forms/core';
+import { DynamicMaterialChipsComponent } from '@ng-dynamic-forms/ui-material';
+import {OutwearSchema} from "./schemas/outwear";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class ProductService {
   private static readonly httpActions = {
     getByID: 'products/product',
@@ -16,43 +18,49 @@ export class ProductService {
     logout: 'auth/logout',
   };
 
-  constructor(private http: HttpClient, @Inject(APP_BASE_HREF) private baseUrl: string,) {
+  constructor(private http: HttpClient, @Inject(APP_BASE_HREF) private baseUrl: string) {
     this.baseUrl = 'api' + this.baseUrl;
   }
 
-  getCreateProductSchema(){
-    return (schemaCreateProduct);
+  getCreateProductSchema(typeProduct: string) {
+    if (typeProduct === 'type_a') {
+      return schemaCreateProduct;
+    } else if (typeProduct === 'outerwear') {
+      return OutwearSchema;
+    }
+    return defaultProductSchema;
   }
 
   getProductsList() {
     return this.http.get(`${this.baseUrl}/${ProductService.httpActions.getAll}`);
   }
 
-
   productCreate(productValues) {
-    return this.http.post('api/products/create', productValues)
+    return this.http.post('api/products/create', productValues);
   }
 
   getProductByOwner(ownerID) {
-    return this.http.get('api/products/' + ownerID)
+    return this.http.get('api/products/' + ownerID);
   }
 
   public getProductByOwnerForCreateOrder(ownerID) {
-    return this.http.get('api/products/' + ownerID).pipe(map((value: any) => {
-      let result = [];
-      value.forEach((item) => {
-        result.push(new CreateOrderData(item.title, item._id, 'https://source.unsplash.com/c_GmwfHBDzk/200x200'))
+    return this.http.get('api/products/' + ownerID).pipe(
+      map((value: any) => {
+        const result = [];
+        value.forEach((item) => {
+          result.push(new CreateOrderData(item.title, item._id, 'https://source.unsplash.com/c_GmwfHBDzk/200x200'));
+        });
+        return result;
       })
-      return result;
-    }))
+    );
   }
 
   public deleteProductById(productID) {
-    return this.http.delete('api/products/' + productID)
+    return this.http.delete('api/products/' + productID);
   }
 
   getProductById(productId) {
-    return this.http.get(`${this.baseUrl}${ProductService.httpActions.getByID}/`+ productId)
+    return this.http.get(`${this.baseUrl}${ProductService.httpActions.getByID}/` + productId);
   }
 
   toResponseBody() {
@@ -73,68 +81,272 @@ export class ProductService {
     return formData;
   }
 
-
   pushImages(files) {
     if (files.length > 0) {
-      let formData: FormData = new FormData();
-      for (let file of files) {
+      const formData: FormData = new FormData();
+      for (const file of files) {
         formData.append('files', file);
       }
-      let headers = new HttpHeaders();
+      const headers = new HttpHeaders();
       headers.append('Content-Type', 'multipart/form-data');
       headers.append('Accept', 'application/json');
       const options = {
-        headers: headers,
-      }
-      return  this.http.post('api/files/upload', formData, options)
-
+        headers,
+      };
+      return this.http.post('api/files/upload', formData, options);
     }
   }
 }
+
 class CreateOrderData {
-  constructor(
-    readonly name: string,
-    readonly code: string,
-    readonly avatarUrl: string | null = null,
-  ) {}
+  constructor(readonly name: string, readonly code: string, readonly avatarUrl: string | null = null) {}
 
   toString(): string {
     return `${this.name}`;
   }
 }
 
-
 export const schemaCreateProduct = [
   {
-    "type": "INPUT",
-    "id": "sampleInput",
-    "label": "Sample Input",
-    "maxLength": 42,
-    "placeholder": "Sample input"
+    type: 'INPUT',
+    id: 'productTitle',
+    inputType: 'text',
+    label: 'Введите название',
+    name: 'INPUT',
   },
   {
-    "type": "RADIO_GROUP",
-    "id": "sampleRadioGroup",
-    "label": "Sample Radio Group",
-    "options": [
+    type: 'INPUT',
+    id: 'productPrice',
+    inputType: 'number',
+    label: 'Цена',
+    name: 'INPUT',
+  },
+  {
+    type: 'INPUT',
+    id: 'productCount',
+    inputType: 'number',
+    label: 'Колличество',
+    name: 'INPUT',
+  },
+  {
+    type: 'SELECT',
+    id: 'who_did',
+    options: [
       {
-        "label": "Option 1",
-        "value": "option-1",
+        label: 'Я сделал',
+        value: 'i_did',
       },
       {
-        "label": "Option 2",
-        "value": "option-2"
+        label: 'Член моей компании',
+        value: 'member_of_my_company',
       },
       {
-        "label": "Option 3",
-        "value": "option-3"
-      }
+        label: 'Другая компания',
+        value: 'other_company',
+      },
     ],
-    "value": "option-3"
+    value: 'Я сделал',
   },
   {
-    "type": "CHECKBOX",
-    "id": "sampleCheckbox",
-    "label": "I do agree"
-  }
-]
+    type: 'INPUT',
+    id: 'description',
+    name: 'EDITOR',
+  },
+  {
+    type: 'INPUT',
+    label: 'Добавьте подходящие теги',
+    id: 'productTag',
+    name: 'TAGS',
+    modelType: 'TAG',
+  },
+  {
+    type: 'INPUT',
+    label: 'Добавьте материалы',
+    id: 'materials',
+    name: 'TAGS',
+    modelType: 'TAG',
+  },
+  {
+    type: 'SELECT',
+    label: 'Состояние',
+    id: 'condition',
+    options: [
+      {
+        label: 'Новое',
+        value: 'New',
+      },
+      {
+        label: 'Б/y',
+        value: 'second thing',
+      },
+    ],
+    value: 'Новое',
+  },
+  {
+    type: 'SELECT',
+    id: 'size',
+    options: [
+      {
+        label: '46 (S)',
+        value: '46 (S)',
+      },
+      {
+        label: '48 (M)',
+        value: '48 (M)',
+      },
+      {
+        label: '50 (L)',
+        value: '50 (L)',
+      },
+      {
+        label: '52 (L/XL)',
+        value: '52 (L/XL)',
+      },
+      {
+        label: '54 (XL)',
+        value: '54 (XL)',
+      },
+      {
+        label: '56 (XXL)',
+        value: '56 (XXL)',
+      },
+    ],
+    value: '46 (S)',
+  },
+];
+
+export const defaultProductSchema = [
+  {
+    type: 'INPUT',
+    id: 'productTitle',
+    inputType: 'text',
+    label: 'Введите название',
+    name: 'INPUT',
+  },
+  {
+    type: 'INPUT',
+    id: 'productPrice',
+    inputType: 'number',
+    label: 'Цена',
+    name: 'INPUT',
+  },
+  {
+    type: 'INPUT',
+    id: 'productCount',
+    inputType: 'number',
+    label: 'Колличество',
+    name: 'INPUT',
+  },
+  {
+    type: 'SELECT',
+    id: 'who_did',
+    options: [
+      {
+        label: 'Я сделал',
+        value: 'i_did',
+      },
+      {
+        label: 'Член моей компании',
+        value: 'member_of_my_company',
+      },
+      {
+        label: 'Другая компания',
+        value: 'other_company',
+      },
+    ],
+    value: 'Я сделал',
+  },
+  {
+    type: 'INPUT',
+    id: 'description',
+    name: 'EDITOR',
+  },
+  {
+    type: 'INPUT',
+    label: 'Добавьте подходящие теги',
+    id: 'productTag',
+    name: 'TAGS',
+    modelType: 'TAG',
+  },
+  {
+    type: 'INPUT',
+    label: 'Добавьте материалы',
+    id: 'materials',
+    name: 'TAGS',
+    modelType: 'TAG',
+  },
+  {
+    type: 'SELECT',
+    label: 'Состояние',
+    id: 'condition',
+    options: [
+      {
+        label: 'Новое',
+        value: 'New',
+      },
+      {
+        label: 'Б/y',
+        value: 'second thing',
+      },
+    ],
+    value: 'Новое',
+  },
+];
+
+const exmpl2: DynamicFormModel = [
+  new DynamicInputModel({
+    id: 'sampleInput',
+    multiple: true,
+  }),
+  new DynamicSelectModel({
+    id: 'sdsf',
+    name: 'control',
+    options: [
+      {
+        label: 'Option 1',
+        value: 'option-1',
+      },
+      {
+        label: 'Option 2',
+        value: 'option-2',
+      },
+      {
+        label: 'Option 3',
+        value: 'option-3',
+      },
+    ],
+    value: 'option-3',
+  }),
+  new DynamicInputModel({
+    id: 'sampleInput2',
+    name: 'customControl',
+    multiple: true,
+  }),
+
+  // new DynamicRadioGroupModel<string>({
+  //
+  //   id: "sampleRadioGroup",
+  //   label: "Sample Radio Group",
+  //   options: [
+  //     {
+  //       label: "Option 1",
+  //       value: "option-1",
+  //     },
+  //     {
+  //       label: "Option 2",
+  //       value: "option-2"
+  //     },
+  //     {
+  //       label: "Option 3",
+  //       value: "option-3"
+  //     }
+  //   ],
+  //   value: "option-3"
+  // }),
+  //
+  // new DynamicCheckboxModel({
+  //
+  //   id: "sampleCheckbox",
+  //   label: "I do agree"
+  // })
+];

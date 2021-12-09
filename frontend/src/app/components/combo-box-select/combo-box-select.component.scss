@@ -1,0 +1,15 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+.template {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  margin: 0 2px 0 0;
+  flex-shrink: 0;
+}
+
+.name {
+  flex-shrink: 1;
+}

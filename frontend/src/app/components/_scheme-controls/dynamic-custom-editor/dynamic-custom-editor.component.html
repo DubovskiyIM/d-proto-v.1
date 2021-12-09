@@ -1,0 +1,8 @@
+<app-custom-editor
+  [name]="model.id"
+  [ngClass]="[getClass('element', 'control'), getClass('grid', 'control')]"
+  (blur)="onBlur($event)"
+  (change)="onChange($event)"
+  (focus)="onFocus($event)"
+  [group]="group"
+></app-custom-editor>

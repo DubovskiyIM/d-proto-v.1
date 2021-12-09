@@ -38,4 +38,8 @@ export class MyProfileComponent implements OnInit {
       this.listCards = res;
     })
   }
+
+  public showDialog(template) {
+
+  }
 }

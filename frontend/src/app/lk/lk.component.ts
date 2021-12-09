@@ -9,6 +9,31 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 })
 export class LkComponent implements AfterViewInit {
   @ViewChild(MatSidenav)
+
+  // Выход
+  public navLinks = [
+    {
+      link: 'lk/orders',
+      label: 'Заказы',
+    },
+    {
+      link: 'lk/favorite',
+      label: 'Избранное',
+    },
+    {
+      link: 'messages',
+      label: 'Сообщения',
+    },
+    {
+      link: 'messages',
+      label: 'Уведомления',
+    },
+    {
+      link: 'lk/settings',
+      label: 'Настройки',
+    },
+  ];
+
   public sidenav!: MatSidenav;
 
   constructor(private observer: BreakpointObserver) {}
