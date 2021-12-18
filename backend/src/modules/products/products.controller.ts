@@ -59,7 +59,7 @@ export class ProductsController {
   @UseGuards(JwtAuthGuard)
   async findAll(@Query('search') search: string): Promise<Product[]> {
     if (search) {
-      return this.productsService.searchForProducts(search);
+      // return this.productsService.searchForProducts(search);
     }
     return await this.productsService.findAll();
   }

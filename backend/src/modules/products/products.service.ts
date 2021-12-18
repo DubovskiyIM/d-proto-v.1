@@ -8,12 +8,12 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { GetLikedProductDto } from '@src/modules/products/dto/get-liked-product.dto';
 import { PRODUCT_NOT_FOUND } from '@src/modules/products/products.constants';
 import { USER_NOT_FOUND } from '@src/modules/users/users.constants';
-import ProductsSearchService from '@src/modules/products/productsSearch.service';
+// import ProductsSearchService from '@src/modules/products/productsSearch.service';
 
 @Injectable()
 export class ProductsService {
   constructor(
-    private readonly productsSearchService: ProductsSearchService,
+    // private readonly productsSearchService: ProductsSearchService,
     @InjectModel('Product') private productModel: Model<ProductDocument>,
     @InjectModel('User') private userModel: Model<UserDocument>,
   ) {}
@@ -110,12 +110,12 @@ export class ProductsService {
     return { likedProducts };
   }
 
-  async searchForProducts(text: string) {
-    const results = await this.productsSearchService.search(text);
-    const ids = results.map((result) => result.id);
-    if (!ids.length) {
-      return [];
-    }
-    return this.productModel.find({ _id: { $in: ids } });
-  }
+  // async searchForProducts(text: string) {
+  //   const results = await this.productsSearchService.search(text);
+  //   const ids = results.map((result) => result.id);
+  //   if (!ids.length) {
+  //     return [];
+  //   }
+  //   return this.productModel.find({ _id: { $in: ids } });
+  // }
 }

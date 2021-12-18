@@ -4,16 +4,14 @@ import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
 import { Product, ProductSchema } from '@src/models/product.schema';
 import { User, UserSchema } from '@src/models/user.schema';
-import ProductsSearchService from '@src/modules/products/productsSearch.service';
-import { SearchModule } from '@src/modules/search/search.module';
+// import ProductsSearchService from '@src/modules/products/productsSearch.service';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    SearchModule,
   ],
   controllers: [ProductsController],
-  providers: [ProductsService, ProductsSearchService],
+  providers: [ProductsService],
 })
 export class ProductsModule {}

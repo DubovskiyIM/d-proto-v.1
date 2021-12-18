@@ -17,7 +17,7 @@ import { FeedbacksModule } from '@src/modules/feedbacks/feedbacks.module';
 
 import { SharedModule } from '@src/shared/shared.module';
 import { ChatGateway } from '@src/modules/chat/chat.gateway';
-import { SearchModule } from '@src/modules/search/search.module';
+// import { SearchModule } from '@src/modules/search/search.module';
 
 @Module({
   imports: [
@@ -37,7 +37,6 @@ import { SearchModule } from '@src/modules/search/search.module';
     FilesModule,
     RoomsModule,
     ChatModule,
-    SearchModule,
     SharedModule,
   ],
   controllers: [AppController],
